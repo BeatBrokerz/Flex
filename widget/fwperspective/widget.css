@@ -1,0 +1,613 @@
+.fwperspective {
+    width: 100%;
+    height: 100%;
+}
+
+.fwperspective {
+    background: #aaa;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.fwperspective-container {
+    background: #fff;
+    min-height: 100%;
+    position: relative;
+    outline: 1px solid rgba(0, 0, 0, 0);
+    z-index: 10;
+}
+
+.fwperspective-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0px;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.2);
+    /* the transition delay of the height needs to be synced with the container transition time */
+    -webkit-transition: opacity 0.4s, height 0s 0.4s;
+    transition: opacity 0.4s, height 0s 0.4s;
+}
+
+.fwperspective-wrapper {
+    position: relative;
+}
+
+.component {
+    margin: 0 auto;
+    width: 60%;
+    text-align: justify;
+    font-size: 1.5em;
+}
+
+/* Modal view */
+.fwperspective.modalview {
+    position: fixed;
+    -webkit-perspective: 1500px;
+    perspective: 1500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.modalview .fwperspective-container {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.modalview .fwperspective-wrapper {
+    -webkit-transform: translateZ(-1px); /* solves a rendering bug in Chrome on Windows */
+}
+
+.animate .fwperspective-container::after {
+    opacity: 1;
+    height: 101%;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+
+/* Outer Nav */
+.fwperspective-modal-wrapper {
+    position: absolute;
+    height: auto;
+    font-size: 15px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.fwperspective-modal-wrapper.vertical {
+    top: 50%;
+    max-height: 75%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.fwperspective-modal-inner {
+    padding-bottom: 50px;
+}
+
+.fwperspective-modal-wrapper .btn {
+    margin-right: 10px;
+}
+
+.fwperspective-modal-wrapper .fw-cart-totals-wrap {
+    margin: 40px 0;
+}
+
+.fwperspective-modal-wrapper.vertical .modal-title {
+    font-size: 22px;
+    font-weight: normal;
+    margin: 0 0 25px;
+    opacity: 0.55;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.fwperspective-modal-wrapper.horizontal {
+    left: 50%;
+    width: 75%;
+    max-width: 1000px;
+    text-align: center;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.fwperspective-modal-wrapper.left {
+    left: 15%;
+    right: 35%;
+}
+
+.fwperspective-modal-wrapper.right {
+    right: 15%;
+    left: 35%;
+}
+
+.fwperspective-modal-wrapper.top {
+    top: 15%;
+    bottom: 35%;
+}
+
+.fwperspective-modal-wrapper.bottom {
+    bottom: 15%;
+    top: 35%;
+}
+
+.fwperspective-modal-wrapper a {
+    display: inline-block;
+    white-space: nowrap;
+    font-weight: 300;
+    margin: 0 0 30px 0;
+    color: #fff;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.fwperspective-modal-wrapper a:hover {
+    color: #ffdccd;
+}
+
+.fwperspective-modal-wrapper.vertical a {
+    display: block;
+}
+
+.fwperspective-modal-wrapper.horizontal a {
+    margin: 15px 20px;
+}
+
+.fwperspective-modal-wrapper a::before {
+    display: inline-block;
+    font-family: 'typicons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    margin-right: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.fwperspective-pad-foot {
+    display: block;
+    padding-bottom: 50px;
+}
+
+/* Individual Effects */
+
+/* Effect airbnb */
+.effect-airbnb {
+    background: #fff;
+}
+
+.effect-airbnb .fwperspective-container {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.effect-airbnb.animate .fwperspective-container {
+    -webkit-transform: translateZ(-1500px) translateX(100%) rotateY(-45deg);
+    transform: translateZ(-1500px) translateX(100%) rotateY(-45deg);
+}
+
+.no-csstransforms3d .effect-airbnb.animate .fwperspective-container {
+    left: 75%;
+}
+
+.effect-airbnb .fwperspective-modal-wrapper a {
+    opacity: 0;
+    -webkit-transform: translateX(-150px);
+    transform: translateX(-150px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.effect-airbnb.animate .fwperspective-modal-wrapper a {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+
+.effect-airbnb.animate .fwperspective-modal-wrapper a:nth-child(2) {
+    -webkit-transition-delay: 0.04s;
+    transition-delay: 0.04s;
+}
+
+.effect-airbnb.animate .fwperspective-modal-wrapper a:nth-child(3) {
+    -webkit-transition-delay: 0.08s;
+    transition-delay: 0.08s;
+}
+
+.effect-airbnb.animate .fwperspective-modal-wrapper a:nth-child(4) {
+    -webkit-transition-delay: 0.12s;
+    transition-delay: 0.12s;
+}
+
+.effect-airbnb.animate .fwperspective-modal-wrapper a:nth-child(5) {
+    -webkit-transition-delay: 0.16s;
+    transition-delay: 0.16s;
+}
+
+.effect-airbnb.animate .fwperspective-modal-wrapper a:nth-child(6) {
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.effect-airbnb.animate .fwperspective-modal-wrapper a:nth-child(7) {
+    -webkit-transition-delay: 0.24s;
+    transition-delay: 0.24s;
+}
+
+/* Effect Move Left */
+.effect-moveleft {
+    background: #f4f3f1;
+}
+
+.effect-moveleft .fwperspective-container {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.effect-moveleft .fwperspective-container::after {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.effect-moveleft.animate .fwperspective-container {
+    -webkit-transform: translateX(-50%) rotateY(45deg) translateZ(-50px);
+    transform: translateX(-50%) rotateY(45deg) translateZ(-50px);
+}
+
+.no-csstransforms3d .effect-moveleft.animate .fwperspective-container {
+    left: -75%;
+}
+
+.effect-moveleft .fwperspective-modal-wrapper a {
+    color: #e86a32;
+    opacity: 0;
+    -webkit-transform: translateX(100px) translateZ(-1000px);
+    transform: translateX(100px) translateZ(-1000px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.effect-moveleft .fwperspective-modal-wrapper a:hover {
+    color: #333;
+}
+
+.effect-moveleft.animate .fwperspective-modal-wrapper a {
+    opacity: 1;
+    -webkit-transform: translateX(0) translateZ(0);
+    transform: translateX(0) translateZ(0);
+}
+
+.effect-moveleft.animate .fwperspective-modal-wrapper a:nth-child(2) {
+    -webkit-transition-delay: 0.04s;
+    transition-delay: 0.04s;
+}
+
+.effect-moveleft.animate .fwperspective-modal-wrapper a:nth-child(3) {
+    -webkit-transition-delay: 0.08s;
+    transition-delay: 0.08s;
+}
+
+.effect-moveleft.animate .fwperspective-modal-wrapper a:nth-child(4) {
+    -webkit-transition-delay: 0.12s;
+    transition-delay: 0.12s;
+}
+
+.effect-moveleft.animate .fwperspective-modal-wrapper a:nth-child(5) {
+    -webkit-transition-delay: 0.16s;
+    transition-delay: 0.16s;
+}
+
+.effect-moveleft.animate .fwperspective-modal-wrapper a:nth-child(6) {
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.effect-moveleft.animate .fwperspective-modal-wrapper a:nth-child(7) {
+    -webkit-transition-delay: 0.24s;
+    transition-delay: 0.24s;
+}
+
+/* Effect Rotate Left */
+.effect-rotateleft {
+    background: #e96e4f;
+}
+
+.effect-rotateleft .fwperspective-container {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform-origin: 0% 50%;
+    transform-origin: 0% 50%;
+}
+
+.effect-rotateleft .fwperspective-container::after {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.effect-rotateleft.animate .fwperspective-container {
+    -webkit-transform: translateZ(-1800px) translateX(-50%) rotateY(45deg);
+    transform: translateZ(-1800px) translateX(-50%) rotateY(45deg);
+}
+
+.no-csstransforms3d .effect-rotateleft.animate .fwperspective-container {
+    left: -75%;
+}
+
+.effect-rotateleft .fwperspective-modal-wrapper a {
+    opacity: 0;
+    -webkit-transform: translateX(350px) translateZ(-1000px);
+    transform: translateX(350px) translateZ(-1000px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.effect-rotateleft.animate .fwperspective-modal-wrapper a {
+    opacity: 1;
+    -webkit-transform: translateX(0) translateZ(0);
+    transform: translateX(0) translateZ(0);
+}
+
+.effect-rotateleft.animate .fwperspective-modal-wrapper a:nth-child(2) {
+    -webkit-transition-delay: 0.04s;
+    transition-delay: 0.04s;
+}
+
+.effect-rotateleft.animate .fwperspective-modal-wrapper a:nth-child(3) {
+    -webkit-transition-delay: 0.08s;
+    transition-delay: 0.08s;
+}
+
+.effect-rotateleft.animate .fwperspective-modal-wrapper a:nth-child(4) {
+    -webkit-transition-delay: 0.08s;
+    transition-delay: 0.08s;
+}
+
+.effect-rotateleft.animate .fwperspective-modal-wrapper a:nth-child(5) {
+    -webkit-transition-delay: 0.16s;
+    transition-delay: 0.16s;
+}
+
+.effect-rotateleft.animate .fwperspective-modal-wrapper a:nth-child(6) {
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.effect-rotateleft.animate .fwperspective-modal-wrapper a:nth-child(7) {
+    -webkit-transition-delay: 0.24s;
+    transition-delay: 0.24s;
+}
+
+/* Effect Move Down */
+.effect-movedown {
+    background: #34495e;
+}
+
+.effect-movedown .fwperspective-container {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.effect-movedown .fwperspective-container::after {
+    background: rgba(52, 73, 94, 0.5);
+}
+
+.effect-movedown.animate .fwperspective-container {
+    -webkit-transform: translateY(100%) translateZ(-1500px);
+    transform: translateY(100%) translateZ(-1500px);
+}
+
+.no-csstransforms3d .effect-movedown.animate .fwperspective-container {
+    top: 75%;
+}
+
+.effect-movedown .fwperspective-modal-wrapper a {
+    opacity: 0;
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.effect-movedown .fwperspective-modal-wrapper a:hover {
+    color: #ed8151;
+}
+
+.effect-movedown.animate .fwperspective-modal-wrapper a {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.effect-movedown.animate .fwperspective-modal-wrapper a:nth-child(2) {
+    -webkit-transition-delay: 0.04s;
+    transition-delay: 0.04s;
+}
+
+.effect-movedown.animate .fwperspective-modal-wrapper a:nth-child(3) {
+    -webkit-transition-delay: 0.08s;
+    transition-delay: 0.08s;
+}
+
+.effect-movedown.animate .fwperspective-modal-wrapper a:nth-child(4) {
+    -webkit-transition-delay: 0.12s;
+    transition-delay: 0.12s;
+}
+
+.effect-movedown.animate .fwperspective-modal-wrapper a:nth-child(5) {
+    -webkit-transition-delay: 0.16s;
+    transition-delay: 0.16s;
+}
+
+.effect-movedown.animate .fwperspective-modal-wrapper a:nth-child(6) {
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.effect-movedown.animate .fwperspective-modal-wrapper a:nth-child(7) {
+    -webkit-transition-delay: 0.24s;
+    transition-delay: 0.24s;
+}
+
+/* Effect Rotate Top */
+.effect-rotatetop {
+    background: #edcdbb;
+}
+
+.effect-rotatetop .fwperspective-container {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.effect-rotatetop .fwperspective-container::after {
+    background: rgba(94, 59, 43, 0.6);
+}
+
+.effect-rotatetop.animate .fwperspective-container {
+    -webkit-transform: translateZ(-1500px) translateY(-50%) rotateX(-45deg);
+    transform: translateZ(-1500px) translateY(-50%) rotateX(-45deg);
+}
+
+.no-csstransforms3d .effect-rotatetop.animate .fwperspective-container {
+    top: -75%;
+}
+
+.effect-rotatetop .fwperspective-modal-wrapper a {
+    opacity: 0;
+    color: #ed8151;
+    -webkit-transform: translateY(200px) translateZ(-1000px);
+    transform: translateY(200px) translateZ(-1000px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.effect-rotatetop .fwperspective-modal-wrapper a:hover {
+    color: #777;
+}
+
+.effect-rotatetop.animate .fwperspective-modal-wrapper a {
+    opacity: 1;
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+}
+
+.effect-rotatetop.animate .fwperspective-modal-wrapper a:nth-child(2) {
+    -webkit-transition-delay: 0.04s;
+    transition-delay: 0.04s;
+}
+
+.effect-rotatetop.animate .fwperspective-modal-wrapper a:nth-child(3) {
+    -webkit-transition-delay: 0.08s;
+    transition-delay: 0.08s;
+}
+
+.effect-rotatetop.animate .fwperspective-modal-wrapper a:nth-child(4) {
+    -webkit-transition-delay: 0.12s;
+    transition-delay: 0.12s;
+}
+
+.effect-rotatetop.animate .fwperspective-modal-wrapper a:nth-child(5) {
+    -webkit-transition-delay: 0.16s;
+    transition-delay: 0.16s;
+}
+
+.effect-rotatetop.animate .fwperspective-modal-wrapper a:nth-child(6) {
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.effect-rotatetop.animate .fwperspective-modal-wrapper a:nth-child(7) {
+    -webkit-transition-delay: 0.24s;
+    transition-delay: 0.24s;
+}
+
+/* Effect Lay Down */
+.effect-laydown {
+    background: #b8b6b4;
+}
+
+.effect-laydown .fwperspective-container {
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform-origin: 50% 150%;
+    transform-origin: 50% 150%;
+}
+
+.effect-laydown.animate .fwperspective-container {
+    -webkit-transform: translateZ(-1500px) rotateX(80deg);
+    transform: translateZ(-1500px) rotateX(80deg);
+}
+
+.no-csstransforms3d .effect-laydown.animate .fwperspective-container {
+    top: 75%;
+}
+
+.effect-laydown .fwperspective-modal-wrapper a {
+    opacity: 0;
+    -webkit-transform: translateY(-200px) translateZ(-1000px);
+    transform: translateY(-200px) translateZ(-1000px);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a {
+    opacity: 1;
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a:nth-child(7) {
+    -webkit-transition-delay: 0.0s;
+    transition-delay: 0.0s;
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a:nth-child(6) {
+    -webkit-transition-delay: 0.04s;
+    transition-delay: 0.04s;
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a:nth-child(5) {
+    -webkit-transition-delay: 0.08s;
+    transition-delay: 0.08s;
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a:nth-child(4) {
+    -webkit-transition-delay: 0.12s;
+    transition-delay: 0.12s;
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a:nth-child(3) {
+    -webkit-transition-delay: 0.16s;
+    transition-delay: 0.16s;
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a:nth-child(2) {
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.effect-laydown.animate .fwperspective-modal-wrapper a:first-child {
+    -webkit-transition-delay: 0.24s;
+    transition-delay: 0.24s;
+}

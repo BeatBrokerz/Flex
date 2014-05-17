@@ -1,0 +1,18 @@
+﻿.dx-viewport .content-view {
+    background: #fff;
+    color: #333;
+}
+
+.dx-viewport .content-view .content-inner {
+    padding: 20px;
+}
+
+.dx-viewport .content-view .content-heading {
+    margin: 1em 0;
+    font-size: 1.4em;
+    color: inherit;
+}
+
+.dx-viewport .content-view .content-body {
+    color: inherit;
+}

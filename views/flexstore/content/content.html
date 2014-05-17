@@ -1,0 +1,16 @@
+﻿<div data-options="dxView : { name: 'content', title: 'Content' } ">
+
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible }"></div>
+
+    <div class="content-view" data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxScrollView: {}">
+            <div class="content-inner limit-width">
+                <div class="content-heading" data-bind="html: content.title"></div>
+                <div class="content-body" data-bind="html: pagecontent"></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-bind="dxLoadPanel: { message: 'Loading...', visible: loadPanelVisible }"></div>
+
+</div>

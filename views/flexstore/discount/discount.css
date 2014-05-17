@@ -1,0 +1,20 @@
+﻿.dx-viewport .discount-view .discount-content-wrap {
+    padding: 15px;
+}
+
+.dx-viewport .discount-view .p {
+    margin: 15px 0;
+    line-height: 1.4em;
+}
+
+.dx-viewport .discount-view .discount-name {
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.dx-viewport .discount-view .presented-by {
+    text-align: center;
+    font-size: 0.9em;
+    opacity: 0.75;
+}

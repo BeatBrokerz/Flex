@@ -1,0 +1,37 @@
+﻿<div data-options="dxView : { name: 'discount', title: 'Special Offer' } ">
+
+    <div data-bind="dxCommand: { action: '#nowplaying', id: 'nowplaying', location: 'settings', title: 'Now Playing', icon: 'music', visible: window[myAppNamespace].nowplaying.showbutton } "></div>
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+
+    <div class="discount-view discount view-content" data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div data-bind="dxScrollView: {}">
+            <img data-bind="attr: { src: discount.producer_banner }"
+                 style="width:100%; max-width:600px; height:auto; display:block; margin:0 auto;"/>
+
+            <div class="discount-content-wrap limit-width">
+                <div class="discount-name" data-bind="text: discount.name"></div>
+                <div class="presented-by">Presented by<br> <strong data-bind="text: discount.producer"></strong></div>
+                <hr>
+                <div style="padding:10px">
+                    <div class="discount-description p"><i class="fwicon-gift"></i> <span
+                            data-bind="html: discount.description"></span></div>
+                    <div class="discount-sys-description p"><i class="fwicon-info"></i> <span
+                            data-bind="html: discount.sys_description"></span></div>
+                    <div data-bind="visible: discount.limitations != ''" class="discount-limitations p"><i
+                            class="fwicon-attention"></i> Only valid with the following license types: <strong
+                            style="font-style:italic"><span data-bind="html: discount.limitations"></span></strong>
+                    </div>
+                </div>
+                <div class="browse-menu dx-list-inline"
+                     data-bind="dxList: { dataSource: [{ icon: 'fwicon-music', title: 'Browse Beats' }], itemClickAction: '#catalog/' + discount.uid, scrollingEnabled: false }">
+                    <div data-options="dxTemplate: { name: 'item' }">
+                        <div style="float:right"><i class="fwicon-right-dir"></i></div>
+                        <div><i data-bind="attr: { class: icon + ' browse-icon' }"></i> <span
+                                data-bind="text: title"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

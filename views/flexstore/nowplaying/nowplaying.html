@@ -1,0 +1,108 @@
+﻿<div data-options="dxView : { name: 'nowplaying', title: 'Now Playing' } ">
+
+    <div data-options="dxCommand: { action: '#cart', id: 'cart', location: 'settings', title: 'Shopping Cart', icon: 'cart' } "></div>
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+
+    <div class="nowplaying-view nowplaying view-content full"
+         data-options="dxContent : { targetPlaceholder: 'content' } ">
+
+        <div class="nowplaying-content-wrap">
+
+            <div class="nowplaying-preview-wrap">
+                <div class="nowplaying-preview">
+                    <div class="nowplaying-image-wrap">
+                        <div class="nowplaying-image">
+                            <img data-bind="attr: { 'src' : image }"/>
+                        </div>
+                    </div>
+                    <div class="nowplaying-info-wrap">
+                        <div class="nowplaying-info">
+                            <div id="nowplaying-info-data">
+                                <div class="nowplaying-producer" data-bind="html: artist"></div>
+                                <div class="nowplaying-title" data-bind="html: songname"></div>
+                                <div class="nowplaying-genres" data-bind="html: genres"></div>
+                            </div>
+
+                            <div class="nowplaying-scrubber" id="nowplaying-scrubber" data-bind="dxSlider:{
+          min: 0, 
+          max: 100, 
+          value: window[myAppNamespace].Music.seekPosition,
+          step: 0.25 }">
+                            </div>
+
+                            <div class="music-button-wrap">
+                                <div class="music-button np-last"
+                                     data-bind="dxButton: { iconSrc: '//www.beatbrokerz.com/flex/images/control/music-last.png', clickAction: window[myAppNamespace].Music.playPrevious }"></div>
+                                <div class="music-button np-pause"
+                                     data-bind="dxButton: { iconSrc: '//www.beatbrokerz.com/flex/images/control/music-pause.png', clickAction: window[myAppNamespace].Music.pause, visible: playing }"></div>
+                                <div class="music-button np-play"
+                                     data-bind="dxButton: { iconSrc: '//www.beatbrokerz.com/flex/images/control/music-play.png', clickAction: function() { window[myAppNamespace].Music.play(); }, visible: paused }"></div>
+                                <div class="music-button np-next"
+                                     data-bind="dxButton: { iconSrc: '//www.beatbrokerz.com/flex/images/control/music-next.png', clickAction: window[myAppNamespace].Music.playNext  }"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="beats-list nowplaying-playlist" style="display:none"
+             data-bind="dxList: { dataSource: currentPlaylist, itemClickAction: playBeat, noDataText: 'No Active Playlist' }">
+            <div class="beats-item" data-options="dxTemplate: { name: 'item' }">
+                <div class="beat-item-container">
+                    <div class="beat-image"><img data-bind="attr: { 'src' : thumbnail }"/></div>
+                    <div class="beat-title" data-bind="html: title"></div>
+                    <div class="beat-info-container">
+                        <div class="beat-producer p" data-bind="html: artist"></div>
+                        <div class="beat-genres p" data-bind="html: genres"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="buynow-licenses nowplaying-licenses" style="display:none"
+             data-bind="dxList: { dataSource: buyNowLicenses, itemClickAction: showLicenseActions, noDataText: 'No Licenses Available' }">
+            <div class="buynow-license" data-options="dxTemplate: { name: 'item' }">
+                <div class="license-name" data-bind="text: name"></div>
+                <div class="license-price"><span data-bind="text: price"></span></div>
+            </div>
+        </div>
+
+        <div class="tabs-wrapper">
+            <div data-bind="dxTabs: { dataSource: tabs.items , itemClickAction: tabs.tabChangeAction, selectedIndex: tabs.selectedIndex }"></div>
+        </div>
+
+    </div>
+
+
+    <div class="details-popup" data-bind="dxPopup:{ visible: detailsPopupVisible }">
+        <div class="dx-clearfix" data-options="dxTemplate : { name: 'title' } ">
+            <div class="title-button" data-bind="dxButton: { icon: 'close', clickAction: hideDetails }"></div>
+            <h2 style="font-size:1em;" data-bind="html: songname"></h2>
+        </div>
+        <div data-options="dxTemplate : { name: 'content' } ">
+            <div class="popup-content"></div>
+        </div>
+    </div>
+
+    <div class="license-info-popup" data-bind="dxPopup:{ visible: licensePopupVisible }">
+        <div class="dx-clearfix" data-options="dxTemplate : { name: 'title' } ">
+            <div class="title-button" data-bind="dxButton: { icon: 'close', clickAction: hideLicense }"></div>
+            <div data-bind="html: licenseInfoType"></div>
+            <div>&raquo; <em data-bind="html: licenseName"></em></div>
+        </div>
+        <div data-options="dxTemplate : { name: 'content' } ">
+            <div data-bind="dxScrollView: {  }">
+                <div class="popup-content" data-bind="html: licenseInfo"></div>
+            </div>
+            <div style="position:absolute; bottom:4px; right:10px;"
+                 data-bind="dxButton: { text: 'Add To Cart', clickAction: addToCart, icon: 'cart', type: 'success' }"></div>
+        </div>
+    </div>
+
+    <div data-bind="dxActionSheet: { dataSource: licenseActionSheet, visible: licenseSheetVisible, title: licenseSheetTitle }"></div>
+    <div data-bind="dxLoadPanel: { message: loadPanelText, visible: loadPanelVisible }"></div>
+
+
+</div>

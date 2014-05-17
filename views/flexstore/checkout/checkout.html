@@ -1,0 +1,12 @@
+﻿<div data-options="dxView : { name: 'checkout', title: 'Secure Checkout' } ">
+
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+
+    <div class="dx-iframe-content" data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <iframe id="iframe-window" data-bind="attr: { src: checkoutURL }"
+                style="width:100%; height:100%; border:0px;"></iframe>
+    </div>
+
+    <div data-bind="dxLoadPanel: { message: loadPanelText, visible: loadPanelVisible }"></div>
+
+</div>

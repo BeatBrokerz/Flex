@@ -1,0 +1,37 @@
+﻿.producers-list .producer-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
+    text-align: left;
+    font-size: 1.3em;
+    height: 1.3em;
+    font-family: "Open Sans";
+}
+
+.producers-list .producer-position {
+    float: left;
+    margin: 0 10px 0 0;
+    font-size: 1.1em;
+}
+
+.producers-list .producer-beats {
+    float: right;
+    margin: 0 0 0 5px;
+    font-weight: bold;
+}
+
+.producers-list .producer-banner-small {
+    border: 1px solid #333;
+    float: right;
+    clear: right;
+    margin: 5px 0 0 5px;
+    width: 50%;
+    max-width: 170px;
+}
+
+.producers-list .producer-stat {
+    float: left;
+    clear: left;
+    opacity: 0.8;
+    margin-top: 3px;
+}

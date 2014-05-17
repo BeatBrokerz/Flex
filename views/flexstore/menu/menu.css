@@ -1,0 +1,13 @@
+﻿.dx-viewport .content-menu .content-arrow {
+    float: right;
+    margin-left: 5px;
+}
+
+.dx-viewport.dx-theme-desktop .content-menu .menu-item {
+    font-size: 17px;
+}
+
+.dx-viewport.dx-theme-desktop .content-menu .content-arrow {
+    margin-top: 5px;
+    font-size: 20px;
+}

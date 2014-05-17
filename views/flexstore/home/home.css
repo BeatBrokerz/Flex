@@ -1,0 +1,597 @@
+﻿@charset "utf-8";
+@import url(//fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800);
+@import url(//fonts.googleapis.com/css?family=Kaushan+Script);
+
+/*////////////////*/
+/*Stylesheet Reset*/
+/*////////////////*/
+.dx-viewport .home-view {
+    font-family: "Open Sans";
+}
+
+.dx-viewport .home-view h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.dx-viewport .home-view h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.dx-viewport .home-view h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.dx-viewport .home-view h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.dx-viewport .home-view h5 {
+    color: #fff;
+    font-size: 12px;
+    margin-bottom: 5px;
+    font-weight: 800;
+}
+
+.dx-viewport .home-view a {
+    color: #e34e47;
+    text-decoration: none;
+}
+
+/*////////////////////////*/
+/*Other Classes and Resets*/
+/*////////////////////////*/
+
+.dx-viewport .home-view .content {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.dx-viewport .home-view .container {
+    margin-bottom: 20px;
+}
+
+.dx-viewport .home-view .no-bottom {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.dx-viewport .home-view .half-bottom {
+    margin-bottom: 10px;
+}
+
+.dx-viewport .home-view .full-bottom {
+    margin-bottom: 20px;
+}
+
+.dx-viewport .home-view .clear {
+    clear: both;
+    height: 0px;
+    line-height: 0px;
+}
+
+.dx-viewport .home-view .float-left {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.dx-viewport .home-view .float-right {
+    float: right;
+    margin-left: 5px;
+}
+
+.dx-viewport .home-view .right-text {
+    text-align: right;
+}
+
+.dx-viewport .home-view .left-text {
+    text-align: left;
+}
+
+.dx-viewport .home-view .center-text {
+    text-align: center;
+}
+
+.dx-viewport .home-view .uppercase {
+    text-transform: uppercase;
+}
+
+.dx-viewport .home-view .capitalize {
+    text-transform: capitalize;
+}
+
+.dx-viewport .home-view .responsive-image {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.dx-viewport .home-view .responsive-video {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.dx-viewport .home-view .decoration {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: block;
+    clear: both;
+}
+
+/*///////////////////*/
+/*Typograhpy Features*/
+/*///////////////////*/
+
+.dx-viewport .home-view .center-icon {
+    width: 70px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.dx-viewport .home-view .last-column {
+    margin-right: 0% !important;
+}
+
+.dx-viewport .home-view .one-third {
+    width: 28%;
+    float: left;
+    margin-right: 8%;
+}
+
+.dx-viewport .home-view .one-half {
+    width: 45%;
+    float: left;
+    margin-right: 10%;
+}
+
+@media (max-width: 760px) {
+
+    .dx-viewport .home-view .hide-if-mobile {
+        display: none;
+    }
+
+}
+
+@media (min-width: 760px) {
+    .dx-viewport .home-view .one-third-responsive {
+        width: 28%;
+        float: left;
+        margin-right: 8%;
+    }
+
+    .dx-viewport .home-view .one-half-responsive {
+        width: 48%;
+        float: left;
+        margin-right: 4%;
+    }
+
+    .dx-viewport .home-view .hide-if-responsive {
+        display: none;
+    }
+
+}
+
+/* Main Style Document */
+
+.dx-viewport .home-view {
+    background-color: #FFFFFF;
+}
+
+/*/////////////////*/
+/*Homepage Settings*/
+/*/////////////////*/
+
+.dx-viewport .home-view .bgwidth {
+    width: 100%;
+}
+
+.dx-viewport .home-view .bgheight {
+    height: 100%;
+}
+
+.dx-viewport .home-view .homepage-wrapper {
+    position: relative;
+    z-index: 999;
+}
+
+.dx-viewport .home-view #bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: inherit;
+}
+
+.dx-viewport .home-view .bg-pattern {
+    z-index: 100;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/repeat.png);
+    background-repeat: repeat;
+}
+
+.dx-viewport .home-view .bg-overlay {
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 150%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dx-viewport .home-view .homepage-title {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 32px;
+    line-height: 35px;
+    font-family: "Kaushan Script";
+    font-weight: normal;
+}
+
+.dx-viewport .home-view .homepage-title-sub {
+    font-size: 10px;
+    font-style: normal;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFFFFF;
+    display: block;
+    margin-top: 5px;
+}
+
+.dx-viewport .home-view .homepage-navigation {
+    margin-top: 30px;
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.dx-viewport .home-view .homepage-navigation a {
+    text-align: center;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: top;
+    color: #a4a5a4;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: 'Dosis', sans-serif;
+    font-weight: 400;
+    padding-top: 80px;
+    background-position: 15px 0px;
+    background-repeat: no-repeat;
+    background-size: 70px 70px;
+    width: 100px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 30px;
+    text-decoration: none;
+}
+
+.dx-viewport .home-view .home-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/home.png);
+}
+
+.dx-viewport .home-view .type-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/type.png);
+}
+
+.dx-viewport .home-view .jquery-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/jquery.png);
+}
+
+.dx-viewport .home-view .gallery-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/gallery.png);
+}
+
+.dx-viewport .home-view .folio-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/folio.png);
+}
+
+.dx-viewport .home-view .mail-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/mail.png);
+}
+
+.dx-viewport .home-view .producers-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/icon-producers.png);
+}
+
+.dx-viewport .home-view .producer-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/icon-producer.png);
+}
+
+.dx-viewport .home-view .playlists-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/icon-playlists.png);
+}
+
+.dx-viewport .home-view .content-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/icon-content.png);
+}
+
+.dx-viewport .home-view .nowplaying-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/icon-nowplaying.png);
+}
+
+.dx-viewport .home-view .discounts-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/icon-discounts.png);
+}
+
+.dx-viewport .home-view .cart-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/icon-shopping-cart.png);
+}
+
+.dx-viewport .home-view .footer {
+    width: 190px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    text-align: center;
+    padding: 0;
+    border: 0;
+}
+
+.dx-viewport .home-view .footer a {
+    background-size: 35px 35px;
+    width: 35px;
+    height: 35px;
+    margin: 3px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+.dx-viewport .home-view .footer p {
+    text-align: center;
+    font-size: 10px;
+    margin-left: 0px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.dx-viewport .home-view .facebook-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/facebook.png);
+}
+
+.dx-viewport .home-view .twitter-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/twitter.png);
+}
+
+.dx-viewport .home-view .google-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/google.png);
+}
+
+.dx-viewport .home-view .youtube-icon {
+    background-image: url(//www.beatbrokerz.com/flex/layouts/slasher/images/misc/youtube.png);
+}
+
+/* iPads (landscape) */
+@media only screen
+and (min-width: 768px)
+and (orientation: landscape) {
+    .dx-viewport .home-view .content-section .responsive-image {
+        margin-top: -210px;
+    }
+
+    .dx-viewport .home-view .homepage-logo {
+        width: 155px;
+        margin-top: 40px;
+    }
+
+    .dx-viewport .home-view .homepage-logo-sub {
+        font-size: 12px;
+        margin-bottom: 120px;
+    }
+
+    .dx-viewport .home-view .homepage-navigation {
+        margin-top: 30px;
+        margin-bottom: 80px;
+        width: 850px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dx-viewport .home-view .homepage-navigation a {
+        font-size: 16px;
+        padding-top: 120px;
+        background-size: 100px 100px;
+        width: 130px;
+        margin-bottom: 50px;
+    }
+
+    .dx-viewport .home-view .footer {
+        margin-bottom: 0px;
+    }
+
+    .dx-viewport .home-view .footer p {
+        margin-bottom: 0px;
+        font-size: 12px;
+        color: #FFFFFF;
+    }
+}
+
+/* iPads (portrait)*/
+
+@media only screen
+and (min-width: 768px)
+and (orientation: portrait) {
+    .dx-viewport .home-view .content-section .responsive-image {
+        margin-top: -130px;
+    }
+
+    .dx-viewport .home-view .homepage-logo {
+        width: 155px;
+        margin-top: 80px;
+    }
+
+    .dx-viewport .home-view .homepage-logo-sub {
+        font-size: 12px;
+        margin-bottom: 120px;
+    }
+
+    .dx-viewport .home-view .homepage-navigation {
+        margin-top: 30px;
+        margin-bottom: 100px;
+        width: 430px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dx-viewport .home-view .homepage-navigation a {
+        font-size: 16px;
+        padding-top: 120px;
+        background-size: 100px 100px;
+        width: 130px;
+        margin-bottom: 50px;
+    }
+
+    .dx-viewport .home-view .footer p {
+        margin-bottom: 0px;
+        font-size: 12px;
+        color: #FFFFFF;
+    }
+}
+
+/*Mobile Devices in Landscape*/
+
+@media only screen
+and (orientation: landscape ) {
+    .dx-viewport .home-view .homepage-logo {
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .dx-viewport .home-view .homepage-navigation {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dx-viewport .home-view .homepage-navigation a {
+        width: 80px;
+        background-size: 60px 60px;
+        background-position: 10px 0px;
+    }
+
+    .dx-viewport .home-view .footer {
+        margin-top: 0px;
+    }
+}
+
+@media screen and (height: 548px) {
+    .dx-viewport .home-view .homepage-navigation {
+        margin-top: 55px;
+    }
+
+    .dx-viewport .home-view .footer {
+        margin-top: 25px;
+    }
+
+    .dx-viewport .home-view .footer p {
+        margin-bottom: 0px;
+    }
+}
+
+@media screen and (height: 572px) {
+    .dx-viewport .home-view .homepage-navigation {
+        margin-top: 65px;
+    }
+
+    .dx-viewport .home-view .footer {
+        margin-top: 35px;
+    }
+}
+
+@media screen and (height: 460px) {
+
+    .dx-viewport .home-view .homepage-logo {
+        margin-top: 20px;
+    }
+
+    .dx-viewport .home-view .homepage-logo-sub {
+        margin-bottom: 30px;
+    }
+
+    .dx-viewport .home-view .homepage-navigation {
+        margin-top: 20px;
+    }
+
+    .dx-viewport .home-view .homepage-navigation a {
+        margin-bottom: 10px;
+    }
+
+    .dx-viewport .home-view .footer {
+        margin-top: 30px;
+    }
+
+    .dx-viewport .home-view .footer p {
+        margin-bottom: 0px;
+    }
+
+    .dx-viewport .home-view .footer a {
+        margin-bottom: -5px;
+    }
+
+}
+
+@media only screen
+and (width: 798px) {
+    .dx-viewport .home-view .content-section .responsive-image {
+        margin-top: -135px;
+    }
+}
+
+@media only screen
+and (min-width: 798px)
+and (min-height: 801px) {
+
+    .dx-viewport .home-view .homepage-logo {
+        width: 155px;
+        margin-top: 40px;
+    }
+
+    .dx-viewport .home-view .homepage-logo-sub {
+
+        font-size: 12px;
+        margin-bottom: 100px;
+    }
+
+    .dx-viewport .home-view .homepage-navigation {
+        margin-top: 30px;
+        margin-bottom: 80px;
+        width: 410px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dx-viewport .home-view .homepage-navigation a {
+        font-size: 16px;
+        padding-top: 120px;
+        background-size: 100px 100px;
+        width: 130px;
+        margin-bottom: 30px;
+    }
+}
+
+
+

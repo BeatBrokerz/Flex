@@ -1,0 +1,22 @@
+﻿<div data-options="dxView : { name: 'producers', title: 'Top Producers' } ">
+
+    <div data-bind="dxCommand: { action: '#nowplaying', id: 'nowplaying', location: 'settings', title: 'Now Playing', icon: 'music', visible: window[myAppNamespace].nowplaying.showbutton } "></div>
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div class="producers-list" data-bind="dxList: { dataSource: producersList, itemClickAction: viewCatalog }">
+            <div class="list-item limit-width" data-options="dxTemplate: { name: 'item' }">
+                <div class="producer-name"><span data-bind="text: name"></span></div>
+                <img class="producer-banner-small" data-bind="attr: { src: banner_thumb }"/>
+
+                <div class="producer-stat" style="margin-top:6px"><i class="fwicon-music"></i> Beats: <strong
+                        data-bind="text: total_beats"></strong></div>
+                <div class="producer-stat"><i class="fwicon-tags"></i> Specials: <strong
+                        data-bind="text: total_discounts"></strong></div>
+                <div class="producer-stat"><i class="fwicon-note"></i> Trackouts: <strong
+                        data-bind="text: total_trackouts"></strong></div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,16 @@
+﻿<div data-options="dxView : { name: 'menu', title: 'Content Menu' } ">
+
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+
+    <div data-options="dxContent : { targetPlaceholder: 'content' } ">
+
+        <div class="browse-menu content-menu"
+             data-bind="dxList: { dataSource: menuitems, itemClickAction: browseTo, noDataText: 'Browse our playlists to listen to some really great music!' }">
+            <div class="limit-width menu-item" data-options="dxTemplate: { name: 'item' }">
+                <div class="content-arrow"><i class="fwicon-right-dir"></i></div>
+                <div><i data-bind="attr: { class: icon }"></i> <span data-bind="html: title"></span></div>
+            </div>
+        </div>
+    </div>
+
+</div>

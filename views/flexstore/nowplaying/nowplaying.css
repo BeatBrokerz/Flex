@@ -1,0 +1,270 @@
+﻿
+.dx-viewport .nowplaying-info {
+    text-align: center;
+    padding: 10%;
+}
+
+.dx-viewport .mini .nowplaying-info {
+    padding: 10px;
+}
+
+.dx-viewport #nowplaying-info-data {
+    cursor: pointer;
+    pointer: hand;
+}
+
+.dx-viewport .nowplaying-image {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.dx-viewport .nowplaying-image-wrap {
+    vertical-align: middle;
+}
+
+.dx-viewport .nowplaying-producer {
+    opacity: 0.9;
+    font-size: 0.9em;
+    height: 1.3em;
+    line-height: 1.3em;
+    overflow: hidden;
+}
+
+.dx-viewport .nowplaying-title {
+    font-weight: bold;
+    height: 1.3em;
+    line-height: 1.3em;
+    overflow: hidden;
+}
+
+.dx-viewport .nowplaying-genres {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.dx-viewport .nowplaying-image img {
+    transition: width 300ms linear, height 300ms linear;
+}
+
+.dx-viewport .nowplaying-info .dx-button {
+    min-width: 45px;
+}
+
+.dx-viewport .nowplaying-image img {
+    border: 1px solid #333;
+    box-shadow: 2px 2px 2px gray;
+    -moz-box-shadow: 2px 2px 2px gray;
+    -webkit-box-shadow: 2px 2px 2px gray;
+    max-height: 250px;
+    max-width: 250px;
+}
+
+.dx-viewport .nowplaying-scrubber.dx-slider {
+    margin: 15px auto 10px;
+}
+
+.dx-viewport .buynow-licenses .license-price {
+    float: right;
+    font-size: 1.2em;
+}
+
+.dx-viewport .buynow-licenses .license-name {
+    float: left;
+}
+
+/* Portrait Orientation */
+
+.dx-viewport.portrait .tabs-wrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 50;
+    text-align: center;
+}
+
+.dx-viewport.portrait .nowplaying .dx-scrollview-content {
+    padding-bottom: 200px;
+}
+
+.dx-viewport.portrait .full .nowplaying-preview {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.dx-viewport.portrait .full .nowplaying-image-wrap {
+    display: table-row;
+    height: 40%;
+}
+
+.dx-viewport.portrait .full .nowplaying-info-wrap {
+    display: table-row;
+}
+
+.dx-viewport.portrait .full .nowplaying-image,
+.dx-viewport.portrait .full .nowplaying-info {
+    display: table-cell;
+    width: 100%;
+    padding: 5%;
+}
+
+.dx-viewport.portrait .full .nowplaying-info {
+    padding-top: 0;
+}
+
+.dx-viewport.portrait .full .nowplaying-image img {
+
+    height: auto;
+}
+
+.dx-viewport.portrait .full .nowplaying-scrubber.dx-slider {
+    width: 80%;
+}
+
+.dx-viewport.portrait .mini .nowplaying-content-wrap {
+    display: table;
+    width: 100%;
+}
+
+.dx-viewport.portrait .mini .nowplaying-preview-wrap {
+    display: table-row;
+}
+
+.dx-viewport.portrait .mini .nowplaying-preview {
+    display: table-cell;
+    padding-left: 120px;
+}
+
+.dx-viewport.portrait .mini .tab-content {
+    display: table-row;
+    height: 90%;
+}
+
+.dx-viewport.portrait .mini .tab-content-wrap {
+    display: table-cell;
+}
+
+.dx-viewport.portrait .mini .nowplaying-image-wrap {
+    height: 100px;
+    margin: 10px 0 0 -110px;
+    float: left;
+}
+
+.dx-viewport.portrait .mini .nowplaying-image {
+    height: 100%;
+}
+
+.dx-viewport.portrait .mini .nowplaying-image img {
+    width: 90px;
+    height: 90px;
+    max-width: 90px !important;
+    max-height: 90px !important;
+}
+
+.dx-viewport.portrait .mini .nowplaying-info-wrap {
+    font-size: 0.8em;
+    line-height: 1.2em;
+}
+
+.dx-viewport.portrait .dx-viewport.small .nowplaying-scrubber.dx-slider {
+    margin: 5px auto 1px;
+}
+
+.dx-viewport.portrait .dx-viewport .nowplaying-info {
+    font-size: 0.8em;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.dx-viewport.portrait .mini .nowplaying-scrubber.dx-slider {
+    margin: 3px;
+}
+
+.dx-viewport.portrait .mini .music-button.np-last,
+.dx-viewport.portrait .mini .music-button.np-next {
+    display: none;
+}
+
+.dx-viewport.portrait .mini .music-button-wrap {
+    position: absolute;
+    left: 25px;
+    top: 25px;
+    opacity: 0.6;
+}
+
+/* Landscape Orientation */
+
+.dx-viewport.landscape .view-content.nowplaying .tabs-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    text-align: center;
+}
+
+.dx-viewport.landscape .view-content.nowplaying .beats-list,
+.dx-viewport.landscape .view-content.nowplaying .buynow-licenses {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0;
+    width: 50%;
+}
+
+.dx-viewport.landscape .view-content.nowplaying.mini .nowplaying-info {
+    display: none;
+}
+
+.dx-viewport.landscape .nowplaying-content-wrap {
+    height: 100%;
+}
+
+.dx-viewport.landscape .nowplaying-preview-wrap {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.dx-viewport.landscape .nowplaying-preview {
+    display: table-row;
+    height: 100%;
+}
+
+.dx-viewport.landscape .nowplaying-image-wrap,
+.dx-viewport.landscape .nowplaying-info-wrap {
+    display: table-cell;
+    width: 50%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.dx-viewport.landscape .nowplaying-info-wrap {
+
+}
+
+.dx-viewport.landscape .nowplaying-image {
+    display: inline;
+}
+
+.dx-viewport.landscape .nowplaying-image img {
+    max-width: 80% !important;
+}
+
+.dx-viewport .music-button.dx-button,
+.dx-viewport .music-button.dx-button .dx-button-content {
+    background-color: inherit;
+    background-image: none;
+    border: 0;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.dx-viewport .music-button.dx-button img.dx-icon {
+    width: auto !important;
+    height: auto !important;
+}
+
+.dx-viewport .music-button-wrap {
+    opacity: 0.99;
+}

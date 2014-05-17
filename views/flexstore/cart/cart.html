@@ -1,0 +1,52 @@
+﻿<div data-options="dxView : { name: 'cart', title: 'Shopping Cart' } ">
+
+    <div data-bind="dxCommand: { action: '#checkout', id: 'checkout', location: 'settings', title: 'Checkout', icon: 'money', visible: checkoutVisible } "></div>
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+
+    <div class="shopping-cart" data-options="dxContent : { targetPlaceholder: 'content' } ">
+        <div class="cart-items"
+             data-bind="dxList: { dataSource: cartItems, itemClickAction: itemMenu, itemHoldAction: itemMenu, noDataText: 'No products here. Time to get shopping!' }">
+            <div class="cart-item limit-width" data-options="dxTemplate: { name: 'item' }">
+                <div class="cart-item-wrapper">
+                    <div class="item-qty" data-bind="text: qty + ' x'"></div>
+                    <div class="item-price">$<span data-bind="text: price"></span></div>
+                    <div class="item-title" data-bind="text: title"></div>
+                    <div class="item-model">&raquo; <span data-bind="text: model"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dx-action-sheet-popup dx-widget dx-popup cart-totals-wrap">
+            <div class="dx-overlay-content" style="padding:0;">
+                <div class="dx-popup-content">
+                    <div class="checkout-button"
+                         data-bind="dxButton: { text: 'Checkout', type: 'success', icon: 'money', clickAction: '#checkout', visible: checkoutVisible }"></div>
+                    <div class="cart-subtotal"><span class="line-item-label">Subtotal</span> <span
+                            class="line-item-total">$<span data-bind="text: cartSubtotal"></span></span></div>
+                    <div class="cart-discounts"><span class="line-item-label">Discounts</span> <span
+                            class="line-item-total">$<span data-bind="text: cartDiscounts"></span></span></div>
+                    <div class="cart-total"><span class="line-item-label">Grand Total</span> <span
+                            class="line-item-total">$<span data-bind="text: cartTotal"></span></span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="license-info-popup" data-bind="dxPopup:{ visible: popupVisible }">
+        <div class="dx-clearfix" data-options="dxTemplate : { name: 'title' } ">
+            <div class="title-button" data-bind="dxButton: { icon: 'close', clickAction: hideLicense }"></div>
+            <div data-bind="html: licenseInfoType"></div>
+            <div>&raquo; <em data-bind="html: licenseName"></em></div>
+        </div>
+        <div data-options="dxTemplate : { name: 'content' } ">
+            <div data-options="dxScrollView: {  }">
+                <div class="popup-content" data-bind="html: licenseInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-bind="dxActionSheet: { dataSource: actionSheetData, visible: actionSheetVisible, title: actionSheetTitle }"></div>
+    <div data-bind="dxLoadPanel: { message: loadPanelText, visible: loadPanelVisible }"></div>
+
+</div>

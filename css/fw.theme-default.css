@@ -1,0 +1,320 @@
+
+.fw-theme-default * {
+    font-family: "Open Sans";
+    font-size: 12px;
+}
+
+/* Buttons */
+
+.fw-theme-default .fw-button {
+    border: 1px solid transparent;
+    padding: 5px 12px 5px 6px;
+    font-size: 11px;
+}
+
+.fw-theme-default .fw-button i {
+    font-size: 0.9em;
+}
+
+.fw-theme-default .fw-button .icon-info {
+    text-indent: 2px;
+}
+
+.fw-theme-default .fw-button.active,
+.fw-theme-default .fw-button.active:hover,
+.fw-theme-default .fw-button.active:focus {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #1A1A1A;
+    background-color: #3A3B3C;
+    padding-top: 5px;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 1px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 1px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.fw-theme-default .fw-button:hover {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #1A1A1A;
+    background-color: #3A3B3C;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.fw-theme-default .fw-button:focus {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #1A1A1A;
+    background-color: #3A3B3C;
+    padding-top: 5px;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Playbar Widget */
+
+.fw-theme-default .flex-widget-playbar {
+    background-color: #fefefe;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#babec4));
+    background-image: -webkit-linear-gradient(top, #fefefe, #babec4);
+    background-image: -moz-linear-gradient(top, #fefefe, #babec4);
+    background-image: -o-linear-gradient(top, #fefefe, #babec4);
+    background-image: -ms-linear-gradient(top, #fefefe, #babec4);
+    background-image: linear-gradient(top, #fefefe, #babec4);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#fefefe', EndColorStr='#babec4');
+    -webkit-box-shadow: inset 0 1px 0 0 #fff;
+    box-shadow: inset 0 1px 0 0 #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-interface-controls-wrap {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+    border: 1px solid #8f8f8f;
+    border-top: 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.fw-theme-default .flex-widget-player .flex-widget-playbar,
+.fw-theme-default .flex-widget-player .flex-widget-playbar .jp-interface-controls-wrap {
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+}
+
+.fw-theme-default .flex-widget-playbar .divider {
+    width: 1px;
+    height: 25px;
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) no-repeat -50px -344px;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-controls a:hover,
+.fw-theme-default .flex-widget-playbar .jp-controls a:active {
+    background-color: transparent;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-button {
+    background: -webkit-gradient(linear, left top, left bottom, from(#f9fafa), to(#c6c9cd));
+    background: -webkit-linear-gradient(top, #f9fafa, #c6c9cd);
+    background: -moz-linear-gradient(top, #f9fafa, #c6c9cd);
+    background: -o-linear-gradient(top, #f9fafa, #c6c9cd);
+    background: -ms-linear-gradient(top, #f9fafa, #c6c9cd);
+    background: linear-gradient(top, #f9fafa, #c6c9cd);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#f9fafa', EndColorStr='#c6c9cd');
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 1px 0 0 #fff;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 1px 0 0 #fff;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    border-top: solid 1px #d3d4d4;
+    border-bottom: solid 1px #a5a8ad;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-button i {
+    color: #505255;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-button:hover i {
+    color: #2d67c4;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-button:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fcfcfc), to(#c8cace));
+    background: -webkit-linear-gradient(top, #fcfcfc, #c8cace);
+    background: -moz-linear-gradient(top, #fcfcfc, #c8cace);
+    background: -o-linear-gradient(top, #fcfcfc, #c8cace);
+    background: -ms-linear-gradient(top, #fcfcfc, #c8cace);
+    background: linear-gradient(top, #fcfcfc, #c8cace);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#fcfcfc', EndColorStr='#c8cace');
+    border: solid 1px rgba(0, 0, 0, 0.20);
+    border-top: solid 1px #c8c9c9;
+    border-bottom: solid 1px #9d9fa4;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-button:active {
+    background: -webkit-gradient(linear, left top, left bottom, from(#f9fafa), to(#e1e3e5));
+    background: -webkit-linear-gradient(top, #f9fafa, #e1e3e5);
+    background: -moz-linear-gradient(top, #f9fafa, #e1e3e5);
+    background: -o-linear-gradient(top, #f9fafa, #e1e3e5);
+    background: -ms-linear-gradient(top, #f9fafa, #e1e3e5);
+    background: linear-gradient(top, #f9fafa, #e1e3e5);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#f9fafa', EndColorStr='#e1e3e5');
+    -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    border: solid 1px rgba(0, 0, 0, 0.20);
+    border-top: solid 1px #c8c9c9;
+    border-bottom: solid 1px #a5a8ad;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-play:before {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) 17px 6px no-repeat;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-play:hover:before,
+.fw-theme-default .flex-widget-playbar .jp-play:active:before {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) -33px 6px no-repeat;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-pause:before {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) 17px -44px no-repeat;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-pause:hover:before,
+.fw-theme-default .flex-widget-playbar .jp-pause:active:before {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) -33px -44px no-repeat;
+}
+
+/* Full Screen */
+
+.fw-theme-default .flex-widget-playbar .jp-fullscreen:before {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) 7px -244px no-repeat;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-fullscreen:hover:before,
+.fw-theme-default .flex-widget-playbar .jp-fullscreen:active:before {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) -43px -244px no-repeat;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-fullscreen i {
+    display: none;
+}
+
+/* Progress & Volume Bar (Possible, Seek, Play, Volume, Volume Value Bars) */
+
+.fw-theme-default .flex-widget-playbar .jp-progress-container,
+.fw-theme-default .flex-widget-playbar .jp-volume-bar-container {
+    -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #e9eaea;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#e9eaea), to(#babdc2));
+    background-image: -webkit-linear-gradient(top, #e9eaea, #babdc2);
+    background-image: -moz-linear-gradient(top, #e9eaea, #babdc2);
+    background-image: -o-linear-gradient(top, #e9eaea, #babdc2);
+    background-image: -ms-linear-gradient(top, #e9eaea, #babdc2);
+    background-image: linear-gradient(top, #e9eaea, #babdc2);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#e9eaea', EndColorStr='#babdc2');
+}
+
+.fw-theme-default .flex-widget-playbar .jp-progress,
+.fw-theme-default .flex-widget-playbar .jp-seek-bar,
+.fw-theme-default .flex-widget-playbar .jp-play-bar,
+.fw-theme-default .flex-widget-playbar .jp-volume-bar,
+.fw-theme-default .flex-widget-playbar .jp-volume-bar-value {
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-progress {
+    background-color: #4ea5f1;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#4ea5f1), to(#387fec));
+    background-image: -webkit-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: -moz-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: -o-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: -ms-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: linear-gradient(top, #4ea5f1, #387fec);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#4ea5f1', EndColorStr='#387fec');
+    -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.fw-theme-default .flex-widget-playbar .jp-seek-bar,
+.fw-theme-default .flex-widget-playbar .jp-volume-bar {
+    border: 0;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-seek-bar,
+.fw-theme-default .flex-widget-playbar .jp-volume-bar {
+    background-color: #a5abb2;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#a5abb2), to(#bec3c8));
+    background-image: -webkit-linear-gradient(top, #a5abb2, #bec3c8);
+    background-image: -moz-linear-gradient(top, #a5abb2, #bec3c8);
+    background-image: -o-linear-gradient(top, #a5abb2, #bec3c8);
+    background-image: -ms-linear-gradient(top, #a5abb2, #bec3c8);
+    background-image: linear-gradient(top, #a5abb2, #bec3c8);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#a5abb2', EndColorStr='#bec3c8');
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.fw-theme-default .flex-widget-playbar .jp-volume-bar {
+    -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.fw-theme-default .flex-widget-playbar .jp-play-bar,
+.fw-theme-default .flex-widget-playbar .jp-volume-bar-value {
+    background-color: #4ea5f1;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#4ea5f1), to(#387fec));
+    background-image: -webkit-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: -moz-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: -o-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: -ms-linear-gradient(top, #4ea5f1, #387fec);
+    background-image: linear-gradient(top, #4ea5f1, #387fec);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#4ea5f1', EndColorStr='#387fec');
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.fw-theme-default .flex-widget-playbar .jp-mute,
+.fw-theme-default .flex-widget-playbar .jp-unmute {
+    text-indent: -100%;
+    overflow: hidden;
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) no-repeat 0 -200px;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-mute:hover,
+.fw-theme-default .flex-widget-playbar .jp-mute:active,
+.fw-theme-default .flex-widget-playbar .jp-unmute:hover,
+.fw-theme-default .flex-widget-playbar .jp-unmute:active {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) no-repeat -50px -200px;
+}
+
+.fw-theme-default .flex-widget-playbar .bullet {
+    background: url(//www.beatbrokerz.com/flex/apps/flexstore/img/sprites.png) no-repeat 0px -350px;
+}
+
+.fw-theme-default .flex-widget-playbar .bullet i {
+    display: none;
+}
+
+.fw-theme-default .flex-widget-playbar .jp-current-time {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.80)), to(rgba(0, 0, 0, 0.90)));
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90));
+    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90));
+    background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90));
+    background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90));
+    background-image: linear-gradient(top, rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.90));
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, StartColorStr='#000000', EndColorStr='#000000');
+    color: #fff;
+    text-shadow: 0 1px 0 #000;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+/* Playlist Widget */
+
+.fw-theme-default .flex-widget-player .flex-widget-playlist ul li,
+.fw-theme-default .flex-widget-player .flex-widget-playlist .jp-playlist-loading {
+    font-size: 12px;
+}
+
+.fw-theme-default .flex-widget-player .flex-widget-playlist .jp-playlist-current,
+.fw-theme-default .flex-widget-player .flex-widget-playlist .jp-playlist-current a,
+.fw-theme-default .flex-widget-player .flex-widget-playlist .jp-playlist-current a:hover {
+    color: yellow;
+}
+
+/* Licensing Widget */

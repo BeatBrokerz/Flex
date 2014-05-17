@@ -1,0 +1,62 @@
+﻿<div data-options="dxView : { name: 'catalog', title: 'Producer Catalog' } ">
+
+    <div data-bind="dxCommand: { action: '#nowplaying', id: 'nowplaying', location: 'settings', title: 'Now Playing', icon: 'music', visible: window[myAppNamespace].nowplaying.showbutton } "></div>
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+
+    <div class="catalog" data-options="dxContent : { targetPlaceholder: 'content' } ">
+
+        <div class="profile-content" data-bind="dxScrollView: {}">
+
+            <div class="producer-banner limit-width">
+                <img data-bind="attr: { src: producer.banner }"/>
+            </div>
+
+            <div class="producer-description limit-width">
+                <div data-bind="html: producer.description"></div>
+            </div>
+
+        </div>
+
+        <div class="beats-list"
+             data-bind="dxList: { dataSource: catalogBeats, showNextButton: true, itemClickAction: playBeat, noDataText: 'No Music Available' }">
+            <div class="beats-item limit-width" data-options="dxTemplate: { name: 'item' }">
+                <div class="beat-item-container">
+                    <div class="beat-image"><img data-bind="attr: { 'src' : thumbnail }"/></div>
+                    <div class="beat-title" data-bind="html: title"></div>
+                    <div class="beat-info-container">
+                        <div class="beat-producer" data-bind="html: artist"></div>
+                        <div class="beat-genres" data-bind="html: genres"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="discounts-list"
+             data-bind="dxList: { dataSource: discountsList, itemClickAction: viewDiscount, noDataText: 'No Special Offers Today' }">
+            <div class="limit-width" data-options="dxTemplate: { name: 'item' }">
+                <div><i class="fwicon-tag"></i> <span data-bind="text: name"></span></div>
+            </div>
+        </div>
+
+        <div class="tabs-wrapper">
+            <div data-bind="dxTabs: { dataSource: tabs.items , itemClickAction: tabs.tabChangeAction, selectedIndex: tabs.selectedIndex }"></div>
+        </div>
+
+    </div>
+
+    <div class="details-popup badge-details"
+         data-bind="dxPopup:{ visible: badgeDetailsVisible, height: '300px', width: '300px' }">
+        <div class="dx-clearfix" data-options="dxTemplate : { name: 'title' } ">
+            <div class="title-button" data-bind="dxButton: { icon: 'close', clickAction: hideBadgeDetails }"></div>
+            <div style="margin-top:5px; font-size:1.3em;" data-bind="text: badgeName"></div>
+        </div>
+        <div data-options="dxTemplate : { name: 'content' } ">
+            <div class="popup-content">
+                <img data-bind="attr: { src: badgeImage }"/>
+
+                <div data-bind="html: badgeDescription"></div>
+            </div>
+        </div>
+    </div>
+
+</div>

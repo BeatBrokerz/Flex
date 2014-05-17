@@ -1,0 +1,664 @@
+#fwdock-container {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 60px;
+    width: 100%;
+    z-index: 999;
+    color: rgb(51, 51, 51);
+    box-shadow: rgba(0, 0, 0, 0.498039) 0px 0px 9px 0px, rgba(18, 18, 18, 0.901961) 0px -1px 0px 0px, rgba(255, 255, 255, 0.14902) 0px 1px 0px 0px inset;
+    -moz-box-shadow: rgba(0, 0, 0, 0.498039) 0px 0px 9px 0px, rgba(18, 18, 18, 0.901961) 0px -1px 0px 0px, rgba(255, 255, 255, 0.14902) 0px 1px 0px 0px inset;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.498039) 0px 0px 9px 0px, rgba(18, 18, 18, 0.901961) 0px -1px 0px 0px, rgba(255, 255, 255, 0.14902) 0px 1px 0px 0px inset;
+    text-decoration: none solid rgb(51, 51, 51);
+    background: #212121;
+    background: rgba(34, 34, 34, 0.95) none repeat scroll 0% 0% / auto padding-box border-box;
+    border: 0px none rgb(51, 51, 51);
+    outline: rgb(51, 51, 51) none 0px;
+}
+
+#fwdock-container .fwdock-music-buttons {
+    position: absolute;
+    left: 50%;
+    top: 11px;
+    height: 30px;
+    margin: 5px 0 5px -435px;
+    width: 115px;
+    text-align: center;
+}
+
+#fwdock-container .fwdock-volume-controls {
+    position: absolute;
+    left: 50%;
+    top: 14px;
+    height: 30px;
+    margin: 5px 0 5px -320px;
+    width: 100px;
+    text-align: center;
+}
+
+#fwdock-container .fwdock-addtocart {
+    position: absolute;
+    left: 85px;
+    top: 8px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+#fwdock-container .fwdock-addtocart:hover {
+    opacity: 1;
+}
+
+#fwdock-container .fwicon-dollar,
+#fwdock-container .fwicon-resize-full {
+    display: block !important;
+}
+
+#fwdock-container .fwdock-nowplaying-info {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 410px;
+    height: 50px;
+    margin: 5px 0 5px -205px;
+    text-align: left;
+    font: normal normal normal 12px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 3px 5px 0px inset, rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px, rgb(0, 0, 0) 0px 0px 1px 0px inset;
+    -moz-box-shadow: rgba(0, 0, 0, 0.247059) 0px 3px 5px 0px inset, rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px, rgb(0, 0, 0) 0px 0px 1px 0px inset;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.247059) 0px 3px 5px 0px inset, rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px, rgb(0, 0, 0) 0px 0px 1px 0px inset;
+    color: rgb(255, 255, 255);
+    text-decoration: none solid rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.2) none repeat scroll 0% 0% / auto padding-box border-box;
+    border: 0px none rgb(255, 255, 255);
+    border-radius: 6px 6px 6px 6px;
+    outline: rgb(255, 255, 255) none 0px;
+}
+
+#fwdock-container .fwdock-command-options {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 50px;
+    margin: 5px 0 5px 220px;
+    width: 145px;
+}
+
+#fwdock-container .fwdock-button.slide-toggle {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: top;
+    margin-top: 10px;
+}
+
+#fwdock-container .fwdock-command-cart {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    margin-left: 10px;
+    text-align: right;
+    vertical-align: top;
+    margin-top: 8px;
+    opacity: 0.8;
+    cursor: pointer;
+    position: relative;
+    width: 90px;
+    color: white;
+    line-height: 1.4em;
+}
+
+#fwdock-container .fwdock-command-cart:hover {
+    opacity: 1;
+}
+
+#fwdock-container .fwdock-command-cart .items-count {
+
+}
+
+#fwdock-container .fwdock-command-cart .items-total {
+    font-size: 14px;
+    line-height: 14px;
+}
+
+#fwdock-container .items-checkout {
+    height: 30px;
+    margin-top: 12px;
+    position: absolute;
+    right: -120px;
+    top: 0;
+}
+
+.fwdock-nowplaying-info .fwdock-nowplaying-image {
+    margin: 1px;
+    padding: 0;
+    height: 48px;
+    width: 48px;
+    border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-right: 1px solid #111;
+}
+
+#fwdock-container .fwdock-progressbar {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: top;
+    position: absolute;
+    left: 115px;
+    bottom: 7px;
+}
+
+#fwdock-container .fw-progress-container,
+#fwdock-container .fw-volume-bar-container {
+    color: rgb(255, 255, 255);
+    height: 9px;
+    position: relative;
+    text-align: center;
+    text-decoration: none solid rgb(255, 255, 255);
+    border: 0px none rgb(255, 255, 255);
+    font: normal normal normal 12px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 5px 0px 0px;
+    outline: rgb(255, 255, 255) none 0px;
+    padding: 0px 5px 0px 0px;
+}
+
+#fwdock-container .fw-progress-container {
+    width: 215px;
+}
+
+#fwdock-container .fw-volume-bar-container {
+    width: 100px;
+}
+
+#fwdock-container .fw-seek-bar,
+#fwdock-container .fw-volume-bar {
+    box-shadow: rgba(0, 0, 0, 0.498039) 0px 2px 3px 0px inset;
+    color: rgb(255, 255, 255);
+    height: 7px;
+    left: 0px;
+    position: relative;
+    text-align: center;
+    text-decoration: none solid rgb(255, 255, 255);
+    top: 0px;
+    background: rgb(29, 29, 29) none repeat scroll 0% 0% / auto padding-box border-box;
+    border: 1px solid rgb(4, 4, 4);
+    border-radius: 3px 3px 3px 3px;
+    font: normal normal normal 12px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    outline: rgb(255, 255, 255) none 0px;
+    cursor: pointer;
+}
+
+#fwdock-container .fw-seek-bar {
+    width: 215px;
+}
+
+#fwdock-container .fw-volume-bar {
+    width: 70px;
+    height: 8px;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+}
+
+#fwdock-container .fw-mute,
+#fwdock-container .fw-unmute {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    color: #fff;
+    opacity: 0.75;
+    margin-right: 5px;
+}
+
+#fwdock-container .fw-mute i,
+#fwdock-container .fw-unmute i {
+    font-size: 14px;
+}
+
+#fwdock-container .fw-mute:hover,
+#fwdock-container .fw-unmute:hover {
+    opacity: 1;
+}
+
+#fwdock-container .fw-play-bar,
+#fwdock-container .fw-volume-bar-value {
+    box-shadow: rgba(255, 255, 255, 0.498039) 0px 0px 2px 0px inset;
+    color: rgb(255, 255, 255);
+    height: 7px;
+    left: 0px;
+    position: absolute;
+    text-align: center;
+    text-decoration: none solid rgb(255, 255, 255);
+    z-index: 2;
+    background: rgb(117, 155, 200) linear-gradient(rgb(117, 155, 200), rgb(103, 139, 217), rgb(85, 110, 164)) repeat scroll 0% 0% / auto padding-box border-box;
+    border: 0px none rgb(255, 255, 255);
+    border-radius: 3px 3px 3px 3px;
+    font: normal normal normal 12px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    outline: rgb(255, 255, 255) none 0px;
+}
+
+#fwdock-container .fw-volume-bar-value {
+    height: 8px;
+}
+
+#fwdock-container .fw-volume-bar .bullet {
+    position: absolute;
+    content: "";
+    top: -3px;
+    right: -4px;
+    height: 12px;
+    width: 12px;
+    border: 1px solid #000;
+    background: none repeat scroll 0 0 #fff;
+    background: -moz-linear-gradient(center top, #FFFFFF, #BCBCBC) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    opacity: 0.9;
+}
+
+#fwdock-container .flex-widget-progressbar .bullet {
+    position: absolute;
+    content: "";
+    top: 0px;
+    right: -4px;
+    height: 5px;
+    width: 5px;
+    border: 1px solid #000;
+    background: none repeat scroll 0 0 #fff;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    opacity: 0.9;
+}
+
+#fwdock-container .flex-widget-progressbar .fw-current-time {
+    position: absolute;
+    bottom: -3px;
+    left: -45px;
+    text-align: right;
+    width: 35px;
+    font-size: 10px;
+    opacity: 0.6;
+}
+
+#fwdock-container .flex-widget-progressbar .fw-duration {
+    position: absolute;
+    bottom: -3px;
+    right: -40px;
+    text-align: left;
+    width: 35px;
+    font-size: 10px;
+    opacity: 0.6;
+}
+
+#fwdock-container .fwdock-nowplaying-music {
+    position: absolute;
+    top: 3px;
+    left: 113px;
+    font-family: "Open Sans";
+    font-size: 11px;
+    line-height: 13px;
+    width: 220px;
+    text-align: center;
+}
+
+#fwdock-container .fwdock-nowplaying-image {
+    cursor: pointer;
+}
+
+#fwdock-container .fwdock-nowplaying-music .title {
+    height: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#fwdock-container .fwdock-nowplaying-music .artist {
+    opacity: 0.6;
+    height: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#fwdock-container .fwdock-side-buttons {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+#fwdock-container .fwdock-side-buttons i {
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 3px;
+}
+
+#fwdock-container .fwdock-side-buttons i:hover {
+    opacity: 1;
+}
+
+#fwdock-container .fwdock-playlist-container {
+    position: absolute;
+    width: 630px;
+    left: 50%;
+    margin-left: -315px;
+    height: 0;
+    bottom: 61px;
+    overflow: hidden;
+    color: #ddd;
+}
+
+#fwdock-container .fwdock-playlist-container .fw-playlist-items a {
+    color: #ddd;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+#fwdock-container .fwdock-playlist-container a:hover {
+    color: #fff;
+}
+
+#fwdock-container .fwdock-playlist-container .fw-playlist-current a,
+#fwdock-container .fwdock-playlist-container .fw-playlist-current a:hover {
+    color: yellow;
+}
+
+#fwdock-container .fwdock-playlist {
+    background: #212121;
+    background: rgba(34, 34, 34, 0.95) none repeat scroll 0% 0% / auto padding-box border-box;
+    padding: 10px;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.75), 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2);
+    border: 1px solid #2A2A2A;
+    font-size: 13px;
+    margin: 4px auto 0;
+    width: 600px;
+    height: 205px;
+    position: relative;
+}
+
+#fwdock-container .flex-widget-playlist {
+    box-shadow: rgb(128, 128, 128) 1px 1px 2px 0px;
+    color: rgb(255, 255, 255);
+    display: inline-block;
+    height: 180px;
+    position: absolute;
+    text-align: left;
+    text-decoration: none solid rgb(255, 255, 255);
+    bottom: 5px;
+    left: 10px;
+    width: 600px;
+    border-top: 0px none rgb(255, 255, 255);
+    border-right: 0px none rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(42, 42, 42);
+    border-left: 0px none rgb(255, 255, 255);
+    font: normal normal normal 13px/normal Arial, sans-serif;
+    margin: 0px 0px 0px 0px;
+    outline: rgb(255, 255, 255) none 0px;
+    overflow: hidden;
+}
+
+#fwdock-container .flex-widget-playlist .fw-playlist.box {
+    color: rgb(255, 255, 255);
+    height: 180px;
+    text-align: left;
+    text-decoration: none solid rgb(255, 255, 255);
+    width: 600px;
+    border: 0px none rgb(255, 255, 255);
+    font: normal normal normal 13px/normal Arial, sans-serif;
+    outline: rgb(255, 255, 255) none 0px;
+    background: none repeat scroll 0 0 #1D1D1D;
+}
+
+#fwdock-container .flex-widget-playlist .fw-playlist .antiscroll-inner {
+    border-top: 1px solid #2A2A2A;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+}
+
+#fwdock-container .fwdock-playlist-title-wrap {
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    color: #fff;
+}
+
+#fwdock-container .fwdock-playlist-title-wrap .fwdock-title,
+#fwdock-container .fwdock-playlist-title-wrap i {
+    font-size: 16px;
+    color: #fff;
+}
+
+#fwdock-container .fwdock-playlist-container .fwdock-playlist-title-wrap .fwdock-title {
+    padding-right: 15px;
+}
+
+#fwdock-container .fwdock-playlist-more {
+    position: absolute;
+    top: 10px;
+    right: 13px;
+    color: #fff;
+}
+
+#fwdock-container .fwdock-playlist-more .jp-button {
+    display: inline-block;
+}
+
+@media print {
+    #fwdock-container {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 945px) {
+    #fwdock-container .fwdock-volume-controls,
+    #fwdock-container .items-checkout {
+        display: none !important;
+    }
+
+    #fwdock-container .fwdock-music-buttons {
+        margin-left: -325px;
+    }
+
+    #fwdock-container .fwdock-command-cart {
+        left: -30px;
+    }
+}
+
+@media only screen and (max-width: 675px) {
+    #fwdock-container .fwdock-playlist-menu,
+    #fwdock-container .fwdock-addtocart,
+    #fwdock-container .fwdock-progressbar,
+    #fwdock-container .fwdock-nowplaying-music {
+        display: none !important;
+    }
+
+    #fwdock-container .fwdock-side-buttons {
+        right: -140px;
+        top: 10px;
+        z-index: 1;
+    }
+
+    #fwdock-container .fwicon-resize-full {
+        font-size: 20px;
+    }
+
+    #fwdock-container .fwdock-nowplaying-info {
+        width: 50px;
+        margin-left: -25px;
+    }
+
+    #fwdock-container .fwdock-command-options {
+        margin-left: 30px;
+        width: 115px;
+    }
+
+    #fwdock-container .fwdock-music-buttons {
+        margin-left: -155px;
+    }
+}
+
+/* Buttons */
+
+.fwdock-button {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    border-radius: .5em;
+    padding: .5em 2em .55em;
+    -moz-border-radius: .5em;
+    -webkit-border-radius: .5em;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2), 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.fwdock-button.circle {
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.fwdock-button.rounded {
+    border-radius: 2em;
+    -moz-border-radius: 2em;
+    -webkit-border-radius: 2em;
+}
+
+.fwdock-button i {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+}
+
+.fwdock-button:hover {
+    text-decoration: none;
+}
+
+.fwdock-button:focus {
+    position: relative;
+    top: 1px;
+}
+
+.fwdock-button.large.circle {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+}
+
+.fwdock-button.large i {
+    margin: 10px 0 0 5px;
+    font-size;
+    15px;
+}
+
+.fwdock-button.medium {
+    padding: .4em 1.5em .42em;
+}
+
+.fwdock-button.medium.circle {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.fwdock-button.medium i {
+    margin: 8px 0 0 3px;
+    font-size: 14px;
+}
+
+.fwdock-button.small {
+    padding: .2em 1em .275em;
+}
+
+.fwdock-button.small.circle {
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.fwdock-button.small i {
+    margin: 6px 0 0 0;
+    font-size: 12px;
+}
+
+/* white */
+.fwdock-button.white {
+    color: #606060;
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+    background: -moz-linear-gradient(top, #fff, #dcdcdc);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+
+.fwdock-button.white:hover {
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#bcbcbc));
+    background: -moz-linear-gradient(top, #fff, #bcbcbc);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#bcbcbc');
+}
+
+.fwdock-button.white:focus {
+    color: #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+    background: -moz-linear-gradient(top, #ededed, #fff);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+}
+
+/* black */
+.fwdock-button.black {
+    color: #d7d7d7;
+    background: #333;
+    background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
+    background: -moz-linear-gradient(top, #666, #000);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#000000');
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.fwdock-button.black:hover {
+    background: #000;
+    background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#000));
+    background: -moz-linear-gradient(top, #444, #000);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#000000');
+}
+
+.fwdock-button.black:focus {
+    color: #666;
+    background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#444));
+    background: -moz-linear-gradient(top, #000, #444);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#666666');
+}
+
+/* green */
+.fwdock-button.green {
+    color: #e8f0de;
+    background: #64991e;
+    background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+    background: -moz-linear-gradient(top, #7db72f, #4e7d0e);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+}
+
+.fwdock-button.green:hover {
+    background: #538018;
+    background: -webkit-gradient(linear, left top, left bottom, from(#6b9d28), to(#436b0c));
+    background: -moz-linear-gradient(top, #6b9d28, #436b0c);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b9d28', endColorstr='#436b0c');
+}
+
+.fwdock-button.green:focus {
+    color: #a9c08c;
+    background: -webkit-gradient(linear, left top, left bottom, from(#4e7d0e), to(#7db72f));
+    background: -moz-linear-gradient(top, #4e7d0e, #7db72f);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e7d0e', endColorstr='#7db72f');
+}

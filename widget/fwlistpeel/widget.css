@@ -1,0 +1,187 @@
+.elasticstack *,
+.elasticstack *:after,
+.elasticstack *::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.elasticstack * {
+    margin: 0;
+    padding: 0;
+}
+
+.elasticstack {
+    position: relative;
+    margin: 40px auto;
+    padding: 0;
+    width: 290px;
+    height: 330px;
+    list-style: none;
+    -webkit-perspective: 1000px;
+    -webkit-perspective-origin: 50% 150%;
+    perspective: 1000px;
+    perspective-origin: 50% 150%;
+}
+
+.no-js .elasticstack {
+    max-width: 1090px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+.elasticstack li {
+    position: absolute;
+    z-index: 1;
+    width: 290px;
+    height: 330px;
+    padding: 20px 20px 60px;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 7px -7px rgba(0, 0, 0, 0.12), 0 0 4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-transform: translate3d(0, 0, -180px);
+    transform: translate3d(0, 0, -180px);
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.no-js .elasticstack li {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    margin: 10px;
+    cursor: default;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.elasticstack li img {
+    display: block;
+    width: 250px;
+    height: 250px;
+}
+
+.elasticstack li .fw-songinfo {
+    margin: 0 5px;
+    color: #143f51;
+    height: 50px;
+    text-align: right;
+    overflow: hidden;
+    padding-top: 5px;
+    position: relative;
+}
+
+.elasticstack li .fw-songinfo .fw-genres {
+    font-size: 12px;
+    margin-top: -3px;
+}
+
+.elasticstack li .fw-songinfo .fw-title {
+    padding-left: 25px;
+}
+
+.elasticstack li .fw-songinfo .fw-play,
+.elasticstack li .fw-songinfo .fw-pause {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 5px;
+    left: -5px;
+    opacity: 0.75;
+}
+
+.elasticstack li .fw-songinfo .fw-play:hover,
+.elasticstack li .fw-songinfo .fw-pause:hover {
+    opacity: 1;
+}
+
+.elasticstack li .fw-songinfo .fw-title,
+.elasticstack li .fw-songinfo .fw-artist,
+.elasticstack li .fw-songinfo .fw-genres {
+    height: 1.25em;
+    line-height: 1.25em;
+    overflow: hidden;
+}
+
+.elasticstack li .fw-songinfo .fw-artist {
+    opacity: 0.6;
+}
+
+.elasticstack li .fw-songinfo .fw-genres {
+    opacity: 0.4;
+}
+
+.elasticstack li .fw-songinfo * {
+    font-size: 13px;
+}
+
+.elasticstack li.animate {
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.elasticstack li.move-back {
+    /* http://matthewlein.com/ceaser/ */
+    -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.470, 1); /* older webkit */
+    -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.470, 1.515);
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.470, 1.515);
+}
+
+.elasticstack.medium {
+    width: 230px;
+    height: 275px;
+}
+
+.elasticstack.medium li {
+    width: 230px;
+    height: 275px;
+    padding: 15px 15px 60px;
+}
+
+.elasticstack.medium li img {
+    width: 200px;
+    height: 200px;
+}
+
+.elasticstack.medium .fw-songinfo .fw-artist,
+.elasticstack.medium .fw-songinfo .fw-genres {
+    font-size: 11px;
+}
+
+.elasticstack.small {
+    width: 170px;
+    height: 200px;
+}
+
+.elasticstack.small li {
+    width: 170px;
+    height: 200px;
+    padding: 10px 10px 40px;
+}
+
+.elasticstack.small li img {
+    width: 150px;
+    height: 150px;
+}
+
+.elasticstack.small li .fw-songinfo {
+    height: 30px;
+    font-size: 12px;
+}
+
+.elasticstack.small li .fw-songinfo * {
+    font-size: 11px;
+}
+
+.elasticstack.small li .fw-songinfo .fw-artist {
+    text-transform: lowercase;
+    font-size: 10px;
+}
+
+.elasticstack.small li .fw-songinfo .fw-genres {
+    display: none;
+}
+

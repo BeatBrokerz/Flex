@@ -1,0 +1,46 @@
+﻿<div data-options="dxView : { name: 'home', title: 'Home' } ">
+    <div data-bind="dxCommand: { action: function(){ window[myAppNamespace].closeApp(); }, id: 'close', location: 'settings', title: 'Close', icon: 'close', visible: window[myAppNamespace].baseVars.closeVisible } "></div>
+    <div class="home-view" data-options="dxContent : { targetPlaceholder: 'content' } ">
+
+        <div class="homepage-background">
+            <div class="bg-pattern"></div>
+            <div class="bg-overlay"></div>
+            <img id="bg" data-bind="attr: { src: appBG.src, style: '', 'data-aspect': appBG.aspect }"
+                 style="display:none">
+        </div>
+
+        <div class="homepage-wrapper">
+            <h1 class="homepage-title" data-bind="html: apptitle"></h1>
+            <em class="homepage-title-sub"></em>
+
+            <div class="homepage-navigation">
+                <a href="javascript:;" class="producer-icon producers-icon"
+                   data-bind="visible: producersCount() > 0, text: producersText, css: { 'producers-icon': producersCount() > 1, 'producer-icon': producersCount() == 1 }, dxAction: viewProducers"></a>
+                <a href="javascript:;" class="playlists-icon" data-bind="dxAction: '#playlists'">Playlists</a>
+                <a href="javascript:;" class="content-icon" data-bind="visible: contentVisible, dxAction: '#menu'">Content</a>
+
+                <a href="javascript:;" class="discounts-icon"
+                   data-bind="visible: discountsVisible, dxAction: '#discounts'">Discounts</a>
+                <a href="javascript:;" class="nowplaying-icon" data-bind="dxAction: '#nowplaying'">Now Playing</a>
+                <a href="javascript:;" class="cart-icon" data-bind="dxAction: '#cart'">Shopping Cart</a>
+
+                <div class="clear"></div>
+            </div>
+
+            <div class="footer">
+                <a class="facebook-icon" data-bind="visible: social.facebook, attr: { href: social.facebook }"
+                   style="display:none"></a>
+                <a class="twitter-icon" data-bind="visible: social.twitter, attr: { href: social.twitter }"
+                   style="display:none"></a>
+                <a class="google-icon" data-bind="visible: social.google, attr: { href: social.google }"
+                   style="display:none"></a>
+                <a class="youtube-icon" data-bind="visible: social.youtube, attr: { href: social.youtube }"
+                   style="display:none"></a>
+
+                <div class="clear"></div>
+                <p class="homepage-copyright">Copyright 2014. <br>All Rights Reserved.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
