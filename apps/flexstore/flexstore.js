@@ -375,12 +375,12 @@ var flexStore = flexStore || {};
                 if (result.Producers) {
                     $.each(result.Producers, function (uid, producer) {
                         if (!myApp.Producers.byId[uid]) {
-                            myApp.Producers.byId[uid] = producer;
+                            myApp.Producers.byId[uid] = ko.observable(producer);
                             myApp.Producers.list.push(producer);
                             if (producer.discounts.length) {
                                 $.each(producer.discounts, function (i, discount) {
                                     if (!myApp.Discounts.byId[discount.id]) {
-                                        myApp.Discounts.byId[discount.id] = discount;
+                                        myApp.Discounts.byId[discount.id] = ko.observable(discount);
                                         myApp.Discounts.list.push(discount);
                                     }
                                 });
