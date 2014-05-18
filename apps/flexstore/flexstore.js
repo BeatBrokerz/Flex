@@ -374,13 +374,17 @@ var flexStore = flexStore || {};
                 // add any producer profiles
                 if (result.Producers) {
                     $.each(result.Producers, function (uid, producer) {
-                        if (!myApp.Producers.byId[uid]) {
-                            myApp.Producers.byId[uid] = ko.observable(producer);
+                        var producers = myApp.Producers.byId();
+                        if (!producers[uid]) {
+                            producers[uid] = producer;
+                            myApp.Producers.byId(producers);
                             myApp.Producers.list.push(producer);
                             if (producer.discounts.length) {
                                 $.each(producer.discounts, function (i, discount) {
-                                    if (!myApp.Discounts.byId[discount.id]) {
-                                        myApp.Discounts.byId[discount.id] = ko.observable(discount);
+                                    var discounts = myApp.Discounts.byId();
+                                    if (!discounts[discount.id]) {
+                                        discounts[discount.id] = discount;
+                                        myApp.Discounts.byId(discounts);
                                         myApp.Discounts.list.push(discount);
                                     }
                                 });
@@ -995,7 +999,7 @@ var flexStore = flexStore || {};
     myApp.Producers = {
 
         list: ko.observableArray([]),
-        byId: {}
+        byId: ko.observable({})
 
     };
 
@@ -1005,7 +1009,7 @@ var flexStore = flexStore || {};
     myApp.Discounts = {
 
         list: ko.observableArray([]),
-        byId: {}
+        byId: ko.observable({})
 
     };
 
