@@ -198,7 +198,7 @@
                 duration: ".fw-duration",
                 fullScreen: ".fw-full-screen",
                 repeat: ".fw-repeat",
-                repeatOff: ".fw-repeat-off",
+                repeatOff: ".fw-repeat-off"
             },
             verticalVolume: false
         },
