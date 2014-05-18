@@ -190,7 +190,7 @@
 
             hideDetails: function () {
                 viewModel.detailsPopupVisible(false);
-            },
+            }
 
         };
 
