@@ -714,7 +714,7 @@
 	<div class="fw-buynow-licenses nowplaying-licenses" data-bind="dxList: { dataSource: nowplaying().licensing.options, scrollingEnabled: false, itemClickAction: function(action){ window[myAppNamespace].Music.showLicense(action.itemData); }, noDataText: \'No Licensing Options Available\' }">\
 	  <div class="fw-buynow-license" data-options="dxTemplate: { name: \'item\' }">\
 	    <i class="fw-buynow-license-icon icon-tag"></i>\
-	    <div class="fw-buynow-addtocart"><i class="icon-forward"></i> View Details</div>\
+	    <div class="fw-buynow-addtocart"><i class="fwicon-forward"></i> View Details</div>\
 	    <div class="fw-buynow-license-name" data-bind="text: name"></div>\
 	    <div class="fw-buynow-license-price"><span data-bind="text: price"></span></div>\
 	  </div>\
