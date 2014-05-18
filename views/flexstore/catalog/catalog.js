@@ -6,7 +6,7 @@
 
         var producer = myApp.Data.Producers[params.account];
 
-        if (!producer.uid) {
+        if (!producer || !producer.uid) {
             myApp.app.navigate('home');
         }
 
