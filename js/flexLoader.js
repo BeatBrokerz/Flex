@@ -271,6 +271,10 @@ flexloader.resources = function (components) {
 
 // used to add a javascript resource to load with other app resources
 flexloader.addResource = function (name, resource) {
+    if (typeof name === 'object') {
+        resource = name;
+        name = resource.src;
+    }
     if (flexloader.initialized && !flexloader.flexApp.resources[name]) {
         if (typeof resource.missing === 'undefined' || resource.missing()) {
             if (typeof resource.ready === 'function') {
@@ -386,4 +390,9 @@ flexloader.data = {};
 flexloader.storeData = function (dataset, data) {
     flexloader.data[dataset] = flexloader.data[dataset] || [];
     flexloader.data[dataset].push(data);
+}
+
+flexloader.autoload = function() {
+
+
 }
