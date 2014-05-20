@@ -273,7 +273,7 @@ flexloader.resources = function (components) {
 flexloader.addResource = function (name, resource) {
     if (typeof name === 'object') {
         resource = name;
-        name = resource.src;
+        name = resource.name || resource.src;
     }
     if (flexloader.initialized && !flexloader.flexApp.resources[name]) {
         if (typeof resource.missing === 'undefined' || resource.missing()) {
@@ -392,7 +392,59 @@ flexloader.storeData = function (dataset, data) {
     flexloader.data[dataset].push(data);
 }
 
-flexloader.autoload = function() {
+/**
+ * Widget autoloader convenience method
+ * @param component string/object
+ *
+ * If the component parameter is a string, it will be converted to an object
+ * with the passed string assigned to the "src" property of that object.
+ *
+ * If the component parameter is an object, the src property should contain the
+ * url of the widget to load, and an optional "options" parameter will be passed
+ * as the "config" parameter to any functions that the widget registers with the
+ * extendApp() method.
+ */
+flexloader.autoload = function (component) {
 
+    if (typeof component === 'string') {
+        component = {
+            src: component
+        }
+    }
+    if (!component || !component.src) { return; }
+    component.options = component.options || {};
+
+    (function() {
+        var extenders;
+        flexloader.addResource({
+            before: function() {
+                extenders = flexloader.extensions.length;
+            },
+            src: component.src,
+            ready: function() {
+                var diff = flexloader.extensions.length - extenders;
+                if (diff) {
+                    var a = document.createElement('a');
+                    a.href = component.src;
+                    var path = '/' + a.pathname.split('/').slice(0,-1).join('/').replace(/^\/|\/$/g, '') + '/';
+                    var file = a.pathname.split('/').pop();
+                    var protocol = a.protocol.replace(/:$/, '');
+                    for (var i=extenders;i<extenders+diff;i++) {
+                        flexloader.extensions[i].config = {
+                            autoload: true,
+                            options: component.options,
+                            script: {
+                                protocol: protocol,
+                                host: a.hostname,
+                                path: path,
+                                file: file,
+                                basepath: (protocol ? protocol + ':' : '') + '//' + a.hostname + path
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    })();
 
 }
