@@ -414,13 +414,15 @@ flexloader.storeData = function (dataset, data) {
  * as the "config" parameter to any functions that the widget registers with the
  * extendApp() method.
  */
-flexloader.autoload = function (component) {
+flexloader.autoload = function (component, options) {
 
     if (typeof component === 'string') {
         component = {
-            src: component
+            src: component,
+            options: options || {}
         }
     }
+
     if (!component || !component.src) { return; }
     component.options = component.options || {};
 
