@@ -432,6 +432,9 @@ flexloader.autoload = function (component, options) {
             before: function() {
                 flexloader.autoload.loading = true;
                 extenders = flexloader.extensions.length;
+                if (typeof component.before === 'function') {
+                    component.before();
+                }
             },
             src: component.src,
             ready: function() {
@@ -457,6 +460,9 @@ flexloader.autoload = function (component, options) {
                         }
                     }
                     flexloader.loadExtensions();
+                }
+                if (typeof component.ready === 'function') {
+                    component.ready();
                 }
             }
         });
