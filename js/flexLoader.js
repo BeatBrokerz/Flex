@@ -11,8 +11,8 @@
 flexloader.coreVer = '1.00';
 
 /**
- * Priority Init: Reserve a place for a priorityInit() method that we can define later, which will still
- * be fired before any other "ready" handlers which are attached to our loader.
+ * Priority Init: Put our reservation in to execute functions passed to extendApp()
+ * before any other "ready" handlers which are attached to our loader via ready() or execute().
  */
 flexloader.ready(function () {
     if (flexloader.priorityInit) {
@@ -224,6 +224,8 @@ flexloader.init = function () {
 }
 
 /**
+ * URL Generator
+ *
  * Convenience method to add our current framework version to a resource URL.
  *
  * @param resource
@@ -241,8 +243,12 @@ flexloader.src = function (resource) {
 }
 
 /**
- * Conveniently put together resources from a components list
- * @param components
+ * Components To Resources Converter
+ *
+ * Puts together resources from a components list. This method is not a public method and is only used
+ * for internal Beat Brokerz framework setup.
+ *
+ * @param components object A components object
  * @returns object A resources object that can be passed to the flexloader.init() method
  */
 flexloader.resources = function (components) {
@@ -266,7 +272,27 @@ flexloader.resources = function (components) {
     return resources;
 };
 
-// used to add a new resource to load with other app resources
+/**
+ * Add Resource
+ *
+ * Adds a resource (javascript/css) to be loaded by our asynchrounous loader. The resource object can
+ * have a number of properties:
+ * {
+ *   src: '/url/to/resource.ext',   // required. the url to the resource to load
+ *   name: 'identifier',            // optional. internal name for the resource
+ *   before: function() {},         // optional. a function to execute just before the resource is loaded
+ *   ready: function() {}           // optional. a function to execute just after the resource is ready
+ * }
+ *
+ * @param name string/object    A string value here will act as an internal name for the resource so that functions
+ *                              can be attached to it's ready() event. E.g. "flexloader.ready('name', function() {});".
+ *                              Otherwise, this can just be a resource object and the name will be inferred from the object.
+ *
+ * @param resource object       If a second parameter is passed to this method, it should always be a resource
+ *                              object. Any name provided in the resource object will be overridden by the name
+ *                              passed as the first parameter to this method.
+ *
+ */
 flexloader.addResource = function (name, resource) {
     if (typeof name === 'object') {
         resource = name;
@@ -294,7 +320,18 @@ flexloader.addResource = function (name, resource) {
 }
 
 
-// shortcut to add multiple javascript resources at once
+/**
+ * Add Multiple Resources
+ *
+ * This method allows us to package multiple resources into a single object and add them all at once.
+ * When packaging resources, use the following format for the containing object:
+ * {
+ *   'resourceName1' : { .. resource object .. },
+ *   'resourceName2' : { .. resource object .. }
+ * }
+ *
+ * @param resources object A packaged resources object
+ */
 flexloader.addResources = function (resources) {
     for (var resource in resources) {
         flexloader.addResource(resource, resources[resource]);
@@ -395,7 +432,7 @@ flexloader.execute = function (name, func, config) {
     name ? flexloader.ready(name, context) : flexloader.ready(context);
 }
 
-// storage for data to be used by our app when it's launched
+// general purpose storage for data to be used by our app when it's launched
 flexloader.data = {};
 flexloader.storeData = function (dataset, data) {
     flexloader.data[dataset] = flexloader.data[dataset] || [];
@@ -403,16 +440,15 @@ flexloader.storeData = function (dataset, data) {
 }
 
 /**
- * Widget autoloader convenience method
- * @param component string/object
+ * Widget Autoloader
  *
- * If the component parameter is a string, it will be converted to an object
- * with the passed string assigned to the "src" property of that object.
+ * Used to autoload a widget script and optionally pass it some loading options. If you want to leverage all the
+ * available properties of a full resource object (before(), ready(), etc), pass this method a resource object.
  *
- * If the component parameter is an object, the src property should contain the
- * url of the widget to load, and an optional "options" parameter will be passed
- * as the "config" parameter to any functions that the widget registers with the
- * extendApp() method.
+ * @param component string/object   If the component parameter is a string, it will be converted to an object
+ *                                  with the string assigned to the "src" property of that object. Otherwise, pass
+ *                                  it a full resource object with an optional 'options' property that will be
+ *                                  passed along to the widget.
  */
 flexloader.autoload = function (component, options) {
 
@@ -459,7 +495,9 @@ flexloader.autoload = function (component, options) {
                             }
                         }
                     }
-                    flexloader.loadExtensions();
+                    if (flexloader.loaded) {
+                        flexloader.loadExtensions();
+                    }
                 }
                 if (typeof component.ready === 'function') {
                     component.ready();
