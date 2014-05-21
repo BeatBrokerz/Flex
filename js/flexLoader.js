@@ -164,10 +164,7 @@ flexloader.init = function () {
     if (typeof myAppNamespace === 'string') {
         window[myAppNamespace] = window[myAppNamespace] || {};
         flexloader.priorityInit = function () {
-            var $ = flexloader.jq;
-            $.each(flexloader.extensions, function (i, extend) {
-                extend.callback($, window[myAppNamespace], extend.config);
-            });
+            flexloader.loadExtensions();
         }
         flexloader.ready(function () {
             flexloader.loaded = true;
@@ -356,10 +353,12 @@ flexloader.addTemplate = function (href) {
 
 }
 
-// save functions to be executed before the app is launched
+// Storage container for our extensions
 flexloader.extensions = [];
+
+// Handler for our extensions
 flexloader.extendApp = function (func) {
-    if (flexloader.loaded) {
+    if (flexloader.loaded && !flexloader.autoload.loading) {
         flexloader.execute(func, {});
     }
     else {
@@ -367,6 +366,17 @@ flexloader.extendApp = function (func) {
             callback: func,
             config: {}
         });
+    }
+}
+
+// Load any extensions in our loading queue
+flexloader.loadExtensions = function() {
+    if (flexloader.initialized) {
+        var $ = flexloader.jq;
+        $.each(flexloader.extensions, function (i, extend) {
+            extend.callback($, window[myAppNamespace], extend.config);
+        });
+        flexloader.extensions = [];
     }
 }
 
@@ -418,10 +428,12 @@ flexloader.autoload = function (component) {
         var extenders;
         flexloader.addResource({
             before: function() {
+                flexloader.autoload.loading = true;
                 extenders = flexloader.extensions.length;
             },
             src: component.src,
             ready: function() {
+                flexloader.autoload.loading = false;
                 var diff = flexloader.extensions.length - extenders;
                 if (diff) {
                     var a = document.createElement('a');
@@ -442,9 +454,12 @@ flexloader.autoload = function (component) {
                             }
                         }
                     }
+                    flexloader.loadExtensions();
                 }
             }
         });
     })();
 
 }
+
+flexloader.autoload.loading = false;
