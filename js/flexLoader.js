@@ -165,9 +165,9 @@ flexloader.init = function () {
         window[myAppNamespace] = window[myAppNamespace] || {};
         flexloader.priorityInit = function () {
             flexloader.loadExtensions();
+            flexloader.loaded = true;
         }
         flexloader.ready(function () {
-            flexloader.loaded = true;
             if (typeof window[myAppNamespace].launch === 'function') {
                 window[myAppNamespace].launch();
             }
@@ -266,7 +266,7 @@ flexloader.resources = function (components) {
     return resources;
 };
 
-// used to add a javascript resource to load with other app resources
+// used to add a new resource to load with other app resources
 flexloader.addResource = function (name, resource) {
     if (typeof name === 'object') {
         resource = name;
