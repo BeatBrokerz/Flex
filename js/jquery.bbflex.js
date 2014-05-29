@@ -307,7 +307,7 @@
                     resizeWidget(this);
                 });
             }
-            $.appflow.trigger('bbflex-resized', $(this));
+            $.appflow.trigger('bbflex-widget-resized', $(this));
             return this;
         },
 
