@@ -8,7 +8,7 @@
  * @var coreVer
  * @type string A property that we can override to ensure the latest release of resources are loaded
  */
-flexloader.coreVer = '1.00';
+flexloader.coreVer = '1.0.0';
 
 /**
  * Priority Init: Put our reservation in to execute functions passed to extendApp()
