@@ -1175,7 +1175,7 @@ var flexStore = flexStore || {};
 
     /* Music Events */
 
-    myApp.on('bbflex-nowplaying', function (media) {
+    myApp.on('bbflex-nowplaying', 'render', function (media) {
         // if the song has changed, reset our "play tracked" flag
         if (myApp.Music.notSelected(media)) {
             myApp.Data.playTracked = false;
@@ -1239,7 +1239,7 @@ var flexStore = flexStore || {};
         }
     });
 
-    myApp.on('bbflex-playlists-show', function () {
+    myApp.on('bbflex-playlists-show', 'render', function () {
 
         var content = $('<div>').bbflex({ widget: 'playlists', theme: 'none' });
         content.find('.fw-playlists').on('click', '.fw-list-title', function () {
@@ -1262,7 +1262,7 @@ var flexStore = flexStore || {};
 
     /* Licensing Events */
 
-    myApp.on('bbflex-show-license', function (license) {
+    myApp.on('bbflex-show-license', 'render', function (license) {
         var cartItem;
         var info;
         if (license.cart_item_id) {
@@ -1304,7 +1304,7 @@ var flexStore = flexStore || {};
 
     });
 
-    myApp.on('bbflex-show-license-options', function (media) {
+    myApp.on('bbflex-show-license-options', 'render', function (media) {
         media = media || myApp.Music.nowplaying();
 
         var content = $('<div class="all-licensing-options">').append('\
@@ -1364,7 +1364,7 @@ var flexStore = flexStore || {};
 
     /* Cart Related Events */
 
-    myApp.on('bbflex-checkout-initiated', function () {
+    myApp.on('bbflex-checkout-initiated', 'after', function () {
         var cart = myApp.Cart.data();
         if (cart.items && cart.items.length) {
             if (myApp.appSettings.app_affiliate) {
@@ -1394,7 +1394,7 @@ var flexStore = flexStore || {};
         }
     });
 
-    myApp.on('bbflex-cart-show', function () {
+    myApp.on('bbflex-cart-show', 'render', function () {
         var totals = $('<div class="fw-cart-totals-wrap">\
       <div data-bind="text: \'Subtotal: $\' + flexStore.Cart.data().sub_total" class="fw-cart-subtotal"></div>\
       <div data-bind="text: \'Discounts: $\' + flexStore.Cart.data().discounts.total" class="fw-cart-discounts"></div>\
