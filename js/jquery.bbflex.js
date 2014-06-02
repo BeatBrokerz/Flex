@@ -26,7 +26,7 @@
 
     $.appflow.config = {
         sequences: {
-            _default: [ 'before', 'execute', 'render', 'after' ]
+            _default: [ 'before', 'process', 'render', 'after' ]
         }
     };
 
@@ -48,7 +48,7 @@
             bind: function (event, hook, func) {
                 if (typeof(hook) == 'function') {
                     func = hook;
-                    hook = "execute";
+                    hook = "process";
                 }
                 if (typeof(process[event]) == 'undefined') process[event] = {};
                 if (typeof(process[event][hook]) == 'undefined') process[event][hook] = [];
