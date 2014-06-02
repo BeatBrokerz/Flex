@@ -102,6 +102,7 @@ var flexStore = flexStore || {};
     myApp.Data = myApp.Data || {};
     myApp.on = $.appflow.bind;
     myApp.trigger = $.appflow.trigger;
+    myApp.sequence = $.appflow.sequence;
 
     myApp.dataDomain = myApp.dataDomain || '//www.beatbrokerz.com';
     myApp.dataURL = myApp.dataURL || '/flexstore/get';

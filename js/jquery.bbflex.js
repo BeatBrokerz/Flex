@@ -65,7 +65,7 @@
                 if (!event) return;
                 if (typeof(process[event]) == 'undefined') process[event] = {};
                 var sequence = e.length ? e : config.sequences[event] || config.sequences._default;
-                var defer = {};
+                var bypass = {};
                 var results = {};
                 var halt = false;
 
@@ -73,24 +73,26 @@
 
                     if (halt) continue;
                     var hook = sequence[i];
-                    if (defer[hook]) continue;
+                    if (bypass[hook]) continue;
                     var forks = new Array();
                     // trigger hooks before event
                     if (typeof(process[event][hook]) != 'undefined') {
                         $.each(process[event][hook], function (index, value) {
                             var result = process[event][hook][index].apply(results, args);
-                            if (result && result.control) {
+                            if (typeof result === 'object' && result.control) {
                                 if (result.control.fork) {
                                     typeof result.control.fork === 'string' ? forks.push(result.control.fork) : $.each(result.control.fork, function (i, trig) {
                                         forks.push(trig);
                                     });
                                 }
-                                if (result.control.defer) {
-                                    typeof result.control.defer === 'string' ? defer[result.control.defer] = true : $.each(result.control.defer, function (i, d) {
-                                        defer[d] = true;
+                                if (result.control.bypass) {
+                                    typeof result.control.bypass === 'string' ? bypass[result.control.bypass] = true : $.each(result.control.bypass, function (i, h) {
+                                        bypass[h] = true;
                                     });
                                 }
-                                if (result.control.halt) halt = true;
+                                if (result.control.halt) {
+                                    halt = true;
+                                }
                                 delete result.control;
                             }
                             if (typeof result === 'object') {
