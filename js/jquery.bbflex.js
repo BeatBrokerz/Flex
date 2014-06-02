@@ -38,7 +38,12 @@
                 config = $.extend(config, options);
             },
             sequence: function (hook, sequence) {
-                config.sequences[hook] = sequence;
+                if (sequence) {
+                    config.sequences[hook] = sequence;
+                }
+                else {
+                    return config.sequences[hook] || config.sequences._default
+                }
             },
             bind: function (event, hook, func) {
                 if (typeof(hook) == 'function') {
