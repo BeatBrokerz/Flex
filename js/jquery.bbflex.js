@@ -66,19 +66,38 @@
                 if (typeof(process[event]) == 'undefined') process[event] = {};
                 var sequence = e.length ? e : config.sequences[event] || config.sequences._default;
                 var bypass = {};
-                var results = {};
+                var forks = [];
                 var halt = false;
+                var eventData = {
+                    eventName: event,
+                    halt: function(status) {
+                        halt = status !== false;
+                    },
+                    fork: function(newEvents) {
+                        if (!newEvents) return;
+                        typeof newEvents === 'string' ? forks.push(newEvents) : $.each(newEvents, function (i, newEvent) {
+                            forks.push(newEvent);
+                        });
+                    },
+                    bypass: function(stages) {
+                        if (!stages) return;
+                        typeof stages === 'string' ? bypass[stages] = true : $.each(stages, function (i, stage) {
+                            bypass[stage] = true;
+                        });
+                    }
+                };
 
                 for (var i in sequence) {
 
                     if (halt) continue;
                     var hook = sequence[i];
                     if (bypass[hook]) continue;
-                    var forks = new Array();
+                    eventData.eventStage = hook;
+                    forks = [];
                     // trigger hooks before event
                     if (typeof(process[event][hook]) != 'undefined') {
                         $.each(process[event][hook], function (index, value) {
-                            var result = process[event][hook][index].apply(results, args);
+                            var result = process[event][hook][index].apply(eventData, args);
                             if (typeof result === 'object' && result.control) {
                                 if (result.control.fork) {
                                     typeof result.control.fork === 'string' ? forks.push(result.control.fork) : $.each(result.control.fork, function (i, trig) {
@@ -96,7 +115,7 @@
                                 delete result.control;
                             }
                             if (typeof result === 'object') {
-                                $.extend(results, result);
+                                $.extend(eventData, result);
                             }
                             if (halt) {
                                 return false;
@@ -105,13 +124,17 @@
                     }
                     if (forks.length) {
                         for (var i in forks) {
-                            $.extend(results, $.appflow.trigger(forks[i], args));
+                            $.extend(eventData, $.appflow.trigger(forks[i], args));
                         }
                         break;
                     }
                 }
 
-                return results;
+                delete eventData.halt;
+                delete eventData.fork;
+                delete eventData.bypass;
+
+                return eventData;
 
             }
         };
