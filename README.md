@@ -27,7 +27,7 @@ Flex Framework will be maintained under the Semantic Versioning guidelines as mu
 And constructed with the following guidelines:
 
 * Breaking backward compatibility bumps the major (and resets the minor and patch)
-* New additions, including new icons, without breaking backward compatibility bumps the minor (and resets the patch)
+* New additions/features without breaking backward compatibility bumps the minor (and resets the patch)
 * Bug fixes and misc changes bumps the patch
 
 For more information on SemVer, please visit http://semver.org.
