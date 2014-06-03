@@ -63,7 +63,9 @@
                 var e = hooks.split(":");
                 var event = e.shift();
                 if (!event) return;
-                if (typeof(process[event]) == 'undefined') process[event] = {};
+                if (typeof(process[event]) == 'undefined') {
+                    process[event] = {};
+                }
                 var sequence = e.length ? e : config.sequences[event] || config.sequences._default;
                 var bypass = {};
                 var forks = [];
@@ -86,6 +88,15 @@
                         });
                     }
                 };
+                if (this.eventName) {
+                    var _eventData = $.extend({}, this);
+                    delete _eventData.eventName;
+                    delete _eventData.eventStage;
+                    delete _eventData.halt;
+                    delete _eventData.fork;
+                    delete _eventData.bypass;
+                    $.extend(eventData, _eventData);
+                }
 
                 for (var i in sequence) {
 
@@ -124,12 +135,15 @@
                     }
                     if (forks.length) {
                         for (var i in forks) {
-                            $.extend(eventData, $.appflow.trigger(forks[i], args));
+                            var _args = args;
+                            _args.unshift(forks[i]);
+                            $.extend(eventData, $.appflow.trigger.apply(eventData, _args));
                         }
-                        break;
                     }
                 }
 
+                delete eventData.eventName;
+                delete eventData.eventStage;
                 delete eventData.halt;
                 delete eventData.fork;
                 delete eventData.bypass;
