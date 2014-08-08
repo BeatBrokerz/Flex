@@ -823,6 +823,12 @@ var flexStore = flexStore || {};
             face.find(css.fullScreen).click(function () {
                 myApp.fullScreen();
             });
+            face.find(css.repeat).click(function() {
+                myApp.Music.repeat();
+            });
+            face.find(css.repeatOff).click(function() {
+                myApp.Music.repeatOff();
+            });
             face.find(css.playBar + ', ' + css.seekBar).click(function (e) {
                 var seekBar = $(this).hasClass(css.playBar.replace('.', '')) ? $(this).closest(css.seekBar) : $(this);
                 var offset = seekBar.offset();
