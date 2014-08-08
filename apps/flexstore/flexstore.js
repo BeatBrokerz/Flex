@@ -867,6 +867,12 @@ var flexStore = flexStore || {};
                 syncThisVolume(vol);
             });
 
+            myApp.on('bbflex-repeat', function (event) {
+               event.jPlayer.options.loop ?
+                   face.find(css.repeat).hide() && face.find(css.repeatOff).show() :
+                   face.find(css.repeatOff).hide() && face.find(css.repeat).show();
+            });
+
             myApp.Music.playing.subscribe(function (playing) {
                 playing ?
                     face.find(css.play).hide() && face.find(css.pause).show() :
