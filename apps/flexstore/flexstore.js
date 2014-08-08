@@ -861,7 +861,9 @@ var flexStore = flexStore || {};
 
             myApp.on('bbflex-volumechange', function (event) {
                 var vol = event.jPlayer.options.volume;
-                event.jPlayer.options.muted ? face.find(css.volumeBarValue).addClass('muted') : face.find(css.volumeBarValue).removeClass('muted');
+                event.jPlayer.options.muted ?
+                    face.find(css.volumeBarValue).addClass('muted') && face.find(css.mute).hide() && face.find(css.unmute).show() :
+                    face.find(css.volumeBarValue).removeClass('muted') && face.find(css.unmute).hide() && face.find(css.mute).show();
                 syncThisVolume(vol);
             });
 
