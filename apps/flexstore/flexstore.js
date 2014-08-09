@@ -1005,6 +1005,12 @@ var flexStore = flexStore || {};
             else {
                 callback();
             }
+        },
+        show: function(content) {
+            if (!content) { console.log('no content to display'); return; }
+            myApp.Content.prepare(content, function() {
+                myApp.trigger('bbflex-content-show', content);
+            });
         }
     }
 
@@ -1121,7 +1127,8 @@ var flexStore = flexStore || {};
         discounts: myApp.Discounts,
         content: {
             categories: myApp.appContent,
-            prepare: myApp.Content.prepare
+            prepare: myApp.Content.prepare,
+            show: myApp.Content.show
         },
         app: {
             fullScreen: myApp.fullScreen,
@@ -1186,6 +1193,23 @@ var flexStore = flexStore || {};
         if (modal && modal.fwinternal) {
             modal.fwinternal.fwmodal('hide');
         }
+    });
+
+    myApp.on('bbflex-content-show', 'render', function (content) {
+
+        var title = $('<span>').append('<i class="' + content.icon + '"></i> ').append(content.title);
+        var body = $('<div>').html(content.content);
+        var footer = $('<button type="button" class="btn btn-default close-button">Close</button>').click(function () {
+            myApp.modal.close();
+        });
+
+        myApp.modal({
+            type: 'content',
+            title: title,
+            content: body,
+            footer: footer
+        });
+
     });
 
     /* Music Events */
