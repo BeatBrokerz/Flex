@@ -599,7 +599,7 @@ var flexStore = flexStore || {};
 
         loadMore: function (playlist) {
             if (typeof playlist === 'object') {
-                id = playlist.id
+                id = playlist.id;
             }
             id = id || myApp.Music.currentPlaylist;
             if (myApp.Music.playlists[id] && myApp.Music.playlists[id].dataSource) {
