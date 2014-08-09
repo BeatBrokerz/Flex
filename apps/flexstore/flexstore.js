@@ -597,6 +597,16 @@ var flexStore = flexStore || {};
          *  Methods
          */
 
+        loadMore: function (playlist) {
+            if (typeof playlist === 'object') {
+                id = playlist.id
+            }
+            id = id || myApp.Music.currentPlaylist;
+            if (myApp.Music.playlists[id] && myApp.Music.playlists[id].dataSource) {
+                myApp.Music.playlists[id].dataSource.nextPage();
+            }
+        },
+
         showLicense: function (license) {
             if (myApp.Data.fullscreen) return;
             myApp.trigger('bbflex-show-license', license);
