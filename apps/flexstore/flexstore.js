@@ -598,10 +598,16 @@ var flexStore = flexStore || {};
          */
 
         loadMore: function (playlist) {
-            if (typeof playlist === 'object') {
-                id = playlist.id;
+            switch (typeof playlist) {
+                case 'object' :
+                    id = playlist.id;
+                    break;
+                case 'string' :
+                    id = playlist;
+                    break;
+                default:
+                    id = myApp.Music.currentPlaylist;
             }
-            id = id || myApp.Music.currentPlaylist;
             if (myApp.Music.playlists[id] && myApp.Music.playlists[id].dataSource) {
                 myApp.Music.playlists[id].dataSource.nextPage();
             }
