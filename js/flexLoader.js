@@ -45,7 +45,7 @@ flexloader.flexApp = {
         jquery: {
             missing: function () {
                 var minVersion = function(version) {
-                    var $vrs = window.jQuery.fn.jquery.split('.'),
+                    var $vrs = jQuery.fn.jquery.split('.'),
                         min = version.split('.'),
                         prevs=[];
 
@@ -68,6 +68,7 @@ flexloader.flexApp = {
                 }
                 else {
                     flexloader.jqConflict = false;
+                    flexloader.jq = jQuery;
                 }
             },
             src: "//www.beatbrokerz.com/flex/js/jquery.min.js",
