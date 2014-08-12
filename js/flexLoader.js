@@ -44,7 +44,25 @@ flexloader.flexApp = {
     resources: {
         jquery: {
             missing: function () {
-                if (typeof jQuery === 'undefined' || parseInt(jQuery.fn.jquery) != 2) {
+                var minVersion = function(version) {
+                    var $vrs = window.jQuery.fn.jquery.split('.'),
+                        min = version.split('.'),
+                        prevs=[];
+
+                    for (var i=0, len=$vrs.length; i<len; i++) {
+                        if (min[i] && $vrs[i] < min[i]) {
+                            if (!prevs[i-1] || prevs[i-1] == 0)
+                                return false;
+                        } else {
+                            if ($vrs[i] > min[i])
+                                prevs[i] = 1;
+                            else
+                                prevs[i] = 0;
+                        }
+                    }
+                    return true;
+                }
+                if (typeof jQuery === 'undefined' || !minVersion('1.8')) {
                     flexloader.jqConflict = typeof jQuery !== 'undefined' ? true : false;
                     return true;
                 }
