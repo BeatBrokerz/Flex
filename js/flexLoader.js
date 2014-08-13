@@ -255,9 +255,13 @@ flexloader.init = function () {
  * @returns string The url to the resource (with appropriate version param for core resources)
  */
 flexloader.src = function (resource) {
+    if (resource.src.indexOf('//') == 0) {
+        resource.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + resource.src;
+    }
     if (resource.core) {
         return resource.src.indexOf('?') >= 0 ? resource.src + '&core=' + flexloader.coreVer : resource.src + '?core=' + flexloader.coreVer;
     }
+
     return resource.src;
 }
 

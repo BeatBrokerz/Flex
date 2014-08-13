@@ -104,7 +104,7 @@ var flexStore = flexStore || {};
     myApp.trigger = $.appflow.trigger;
     myApp.sequence = $.appflow.sequence;
 
-    myApp.dataDomain = myApp.dataDomain || '//www.beatbrokerz.com';
+    myApp.dataDomain = myApp.dataDomain || ('https:' == document.location.protocol ? 'https:' : 'http:') + '//www.beatbrokerz.com';
     myApp.dataURL = myApp.dataURL || '/flexstore/get';
     myApp.postDomain = myApp.postDomain || '';
     myApp.postPath = myApp.postPath || '';
