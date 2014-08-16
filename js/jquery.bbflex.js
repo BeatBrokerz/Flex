@@ -52,7 +52,19 @@
                 }
                 if (typeof(process[event]) == 'undefined') process[event] = {};
                 if (typeof(process[event][hook]) == 'undefined') process[event][hook] = [];
-                process[event][hook].push(func);
+                if (typeof func === 'function') {
+                    process[event][hook].push(func);
+                }
+            },
+            bindonce: function (event, hook, func) {
+                if (typeof(hook) == 'function') {
+                    func = hook;
+                    hook = "process";
+                }
+                if (typeof func === 'function') {
+                    func.runOnce = true;
+                    $.appflow.bind(event, hook, func);
+                }
             },
             trigger: function () {
                 var args = [];
@@ -107,8 +119,10 @@
                     forks = [];
                     // trigger hooks before event
                     if (typeof(process[event][hook]) != 'undefined') {
-                        $.each(process[event][hook], function (index, value) {
-                            var result = process[event][hook][index].apply(eventData, args);
+                        $.each(process[event][hook], function (index, func) {
+                            if (!func) { return; }
+                            if (func.runOnce) { delete process[event][hook][index]; }
+                            var result = func.apply(eventData, args);
                             if (typeof result === 'object' && result.control) {
                                 if (result.control.fork) {
                                     typeof result.control.fork === 'string' ? forks.push(result.control.fork) : $.each(result.control.fork, function (i, trig) {
@@ -131,6 +145,10 @@
                             if (halt) {
                                 return false;
                             }
+                        });
+                        /* remove any deleted functions */
+                        process[event][hook] = $.map(process[event][hook], function(func) {
+                           if (func) { return func; }
                         });
                     }
                     if (forks.length) {
@@ -156,6 +174,7 @@
 
     $.appflow.trigger = $.appflow.methods['trigger'];
     $.appflow.bind = $.appflow.methods['bind'];
+    $.appflow.bindonce = $.appflow.methods['bindonce'];
     $.appflow.sequence = $.appflow.methods['sequence'];
 
     $.bbflex = function (method) {

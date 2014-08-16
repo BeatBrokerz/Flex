@@ -97,37 +97,40 @@
  */
 var flexStore = flexStore || {};
 
-(function ($, myApp) {
+(function ($, App) {
 
-    myApp.Data = myApp.Data || {};
-    myApp.on = $.appflow.bind;
-    myApp.trigger = $.appflow.trigger;
-    myApp.sequence = $.appflow.sequence;
+    App.Data = App.Data || {};
+    App.on = $.appflow.bind;
+    App.one = App.once = $.appflow.bindonce;
+    App.trigger = $.appflow.trigger;
+    App.sequence = $.appflow.sequence;
 
-    myApp.dataDomain = myApp.dataDomain || ('https:' == document.location.protocol ? 'https:' : 'http:') + '//www.beatbrokerz.com';
-    myApp.dataURL = myApp.dataURL || '/flexstore/get';
-    myApp.postDomain = myApp.postDomain || '';
-    myApp.postPath = myApp.postPath || '';
-    myApp.checkoutURL = myApp.checkoutURL || 'https://api.beatbrokerz.com/cart/checkout';
+    App.dataDomain = App.dataDomain || ('https:' == document.location.protocol ? 'https:' : 'http:') + '//www.beatbrokerz.com';
+    App.dataURL = App.dataURL || '/flexstore/get';
+    App.postDomain = App.postDomain || '';
+    App.postPath = App.postPath || '';
+    App.checkoutURL = App.checkoutURL || 'https://api.beatbrokerz.com/cart/checkout';
+
+    App.ajaxActive = ko.observable(false);
 
     var session_id = $.cookie('_FSID') || undefined;
     if (session_id) {
-        myApp.session_id = session_id;
+        App.session_id = session_id;
     }
 
     /** App is launched here by our loader. **/
-    myApp.launch = function (complete) {
+    App.launch = function (complete) {
 
         complete = complete || function () {
         };
 
         (function () {
 
-            if (myApp.app) {
+            if (App.app) {
                 return;
             }
 
-            myApp.trigger('bbflex-app-prelaunch');
+            App.trigger('bbflex-app-prelaunch');
 
             if (!$('.dx-viewport').length) {
                 $('body').wrapInner('<div class="bbflex-page-body">').append('<div class="dx-viewport"></div>');
@@ -143,28 +146,28 @@ var flexStore = flexStore || {};
                 }
             }).resize();
 
-            myApp.app = new DevExpress.framework.html.HtmlApplication({
-                namespace: myApp,
-                disableViewCache: myApp.disableViewCache || true,
-                defaultLayout: myApp.defaultLayout || "slideout",
-                navigation: myApp.navigation,
-                commandMapping: myApp.commandMapping,
+            App.app = new DevExpress.framework.html.HtmlApplication({
+                namespace: App,
+                disableViewCache: App.disableViewCache || true,
+                defaultLayout: App.defaultLayout || "slideout",
+                navigation: App.navigation,
+                commandMapping: App.commandMapping,
                 viewPort: { allowZoom: true, allowPan: true }
             });
 
             // View Shown Handler: Analytics, Messaging, etc.
-            myApp.app.viewShown.add(function (args) {
+            App.app.viewShown.add(function (args) {
 
                 var viewModel = args.viewInfo.model;
-                myApp.app.navigated = true;
+                App.app.navigated = true;
 
                 // analytics
-                //myApp.trackPageView({ affiliate: myApp.appSettings.acct_id, channel: myApp.appSettings.app_name });
+                //App.trackPageView({ affiliate: App.appSettings.acct_id, channel: App.appSettings.app_name });
 
                 // messaging
-                if (myApp.Data.msgQue) {
-                    myApp.showMessages(myApp.Data.msgQue);
-                    delete myApp.Data.msgQue;
+                if (App.Data.msgQue) {
+                    App.showMessages(App.Data.msgQue);
+                    delete App.Data.msgQue;
                 }
 
             });
@@ -178,9 +181,9 @@ var flexStore = flexStore || {};
             }
 
             // register the url routers for our app
-            for (i = 0; i < myApp.routers.length; i++) {
-                var menu = myApp.routers[i];
-                myApp.app.router.register(menu.path, menu.router);
+            for (i = 0; i < App.routers.length; i++) {
+                var menu = App.routers[i];
+                App.app.router.register(menu.path, menu.router);
             }
 
             // load any widgets from the loading queue before we initialize
@@ -190,32 +193,31 @@ var flexStore = flexStore || {};
             flexloader.data.widgets = [];
 
             // load any templates from the loading queue before we navigate
-            myApp.app.navigating.add(function (e) {
+            App.app.navigating.add(function (e) {
                 if (flexloader.data.templates && flexloader.data.templates.length) {
                     $.each(flexloader.data.templates, function (i, template) {
-                        myApp.app.viewEngine._loadTemplatesFromMarkup($('<div>').html(template));
+                        App.app.viewEngine._loadTemplatesFromMarkup($('<div>').html(template));
                     });
                     flexloader.data.templates = [];
                 }
             });
 
             // Initialize the store
-            myApp.refreshData({ data: 'all' }, function (data) {
+            App.refreshData({ data: 'all' }, function (data) {
 
-                myApp.trigger('bbflex-app-launching', data);
+                App.trigger('bbflex-app-launching', data);
 
                 // Process Playlists
-                for (var i in data.playlists) {
-                    var playlist = myApp.Music.playlists[i];
+                $.each(data.playlists, function(id, playlist) {
                     if (playlist.source == 'ajax') {
                         if (playlist.isDefault) {
-                            myApp.Music.usePlaylist(playlist.id);
+                            App.Music.usePlaylist(playlist.id);
                             playlist.selectOnLoad = true;
                         }
-                        playlist.dataSource = myApp.Datasource.create(myApp.appSettings.app_id, playlist);
-                        myApp.Datasource.reload(playlist);
+                        playlist.dataSource = App.Datasource.create(App.appSettings.app_id, playlist);
+                        App.Datasource.reload(playlist);
                     }
-                }
+                });
 
                 // fire up our widgets on the page
                 $.bbflex.init();
@@ -223,8 +225,8 @@ var flexStore = flexStore || {};
                 // trigger any launch callback
                 complete();
 
-                myApp.initialized = true;
-                myApp.trigger('bbflex-app-launched', data);
+                App.initialized = true;
+                App.trigger('bbflex-app-launched', data);
 
             });
 
@@ -236,10 +238,10 @@ var flexStore = flexStore || {};
      * Command Mapping
      */
 
-    myApp.commandMapping = {};
+    App.commandMapping = {};
     $.each(['ios-header-toolbar', 'android-header-toolbar', 'win8-phone-appbar', 'tizen-header-toolbar', 'generic-header-toolbar', 'desktop-toolbar'],
         function (index, commandContainer) {
-            myApp.commandMapping[commandContainer] = {
+            App.commandMapping[commandContainer] = {
                 commands: [
                     { id: 'login', align: 'right', showText: false },
                     { id: 'account', align: 'right', showText: false },
@@ -258,7 +260,7 @@ var flexStore = flexStore || {};
     /**
      * URL Routers
      */
-    myApp.routers = [
+    App.routers = [
 
         // Discounts
         { path: "discount/:id", router: { view: 'discount' } },
@@ -283,27 +285,27 @@ var flexStore = flexStore || {};
      *  Convenience Functions
      */
 
-    myApp.modal = function (data, options) {
-        myApp.modal.current = myApp.trigger('bbflex-modal-open', data, options);
+    App.modal = function (data, options) {
+        App.modal.current = App.trigger('bbflex-modal-open', data, options);
     }
 
-    myApp.modal.close = function () {
-        myApp.trigger('bbflex-modal-close', myApp.modal.current);
+    App.modal.close = function () {
+        App.trigger('bbflex-modal-close', App.modal.current);
     }
 
-    myApp.refreshData = function (request, callback) {
+    App.refreshData = function (request, callback) {
 
         var requestData = request.data instanceof Array ? request.data.join(',') : request.data;
         var asyncmode = typeof request.wait !== 'undefined' ? !request.wait : true;
         asyncmode = true;
 
-        myApp.ajax({
-            url: myApp.dataDomain + myApp.dataURL,
+        App.ajax({
+            url: App.dataDomain + App.dataURL,
             data: { data: requestData },
             async: asyncmode,
             success: function (result) {
 
-                $.extend(myApp.Data, result);
+                $.extend(App.Data, result);
 
                 // trigger the passed callback, if any
                 if (typeof callback == 'function') {
@@ -315,28 +317,32 @@ var flexStore = flexStore || {};
 
     };
 
-    // A wrapper for ajax requests in our app
-    myApp.ajax = function (params) {
+    var activeAjaxRequests = 0;
 
-        // save and clear any success callback since we have our own
-        var callback = params.success || function () {
-        };
+    // A wrapper for ajax requests in our app
+    App.ajax = function (params) {
+
+        // save and clear any callbacks since we implement our own
+        var successCallback = params.success || new Function;
+        var errorCallback = params.error || new Function;
+        var completeCallback = params.complete || new Function;
+
         delete params.success;
+        delete params.error;
+        delete params.complete;
 
         // add the app id to our request
         params.data = params.data || {};
-        params.data.app_id = myApp.appSettings.app_id;
-
-        myApp.trigger('bbflex-ajax-working', params);
+        params.data.app_id = App.appSettings.app_id;
 
         if (session_id) {
             params.data['_fsid'] = session_id;
         }
 
         var settings = {
-            url: myApp.dataDomain + myApp.dataURL,
+            url: App.dataDomain + App.dataURL,
             dataType: "jsonp",
-            success: function (result) {
+            success: function (result, textStatus, jqXHR) {
 
                 /* Automated Processing */
 
@@ -345,48 +351,48 @@ var flexStore = flexStore || {};
                     if (result.session.storage) {
                         $.cookie('_FSID', result.session.storage.id, { expires: 30, path: '/' });
                         session_id = result.session.storage.id;
-                        myApp.session_id = session_id;
+                        App.session_id = session_id;
                     }
                     else if (result.session.established) {
                         $.removeCookie('_FSID');
                         session_id = undefined;
-                        delete myApp.session_id;
+                        delete App.session_id;
                     }
                 }
 
                 // process playlist data
                 if (result.playlists) {
                     $.each(result.playlists, function (id, playlist) {
-                        myApp.Music.resetPlaylist($.extend({}, playlist));
+                        App.Music.resetPlaylist($.extend({}, playlist));
                         $.each(playlist.media, function (i, media) {
-                            myApp.Music.addToPlaylist(playlist.id, media);
+                            App.Music.addToPlaylist(playlist.id, media);
                         });
                         if (typeof playlist.total_count !== 'undefined') {
-                            myApp.Music.Playlist[playlist.id].count(playlist.total_count);
+                            App.Music.Playlist[playlist.id].count(playlist.total_count);
                         }
                     });
                 }
 
                 // update any cart information
                 if (result.cart) {
-                    myApp.Cart.data(result.cart);
+                    App.Cart.data(result.cart);
                 }
 
                 // add any producer profiles
                 if (result.Producers) {
                     $.each(result.Producers, function (uid, producer) {
-                        var producers = myApp.Producers.byId();
+                        var producers = App.Producers.byId();
                         if (!producers[uid]) {
                             producers[uid] = producer;
-                            myApp.Producers.byId(producers);
-                            myApp.Producers.list.push(producer);
+                            App.Producers.byId(producers);
+                            App.Producers.list.push(producer);
                             if (producer.discounts.length) {
                                 $.each(producer.discounts, function (i, discount) {
-                                    var discounts = myApp.Discounts.byId();
+                                    var discounts = App.Discounts.byId();
                                     if (!discounts[discount.id]) {
                                         discounts[discount.id] = discount;
-                                        myApp.Discounts.byId(discounts);
-                                        myApp.Discounts.list.push(discount);
+                                        App.Discounts.byId(discounts);
+                                        App.Discounts.list.push(discount);
                                     }
                                 });
                             }
@@ -395,22 +401,51 @@ var flexStore = flexStore || {};
                 }
 
                 // execute the calling handler
-                callback(result);
+                successCallback(result, textStatus, jqXHR);
 
-                // execute any other registered handlers
-                myApp.trigger('bbflex-ajax-complete', params, result);
+                // execute any registered 'success' handlers
+                App.trigger('bbflex-ajax-success', params, result, textStatus);
 
-                myApp.showMessages(result.messages);
+                App.showMessages(result.messages);
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+
+                errorCallback(jqXHR, textStatus, errorThrown);
+
+                // execute any registered 'error' handlers
+                App.trigger('bbflex-ajax-error', params, textStatus, errorThrown);
+
+            },
+            complete: function(jqXHR, textStatus) {
+
+                completeCallback(jqXHR, textStatus);
+
+                // execute any registered 'complete' handlers
+                App.trigger('bbflex-ajax-complete', params, textStatus);
+
+                if (--activeAjaxRequests == 0) {
+                    App.trigger('bbflex-ajax-idle');
+                }
 
             }
         };
 
         $.extend(settings, params);
+        activeAjaxRequests++;
+        if (!App.ajaxActive()) {
+            App.ajaxActive(true);
+            App.trigger('bbflex-ajax-active');
+        }
+        App.trigger('bbflex-ajax-working', params);
+
         $.ajax(settings);
 
     };
 
-    myApp.showMessages = function (messages, delay) {
+    App.once('bbflex-ajax-idle', function() { App.trigger('bbflex-app-final')});
+
+    App.showMessages = function (messages, delay) {
         if (messages) {
             delay = delay || 0;
             var messageDelay = 3000;
@@ -418,7 +453,7 @@ var flexStore = flexStore || {};
             $.each(messages, function (type, message) {
                 type = type == 'status' ? 'info' : type;
                 setTimeout(function () {
-                    if (myApp.Data.fullscreen) {
+                    if (App.Data.fullscreen) {
                         DevExpress.ui.notify(message.join(', '), type, messageDelay);
                     }
                     else {
@@ -442,7 +477,7 @@ var flexStore = flexStore || {};
 
 
     /* Abstraction layer for the PhoneJS Datasource object */
-    myApp.Datasource = {
+    App.Datasource = {
 
         reload: function (playlist, options) {
             if (playlist.dataSource) {
@@ -467,7 +502,7 @@ var flexStore = flexStore || {};
 
                     // start loading new, or attempt to get the next page
                     if (loadOptions.refresh) {
-                        myApp.Music.resetPlaylist(playlist);
+                        App.Music.resetPlaylist(playlist);
                         viewModel.page = 0;
                     }
                     else {
@@ -476,15 +511,15 @@ var flexStore = flexStore || {};
 
                     // bail out if we know there is nothing more to load
                     if (viewModel.page &&
-                        ((playlist.maxsize && (playlist.loadsize + ((viewModel.page - 1) * playlist.pagesize)) + 1 > viewModel.count) || myApp.Music.playlists[playlist.id].media.length >= viewModel.count)
+                        ((playlist.maxsize && (playlist.loadsize + ((viewModel.page - 1) * playlist.pagesize)) + 1 > viewModel.count) || App.Music.playlists[playlist.id].media.length >= viewModel.count)
                         ) {
-                        myApp.trigger('bbflex-playlist-outofdata', playlist);
+                        App.trigger('bbflex-playlist-outofdata', playlist);
                         return [];
                     }
 
                     // setup our request parameters
                     var reqParams = {
-                        app_id: myApp.appSettings.app_id,
+                        app_id: App.appSettings.app_id,
                         music: playlist.id,
                         page: viewModel.page
                     }
@@ -496,11 +531,11 @@ var flexStore = flexStore || {};
                     }
 
                     var deferred = new $.Deferred();
-                    myApp.ajax({
+                    App.ajax({
                         data: reqParams,
                         success: function (list) {
                             if (typeof list !== 'object' || list.total_count < 1) {
-                                myApp.trigger('bbflex-playlist-outofdata', playlist);
+                                App.trigger('bbflex-playlist-outofdata', playlist);
                                 deferred.resolve([]);
                                 return;
                             }
@@ -510,24 +545,24 @@ var flexStore = flexStore || {};
 
                                 // add beats into our playlist
                                 beat.playlist = myPlaylist;
-                                beat.playlistIndex = myApp.Music.addToPlaylist(myPlaylist, beat);
+                                beat.playlistIndex = App.Music.addToPlaylist(myPlaylist, beat);
 
                                 return beat;
 
                             });
-                            myApp.Music.Playlist[myPlaylist].count(list.total_count);
+                            App.Music.Playlist[myPlaylist].count(list.total_count);
                             deferred.resolve(beats);
 
                             if (loadOptions.refresh) {
                                 if (playlist.selectOnLoad) {
                                     delete playlist.selectOnLoad;
-                                    myApp.Music.usePlaylist(myPlaylist, true);
-                                    if (myApp.Music.playlists[myPlaylist].media[0]) {
-                                        myApp.Music.selectMedia(myApp.Music.playlists[myPlaylist].media[0]);
+                                    App.Music.usePlaylist(myPlaylist, true);
+                                    if (App.Music.playlists[myPlaylist].media[0]) {
+                                        App.Music.selectMedia(App.Music.playlists[myPlaylist].media[0]);
                                     }
                                 }
                                 if (playlist.autoplay) {
-                                    myApp.Music.playMedia(myApp.Music.playlists[myPlaylist].media[0]);
+                                    App.Music.playMedia(App.Music.playlists[myPlaylist].media[0]);
                                 }
                             }
 
@@ -542,40 +577,40 @@ var flexStore = flexStore || {};
     };
 
     /* Abstraction Layer for PhoneJS Devices */
-    myApp.device = DevExpress.devices.current();
+    App.device = DevExpress.devices.current();
 
-    myApp.fullScreen = function (view) {
-        if (myApp.appSettings.bootmode == 'disabled') {
+    App.fullScreen = function (view) {
+        if (App.appSettings.bootmode == 'disabled') {
             console.log('fullscreen disabled');
             return;
         }
-        myApp.Data.fullscreen = true;
+        App.Data.fullscreen = true;
         if (view && view.fwViewModel) view = undefined; // allow direct ko bindings
-        view = view || (myApp.app.navigated ? undefined : (myApp.Music.playing() ? 'nowplaying' : 'home'));
-        myApp.trigger('bbflex-fullscreen-opened', view);
+        view = view || (App.app.navigated ? undefined : (App.Music.playing() ? 'nowplaying' : 'home'));
+        App.trigger('bbflex-fullscreen-opened', view);
         $('.bbflex-page-body').css('display', 'none');
         $('.dx-viewport').addClass('fullscreen');
-        if (view) myApp.app.navigate(view);
+        if (view) App.app.navigate(view);
     }
 
-    myApp.closeApp = function () {
-        myApp.Data.fullscreen = false;
+    App.closeApp = function () {
+        App.Data.fullscreen = false;
         $('.dx-viewport').removeClass('fullscreen');
         $('.bbflex-page-body').css('display', '');
-        myApp.trigger('bbflex-fullscreen-closed');
+        App.trigger('bbflex-fullscreen-closed');
     }
 
-    myApp.receiveMessage = function (message) {
-        myApp.trigger('message-received', message);
+    App.receiveMessage = function (message) {
+        App.trigger('message-received', message);
     }
 
-    window.addEventListener("message", myApp.receiveMessage, false);
+    window.addEventListener("message", App.receiveMessage, false);
 
 
     /**
      *  Music Player Interface
      */
-    myApp.Music = {
+    App.Music = {
 
         /* Storage & Reference */
         playlists: {},
@@ -606,34 +641,34 @@ var flexStore = flexStore || {};
                     id = playlist;
                     break;
                 default:
-                    id = myApp.Music.currentPlaylist;
+                    id = App.Music.currentPlaylist;
             }
-            if (myApp.Music.playlists[id] && myApp.Music.playlists[id].dataSource) {
-                myApp.Music.playlists[id].dataSource.nextPage();
+            if (App.Music.playlists[id] && App.Music.playlists[id].dataSource) {
+                App.Music.playlists[id].dataSource.nextPage();
             }
         },
 
         showLicense: function (license) {
-            if (myApp.Data.fullscreen) return;
-            myApp.trigger('bbflex-show-license', license);
+            if (App.Data.fullscreen) return;
+            App.trigger('bbflex-show-license', license);
         },
 
         showLicenseOptions: function (media) {
-            if (myApp.Data.fullscreen) return;
+            if (App.Data.fullscreen) return;
             if (media && media.fwViewModel) media = undefined; // allow direct ko bindings
-            media = media || myApp.Music.nowplaying();
-            myApp.trigger('bbflex-show-license-options', media);
+            media = media || App.Music.nowplaying();
+            App.trigger('bbflex-show-license-options', media);
         },
 
         showPlaylists: function () {
-            if (myApp.Data.fullscreen) return;
-            myApp.trigger('bbflex-playlists-show');
+            if (App.Data.fullscreen) return;
+            App.trigger('bbflex-playlists-show');
         },
 
         createPlaylist: function (playlist) {
             if (!playlist) return;
-            myApp.trigger('bbflex-playlist-creating', playlist);
-            myApp.Music.resetPlaylist(playlist);
+            App.trigger('bbflex-playlist-creating', playlist);
+            App.Music.resetPlaylist(playlist);
         },
 
         resetPlaylist: function (playlist) {
@@ -650,7 +685,7 @@ var flexStore = flexStore || {};
             }
 
             // dereference and default the playlist structure
-            myApp.Music.playlists[playlist.id] = {
+            App.Music.playlists[playlist.id] = {
                 id: playlist.id,
                 title: '',
                 media: [],
@@ -661,47 +696,47 @@ var flexStore = flexStore || {};
             };
 
             // reset current playlist observable if needed
-            if (myApp.Music.currentPlaylist == playlist.id) {
-                myApp.Music.activePlaylistItems.removeAll();
+            if (App.Music.currentPlaylist == playlist.id) {
+                App.Music.activePlaylistItems.removeAll();
             }
 
             // extend the playlist with any old playlist data
             playlist.media = [];
-            $.extend(myApp.Music.playlists[playlist.id], playlist);
+            $.extend(App.Music.playlists[playlist.id], playlist);
 
-            if (typeof myApp.Music.Playlist[playlist.id] === 'undefined') {
-                myApp.Music.Playlist[playlist.id] = ko.observableArray([]);
-                myApp.Music.Playlist[playlist.id].nowplaying = ko.observable({});
-                myApp.Music.Playlist[playlist.id].count = ko.observable(0);
-                myApp.Music.playlistKeys.push(playlist.id);
+            if (typeof App.Music.Playlist[playlist.id] === 'undefined') {
+                App.Music.Playlist[playlist.id] = ko.observableArray([]);
+                App.Music.Playlist[playlist.id].nowplaying = ko.observable({});
+                App.Music.Playlist[playlist.id].count = ko.observable(0);
+                App.Music.playlistKeys.push(playlist.id);
             }
             else {
-                myApp.Music.Playlist[playlist.id].removeAll();
-                myApp.Music.Playlist[playlist.id].nowplaying({});
-                myApp.Music.Playlist[playlist.id].count(0);
+                App.Music.Playlist[playlist.id].removeAll();
+                App.Music.Playlist[playlist.id].nowplaying({});
+                App.Music.Playlist[playlist.id].count(0);
             }
-            myApp.trigger('bbflex-playlist-reset', playlist.id);
+            App.trigger('bbflex-playlist-reset', playlist.id);
         },
 
         addToPlaylist: function (id, media) {
 
             // create the playlist if it doesn't exist
-            if (typeof myApp.Music.playlists[id] === 'undefined') {
-                myApp.Music.resetPlaylist({ id: id, title: id });
+            if (typeof App.Music.playlists[id] === 'undefined') {
+                App.Music.resetPlaylist({ id: id, title: id });
             }
 
             // add the beat to our playlist
-            myApp.Music.playlists[id].media.push(media);
-            myApp.Music.Playlist[id].push(media);
+            App.Music.playlists[id].media.push(media);
+            App.Music.Playlist[id].push(media);
 
             // also, add the beat to the active playlist if we're using it
-            if (myApp.Music.currentPlaylist == id) {
-                myApp.Music.Player.add(media);
-                myApp.Music.activePlaylistItems.push(media);
+            if (App.Music.currentPlaylist == id) {
+                App.Music.Player.add(media);
+                App.Music.activePlaylistItems.push(media);
             }
 
-            var playlistIndex = myApp.Music.playlists[id].media.length - 1;
-            myApp.trigger('bbflex-playlist-updated', id, media, playlistIndex);
+            var playlistIndex = App.Music.playlists[id].media.length - 1;
+            App.trigger('bbflex-playlist-updated', id, media, playlistIndex);
 
             // send back a reference to the index we just added
             return playlistIndex;
@@ -716,42 +751,42 @@ var flexStore = flexStore || {};
             }
 
             // always play new media using our multipurpose internal player
-            myApp.Music.Core = $.bbflex.core;
-            myApp.Music.Player = $.bbflex.player;
+            App.Music.Core = $.bbflex.core;
+            App.Music.Player = $.bbflex.player;
 
             // convert shopping cart object into approprate beat object
             if (media.cart_item_id) {
-                var beat = myApp.Music.Playlist.cart()[media.playlistIndex];
+                var beat = App.Music.Playlist.cart()[media.playlistIndex];
                 media = beat;
             }
 
             // if this beat isn't already now playing, load and go!
-            if (myApp.Music.notSelected(media)) {
-                myApp.Music.selectMedia(media);
+            if (App.Music.notSelected(media)) {
+                App.Music.selectMedia(media);
             }
 
-            myApp.Music.play();
+            App.Music.play();
 
         },
 
         selectMedia: function (media) {
-            if (myApp.Music.notSelected(media)) {
-                myApp.Music.usePlaylist(media.playlist);
-                myApp.Music.Player.select(media.playlistIndex);
-                myApp.trigger('bbflex-nowplaying', media);
+            if (App.Music.notSelected(media)) {
+                App.Music.usePlaylist(media.playlist);
+                App.Music.Player.select(media.playlistIndex);
+                App.trigger('bbflex-nowplaying', media);
             }
         },
 
         isSelected: function (media) {
             return (
-                myApp.Music.nowplaying() &&
-                    media.playlist == myApp.Music.currentPlaylist &&
-                    myApp.Music.nowplaying().playlistIndex == media.playlistIndex
+                App.Music.nowplaying() &&
+                    media.playlist == App.Music.currentPlaylist &&
+                    App.Music.nowplaying().playlistIndex == media.playlistIndex
                 );
         },
 
         notSelected: function (media) {
-            return !myApp.Music.isSelected(media);
+            return !App.Music.isSelected(media);
         },
 
         // used to make sure that we're on the right playlist
@@ -759,35 +794,35 @@ var flexStore = flexStore || {};
             if (!id) return;
 
             // if this isn't already our active playlist, change the playlist!
-            if (myApp.Music.currentPlaylist !== id || forced) {
+            if (App.Music.currentPlaylist !== id || forced) {
                 /*
                  * We always synchronize the playlist to our internal player
                  * and we check if the internal player exists because we select a
                  * default playlist during launch() before the player is even initialized!
                  */
-                myApp.Music.paused(true);
-                if ($.bbflex.player) $.bbflex.player.setPlaylist(myApp.Music.playlists[id].media);
-                myApp.Music.activePlaylistItems.removeAll();
-                $.each(myApp.Music.playlists[id].media, function (i, media) {
-                    myApp.Music.activePlaylistItems.push(media);
+                App.Music.paused(true);
+                if ($.bbflex.player) $.bbflex.player.setPlaylist(App.Music.playlists[id].media);
+                App.Music.activePlaylistItems.removeAll();
+                $.each(App.Music.playlists[id].media, function (i, media) {
+                    App.Music.activePlaylistItems.push(media);
                 });
-                myApp.Music.activePlaylist(myApp.Music.playlists[id]);
-                myApp.trigger('bbflex-playlist-changed', id);
-                myApp.Music.currentPlaylist = id;
+                App.Music.activePlaylist(App.Music.playlists[id]);
+                App.trigger('bbflex-playlist-changed', id);
+                App.Music.currentPlaylist = id;
             }
         },
 
         changePlaylist: function (playlist) {
             var id = typeof playlist === 'object' ? playlist.id : playlist;
-            if (myApp.Music.currentPlaylist !== id) {
-                if (myApp.Music.playlists[id] && myApp.Music.playlists[id].media.length) {
-                    myApp.Music.selectMedia(myApp.Music.playlists[id].media[0]);
+            if (App.Music.currentPlaylist !== id) {
+                if (App.Music.playlists[id] && App.Music.playlists[id].media.length) {
+                    App.Music.selectMedia(App.Music.playlists[id].media[0]);
                 }
             }
         },
 
         playlistLength: function (id) {
-            return myApp.Music.playlists[id].media.length;
+            return App.Music.playlists[id].media.length;
         },
 
         addInterface: function (face, options) {
@@ -819,31 +854,31 @@ var flexStore = flexStore || {};
             var css = options.cssSelector;
 
             face.find(css.play).click(function () {
-                myApp.Music.play();
+                App.Music.play();
             });
             face.find(css.pause).click(function () {
-                myApp.Music.pause();
+                App.Music.pause();
             });
             face.find(css.previous).click(function () {
-                myApp.Music.playPrevious();
+                App.Music.playPrevious();
             });
             face.find(css.next).click(function () {
-                myApp.Music.playNext();
+                App.Music.playNext();
             });
             face.find(css.mute).click(function () {
-                myApp.Music.mute();
+                App.Music.mute();
             });
             face.find(css.unmute).click(function () {
-                myApp.Music.unmute();
+                App.Music.unmute();
             });
             face.find(css.fullScreen).click(function () {
-                myApp.fullScreen();
+                App.fullScreen();
             });
             face.find(css.repeat).click(function() {
-                myApp.Music.repeat();
+                App.Music.repeat();
             });
             face.find(css.repeatOff).click(function() {
-                myApp.Music.repeatOff();
+                App.Music.repeatOff();
             });
             face.find(css.playBar + ', ' + css.seekBar).click(function (e) {
                 var seekBar = $(this).hasClass(css.playBar.replace('.', '')) ? $(this).closest(css.seekBar) : $(this);
@@ -851,7 +886,7 @@ var flexStore = flexStore || {};
                 var x = e.pageX - offset.left;
                 var w = seekBar.width();
                 var p = 100 * x / w;
-                myApp.Music.playHead(p);
+                App.Music.playHead(p);
             });
             face.find(css.volumeBar + ', ' + css.volumeBarValue).click(function (e) {
                 var volumeBar = $(this).hasClass(css.volumeBarValue.replace('.', '')) ? $(this).closest(css.volumeBar) : $(this);
@@ -861,15 +896,15 @@ var flexStore = flexStore || {};
                     y = volumeBar.height() - e.pageY + offset.top,
                     h = volumeBar.height();
                 if (options.verticalVolume) {
-                    myApp.Music.volume(y / h);
+                    App.Music.volume(y / h);
                 } else {
-                    myApp.Music.volume(x / w);
+                    App.Music.volume(x / w);
                 }
             });
 
-            myApp.on('bbflex-timeupdate', function (event) {
+            App.on('bbflex-timeupdate', function (event) {
                 // only update the interface if this event is being triggered by our currently active player
-                if ($(event.target)[0] === myApp.Music.Core[0]) {
+                if ($(event.target)[0] === App.Music.Core[0]) {
                     face.find(css.duration).html($.jPlayer.convertTime(event.jPlayer.status.duration));
                     face.find(css.currentTime).html($.jPlayer.convertTime(event.jPlayer.status.currentTime));
                     face.find(css.playBar).css('width', event.jPlayer.status.currentPercentAbsolute + '%');
@@ -881,7 +916,7 @@ var flexStore = flexStore || {};
                 face.find(css.volumeBarValue).css(dim, (vol * 100) + "%");
             };
 
-            myApp.on('bbflex-volumechange', function (event) {
+            App.on('bbflex-volumechange', function (event) {
                 var vol = event.jPlayer.options.volume;
                 event.jPlayer.options.muted ?
                     face.find(css.volumeBarValue).addClass('muted') && face.find(css.mute).hide() && face.find(css.unmute).show() :
@@ -889,25 +924,25 @@ var flexStore = flexStore || {};
                 syncThisVolume(vol);
             });
 
-            myApp.on('bbflex-repeat', function (event) {
+            App.on('bbflex-repeat', function (event) {
                event.jPlayer.options.loop ?
                    face.find(css.repeat).hide() && face.find(css.repeatOff).show() :
                    face.find(css.repeatOff).hide() && face.find(css.repeat).show();
             });
 
-            myApp.Music.playing.subscribe(function (playing) {
+            App.Music.playing.subscribe(function (playing) {
                 playing ?
                     face.find(css.play).hide() && face.find(css.pause).show() :
                     face.find(css.pause).hide() && face.find(css.play).show();
             });
 
             // synchronize the initial play/pause buttons state
-            myApp.Music.playing() ?
+            App.Music.playing() ?
                 face.find(css.play).hide() && face.find(css.pause).show() :
                 face.find(css.pause).hide() && face.find(css.play).show();
 
             // synchronize the initial volume level
-            syncThisVolume(myApp.Music.volume());
+            syncThisVolume(App.Music.volume());
 
         },
 
@@ -917,57 +952,57 @@ var flexStore = flexStore || {};
 
         play: function (index) {
             if (index && index.fwViewModel) index = undefined; // allow direct ko bindings
-            myApp.Music.Player.play(index);
+            App.Music.Player.play(index);
         },
 
         pause: function () {
-            myApp.Music.Player.pause();
+            App.Music.Player.pause();
         },
 
         stop: function () {
-            myApp.Music.Player.pause();
+            App.Music.Player.pause();
         },
 
         playNext: function () {
-            myApp.Music.Player.next();
+            App.Music.Player.next();
         },
 
         playPrevious: function () {
-            myApp.Music.Player.previous();
+            App.Music.Player.previous();
         },
 
         playHead: function (position) {
-            myApp.Music.Core.jPlayer('playHead', position);
+            App.Music.Core.jPlayer('playHead', position);
         },
 
         mute: function () {
-            myApp.Music.Core.jPlayer('mute');
+            App.Music.Core.jPlayer('mute');
         },
         unmute: function () {
-            myApp.Music.Core.jPlayer('unmute');
+            App.Music.Core.jPlayer('unmute');
         },
         repeat: function () {
-            myApp.Music.Core.jPlayer('option', 'loop', true);
+            App.Music.Core.jPlayer('option', 'loop', true);
         },
         repeatOff: function () {
-            myApp.Music.Core.jPlayer('option', 'loop', false);
+            App.Music.Core.jPlayer('option', 'loop', false);
         }
 
     };
 
-    myApp.Music.playing = ko.computed(function () {
-        return !myApp.Music.paused();
+    App.Music.playing = ko.computed(function () {
+        return !App.Music.paused();
     });
-    myApp.Music.volume.subscribe(function (vol) {
-        myApp.Music.Core.jPlayer("volume", vol);
+    App.Music.volume.subscribe(function (vol) {
+        App.Music.Core.jPlayer("volume", vol);
     });
-    myApp.on('bbflex-volumechange', function (event) {
-        myApp.Music.muted(event.jPlayer.options.muted);
+    App.on('bbflex-volumechange', function (event) {
+        App.Music.muted(event.jPlayer.options.muted);
     });
 
-    myApp.Music.playlistKeys.subscribe(function (id) {
+    App.Music.playlistKeys.subscribe(function (id) {
         var listGroups = {};
-        $.each(myApp.Music.playlists, function (id, list) {
+        $.each(App.Music.playlists, function (id, list) {
             if (typeof listGroups[list.category] === 'object') {
                 listGroups[list.category].items.push(list);
             }
@@ -981,16 +1016,16 @@ var flexStore = flexStore || {};
         var groups = $.map(listGroups, function (group, category) {
             return group;
         });
-        myApp.Music.groupedPlaylists(groups);
+        App.Music.groupedPlaylists(groups);
     });
 
     // Preload the shopping cart playlist
-    myApp.Music.resetPlaylist({ id: 'cart', title: 'Shopping Cart', description: '<p>Beats that are in your shopping cart.</p>' });
+    App.Music.resetPlaylist({ id: 'cart', title: 'Shopping Cart', description: '<p>Beats that are in your shopping cart.</p>' });
 
     /**
      *   Content Interface
      */
-    myApp.Content = {
+    App.Content = {
         prepare: function (appContent, callback) {
             var requested = [];
             var cmap = {};
@@ -1007,12 +1042,12 @@ var flexStore = flexStore || {};
                 }
             });
             if (requested.length) {
-                myApp.ajax({
+                App.ajax({
                     data: { cid: requested.join(',') },
                     success: function (data) {
                         $.each(data.content, function (i, content) {
                             var ref = cmap[i];
-                            myApp.appContent[ref.catid].content[ref.index].content = content || '';
+                            App.appContent[ref.catid].content[ref.index].content = content || '';
                         });
                         callback();
                     }
@@ -1024,8 +1059,8 @@ var flexStore = flexStore || {};
         },
         show: function(content) {
             if (!content) { console.log('no content to display'); return; }
-            myApp.Content.prepare(content, function() {
-                myApp.trigger('bbflex-content-show', content);
+            App.Content.prepare(content, function() {
+                App.trigger('bbflex-content-show', content);
             });
         }
     }
@@ -1033,7 +1068,7 @@ var flexStore = flexStore || {};
     /**
      *   Music Producers Interface
      */
-    myApp.Producers = {
+    App.Producers = {
 
         list: ko.observableArray([]),
         byId: ko.observable({})
@@ -1043,7 +1078,7 @@ var flexStore = flexStore || {};
     /**
      *  Discounts Interface
      */
-    myApp.Discounts = {
+    App.Discounts = {
 
         list: ko.observableArray([]),
         byId: ko.observable({})
@@ -1054,7 +1089,7 @@ var flexStore = flexStore || {};
     /**
      *  Shopping Cart Interface
      */
-    myApp.Cart = {
+    App.Cart = {
 
         data: ko.observable({ items: [], discounts: { items: [], total: '' }, sub_total: '', total: '', errors: [], messages: [], warnings: [] }),
 
@@ -1063,15 +1098,15 @@ var flexStore = flexStore || {};
             var callback = typeof func === 'function' ? func : function () {
             };
             var addLink = 'p' + license.nid + '_q1_a1o' + license.option;
-            var cartData = myApp.appSettings.app_affiliate ? { href: addLink, _aac: myApp.appSettings.acct_id } : { href: addLink };
-            myApp.ajax({
-                url: myApp.dataDomain + '/uc_ajax_cart/addlink',
+            var cartData = App.appSettings.app_affiliate ? { href: addLink, _aac: App.appSettings.acct_id } : { href: addLink };
+            App.ajax({
+                url: App.dataDomain + '/uc_ajax_cart/addlink',
                 data: cartData,
                 success: function (response) {
                     callback(response);
-                    myApp.showMessages({ success: [ $(response).text() ] });
-                    myApp.refreshData({ data: 'cart' }, function (data) {
-                        myApp.trigger('bbflex-cart-item-added', license, data);
+                    App.showMessages({ success: [ $(response).text() ] });
+                    App.refreshData({ data: 'cart' }, function (data) {
+                        App.trigger('bbflex-cart-item-added', license, data);
                     });
                 }
             });
@@ -1081,84 +1116,85 @@ var flexStore = flexStore || {};
             if (!item) return;
             var callback = typeof func === 'function' ? func : function () {
             };
-            myApp.ajax({
-                url: myApp.dataDomain + '/uc_ajax_cart/remove/item',
+            App.ajax({
+                url: App.dataDomain + '/uc_ajax_cart/remove/item',
                 data: { nid: item.nid, data: item.data, action: 'remove' },
                 success: function (response) {
                     callback(response);
-                    myApp.showMessages({ warning: [ $(response).text() ] });
-                    myApp.refreshData({ data: 'cart' }, function (data) {
-                        myApp.trigger('bbflex-cart-item-removed', item);
+                    App.showMessages({ warning: [ $(response).text() ] });
+                    App.refreshData({ data: 'cart' }, function (data) {
+                        App.trigger('bbflex-cart-item-removed', item);
                     });
                 }
             });
         },
 
         show: function () {
-            myApp.trigger('bbflex-cart-show');
+            App.trigger('bbflex-cart-show');
         },
         showCart: function () {
-            myApp.Cart.show();
+            App.Cart.show();
         },
 
         checkout: function () {
-            var cart = myApp.Cart.data();
+            var cart = App.Cart.data();
             if (cart.items && cart.items.length) {
-                myApp.trigger('bbflex-checkout-initiated');
+                App.trigger('bbflex-checkout-initiated');
             }
             else {
-                myApp.showMessages({ warning: [ "No products in your shopping cart!" ] });
+                App.showMessages({ warning: [ "No products in your shopping cart!" ] });
             }
         },
         showCheckout: function () {
-            myApp.Cart.checkout();
+            App.Cart.checkout();
         }
 
     };
 
-    myApp.Cart.data.subscribe(function (cart) {
-        myApp.trigger('bbflex-cart-updated', cart);
+    App.Cart.data.subscribe(function (cart) {
+        App.trigger('bbflex-cart-updated', cart);
     });
 
 
-    myApp.baseVars = {
+    App.baseVars = {
 
         // internal flag
         fwViewModel: true,
 
         // Computed Shorthands
         nowplaying: ko.computed(function () {
-            return myApp.Music.nowplaying();
+            return App.Music.nowplaying();
         }),
         cart: ko.computed(function () {
-            return myApp.Cart.data();
+            return App.Cart.data();
         }),
 
         // Control Variables
-        closeVisible: ko.observable(myApp.appSettings.bootmode != 'native'),
+        closeVisible: ko.observable(App.appSettings.bootmode != 'native'),
 
         // Convenience References
-        music: myApp.Music,
-        producers: myApp.Producers,
-        discounts: myApp.Discounts,
+        music: App.Music,
+        producers: App.Producers,
+        discounts: App.Discounts,
         content: {
-            categories: myApp.appContent,
-            prepare: myApp.Content.prepare,
-            show: myApp.Content.show
+            categories: App.appContent,
+            prepare: App.Content.prepare,
+            show: App.Content.show
         },
         app: {
-            fullScreen: myApp.fullScreen,
-            settings: myApp.appSettings,
-            content: myApp.appContent
+            fullScreen: App.fullScreen,
+            settings: App.appSettings,
+            content: App.appContent,
+            ajaxActive: App.ajaxActive
         }
 
     };
 
-    myApp.baseVars.cart.show = myApp.Cart.show;
-    myApp.baseVars.cart.checkout = myApp.Cart.checkout;
-    myApp.baseVars.cart.add = myApp.Cart.add;
-    myApp.baseVars.cart.remove = myApp.Cart.remove;
-    myApp.baseVars.Music = myApp.baseVars.music;
+    App.baseVars.cart.show = App.Cart.show;
+    App.baseVars.cart.checkout = App.Cart.checkout;
+    App.baseVars.cart.add = App.Cart.add;
+    App.baseVars.cart.remove = App.Cart.remove;
+    App.baseVars.Music = App.baseVars.music;
 
     /**
      * Application Level Event Programming
@@ -1166,20 +1202,20 @@ var flexStore = flexStore || {};
 
     /* General Application Events */
 
-    myApp.on('bbflex-initialized', function (bbflex, jPlayer) {
-        myApp.Music.Player = bbflex.player;
-        myApp.Music.Core = jPlayer;
+    App.on('bbflex-initialized', function (bbflex, jPlayer) {
+        App.Music.Player = bbflex.player;
+        App.Music.Core = jPlayer;
     });
 
-    myApp.on('bbflex-widget-loading', function (widget) {
+    App.on('bbflex-widget-loading', function (widget) {
         widget.bbflex('applyBindings');
     });
 
-    myApp.on('bbflex-app-launched', function () {
+    App.on('bbflex-app-launched', function () {
         $('body').addClass('flex-ready');
     });
 
-    myApp.on('bbflex-modal-open', 'render', function (modal) {
+    App.on('bbflex-modal-open', 'render', function (modal) {
         modal = modal || {};
         var dialog = $('#fw-modalDialog').length ? $('#fw-modalDialog') : $('\
       <div id="fw-modalDialog" class="fwbs-modal fade fwmodal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" >\
@@ -1205,21 +1241,21 @@ var flexStore = flexStore || {};
 
     });
 
-    myApp.on('bbflex-modal-close', 'render', function (modal) {
+    App.on('bbflex-modal-close', 'render', function (modal) {
         if (modal && modal.fwinternal) {
             modal.fwinternal.fwmodal('hide');
         }
     });
 
-    myApp.on('bbflex-content-show', 'render', function (content) {
+    App.on('bbflex-content-show', 'render', function (content) {
 
         var title = $('<span>').append('<i class="' + content.icon + '"></i> ').append(content.title);
         var body = $('<div>').html(content.content);
         var footer = $('<button type="button" class="btn btn-default close-button">Close</button>').click(function () {
-            myApp.modal.close();
+            App.modal.close();
         });
 
-        myApp.modal({
+        App.modal({
             type: 'content',
             title: title,
             content: body,
@@ -1230,49 +1266,49 @@ var flexStore = flexStore || {};
 
     /* Music Events */
 
-    myApp.on('bbflex-nowplaying', 'render', function (media) {
+    App.on('bbflex-nowplaying', 'render', function (media) {
         // if the song has changed, reset our "play tracked" flag
-        if (myApp.Music.notSelected(media)) {
-            myApp.Data.playTracked = false;
+        if (App.Music.notSelected(media)) {
+            App.Data.playTracked = false;
             // load more music if we're on the last song of a dynamic playlist
-            var playlist = myApp.Music.playlists[media.playlist];
-            myApp.Music.usePlaylist(media.playlist);
+            var playlist = App.Music.playlists[media.playlist];
+            App.Music.usePlaylist(media.playlist);
             if (playlist.dataSource instanceof Object && playlist.media.length == media.playlistIndex + 1) {
                 playlist.dataSource.nextPage();
             }
         }
-        myApp.Music.nowplaying(media);
-        myApp.Music.Playlist[media.playlist].nowplaying(media);
+        App.Music.nowplaying(media);
+        App.Music.Playlist[media.playlist].nowplaying(media);
     });
 
-    myApp.on('bbflex-play', function (event) {
+    App.on('bbflex-play', function (event) {
         var media = event.jPlayer.status.media;
-        myApp.Music.Core = $(event.target);
-        myApp.Music.Player = $(event.target).data('jPlayerPlaylist') || $.bbflex.player;
-        if (myApp.Music.notSelected(media)) {
-            myApp.trigger('bbflex-nowplaying', media);
+        App.Music.Core = $(event.target);
+        App.Music.Player = $(event.target).data('jPlayerPlaylist') || $.bbflex.player;
+        if (App.Music.notSelected(media)) {
+            App.trigger('bbflex-nowplaying', media);
         }
-        if (!myApp.Data.playTracked) { // track the play if it hasn't been already
-            myApp.Data.playTracked = true;
-            myApp.trackAction({ nid: media.nid, uid: media.uid, group: 'Engagement', name: 'Plays', label: media.title });
+        if (!App.Data.playTracked) { // track the play if it hasn't been already
+            App.Data.playTracked = true;
+            App.trackAction({ nid: media.nid, uid: media.uid, group: 'Engagement', name: 'Plays', label: media.title });
         }
-        myApp.Music.paused(false);
+        App.Music.paused(false);
     });
 
-    myApp.on('bbflex-pause', function (event) {
-        if ($(event.target)[0] === myApp.Music.Core[0]) {
-            myApp.Music.paused(true);
+    App.on('bbflex-pause', function (event) {
+        if ($(event.target)[0] === App.Music.Core[0]) {
+            App.Music.paused(true);
         }
     });
 
-    myApp.on('bbflex-timeupdate', function (event) {
+    App.on('bbflex-timeupdate', function (event) {
         var scrubValue = event.jPlayer.status.currentPercentAbsolute;
-        if (!myApp.Data.scrubSliding) {
-            myApp.Music.seekPosition(scrubValue);
+        if (!App.Data.scrubSliding) {
+            App.Music.seekPosition(scrubValue);
         }
     });
 
-    myApp.on('bbflex-volumechange', function (event) {
+    App.on('bbflex-volumechange', function (event) {
         var volume = event.jPlayer.options.volume;
         $.cookie('_vol', volume, { path: '/' });
     });
@@ -1281,31 +1317,31 @@ var flexStore = flexStore || {};
     /* Playlist Related Events */
 
     // -- Listener
-    myApp.on('bbflex-playlist-scrolled-bottom', function (id, widget) {
-        id = id || myApp.Music.currentPlaylist;
-        if (myApp.Music.playlists[id] && myApp.Music.playlists[id].dataSource) {
-            myApp.Music.playlists[id].dataSource.nextPage();
+    App.on('bbflex-playlist-scrolled-bottom', function (id, widget) {
+        id = id || App.Music.currentPlaylist;
+        if (App.Music.playlists[id] && App.Music.playlists[id].dataSource) {
+            App.Music.playlists[id].dataSource.nextPage();
         }
     });
 
-    myApp.on('bbflex-playlist-updated', function (id, media, index) {
-        if (!myApp.Music.Playlist[id].nowplaying() || !myApp.Music.Playlist[id].nowplaying().nid) {
-            myApp.Music.Playlist[id].nowplaying(myApp.Music.Playlist[id]()[0])
+    App.on('bbflex-playlist-updated', function (id, media, index) {
+        if (!App.Music.Playlist[id].nowplaying() || !App.Music.Playlist[id].nowplaying().nid) {
+            App.Music.Playlist[id].nowplaying(App.Music.Playlist[id]()[0])
         }
     });
 
-    myApp.on('bbflex-playlists-show', 'render', function () {
+    App.on('bbflex-playlists-show', 'render', function () {
 
         var content = $('<div>').bbflex({ widget: 'playlists', theme: 'none' });
         content.find('.fw-playlists').on('click', '.fw-list-title', function () {
-            myApp.modal.close();
+            App.modal.close();
         });
 
         var footer = $('<button type="button" class="btn btn-default close-button">Close</button>').click(function () {
-            myApp.modal.close();
+            App.modal.close();
         });
 
-        myApp.modal({
+        App.modal({
             type: 'playlists',
             title: '<i class="fwicon-itunes"></i> Playlist Selection',
             content: content,
@@ -1317,7 +1353,7 @@ var flexStore = flexStore || {};
 
     /* Licensing Events */
 
-    myApp.on('bbflex-show-license', 'render', function (license) {
+    App.on('bbflex-show-license', 'render', function (license) {
         var cartItem;
         var info;
         if (license.cart_item_id) {
@@ -1325,7 +1361,7 @@ var flexStore = flexStore || {};
             info = license.license;
         }
         else {
-            cartItem = $.map(myApp.Cart.data().items, function (item) {
+            cartItem = $.map(App.Cart.data().items, function (item) {
                 return item.nid == license.nid && item.option == license.option ? item : undefined;
             })[0];
             info = license;
@@ -1339,18 +1375,18 @@ var flexStore = flexStore || {};
 
         var footer = $('<div>').append('<button type="button" class="btn btn-default close-button">Close</button>' + actionButton);
         footer.find('#modalCartAdd').click(function () {
-            myApp.Cart.add(license);
-            myApp.modal.close();
+            App.Cart.add(license);
+            App.modal.close();
         });
         footer.find('#modalCartRemove').click(function () {
-            myApp.Cart.remove(cartItem);
-            myApp.modal.close();
+            App.Cart.remove(cartItem);
+            App.modal.close();
         });
         footer.find('.close-button').click(function () {
-            myApp.modal.close();
+            App.modal.close();
         });
 
-        myApp.modal({
+        App.modal({
             type: 'license',
             title: info.name + (info.price.indexOf('$') ? ' ' : ' $') + info.price,
             content: content,
@@ -1359,8 +1395,8 @@ var flexStore = flexStore || {};
 
     });
 
-    myApp.on('bbflex-show-license-options', 'render', function (media) {
-        media = media || myApp.Music.nowplaying();
+    App.on('bbflex-show-license-options', 'render', function (media) {
+        media = media || App.Music.nowplaying();
 
         var content = $('<div class="all-licensing-options">').append('\
       <div class="beat-preview clearfix">\
@@ -1374,7 +1410,7 @@ var flexStore = flexStore || {};
 
             var thiscontent = $('<div class="licensing-option">');
 
-            var cartItem = $.map(myApp.Cart.data().items, function (item) {
+            var cartItem = $.map(App.Cart.data().items, function (item) {
                 return item.nid == license.nid && item.option == license.option ? item : undefined;
             })[0];
 
@@ -1390,13 +1426,13 @@ var flexStore = flexStore || {};
             thiscontent.append('<hr>');
 
             thiscontent.find('.cart-add').click(function () {
-                myApp.Cart.add(license);
-                myApp.modal.close();
+                App.Cart.add(license);
+                App.modal.close();
             });
 
             thiscontent.find('.cart-remove').click(function () {
-                myApp.Cart.remove(cartItem);
-                myApp.modal.close();
+                App.Cart.remove(cartItem);
+                App.modal.close();
             });
 
             content.append(thiscontent);
@@ -1404,10 +1440,10 @@ var flexStore = flexStore || {};
         });
 
         var footer = $('<button type="button" class="btn btn-default">Close</button>').click(function () {
-            myApp.modal.close();
+            App.modal.close();
         });
 
-        myApp.modal({
+        App.modal({
             type: 'licenseoptions',
             title: '<i class="fwicon-tags"></i> Available Licensing Options',
             content: content,
@@ -1419,24 +1455,24 @@ var flexStore = flexStore || {};
 
     /* Cart Related Events */
 
-    myApp.on('bbflex-checkout-initiated', 'after', function () {
-        var cart = myApp.Cart.data();
+    App.on('bbflex-checkout-initiated', 'after', function () {
+        var cart = App.Cart.data();
         if (cart.items && cart.items.length) {
-            if (myApp.appSettings.app_affiliate) {
-                if (myApp.appSettings.bootmode != 'disabled' && !(myApp.device.tablet || myApp.device.phone)) {
-                    myApp.fullScreen('checkout');
+            if (App.appSettings.app_affiliate) {
+                if (App.appSettings.bootmode != 'disabled' && !(App.device.tablet || App.device.phone)) {
+                    App.fullScreen('checkout');
                 }
                 else {
-                    myApp.ajax({
+                    App.ajax({
                         url: 'https://api.beatbrokerz.com/cart/checkout/session',
                         data: {
-                            app_id: myApp.appSettings.app_id,
+                            app_id: App.appSettings.app_id,
                             ref: document.location.href.replace(document.location.hash, '')
                         },
                         success: function (result) {
-                            var checkout_url = myApp.checkoutURL;
-                            if (myApp.session_id) {
-                                checkout_url = checkout_url + '?_fsid=' + myApp.session_id;
+                            var checkout_url = App.checkoutURL;
+                            if (App.session_id) {
+                                checkout_url = checkout_url + '?_fsid=' + App.session_id;
                             }
                             window.top.location = checkout_url;
                         }
@@ -1449,7 +1485,7 @@ var flexStore = flexStore || {};
         }
     });
 
-    myApp.on('bbflex-cart-show', 'render', function () {
+    App.on('bbflex-cart-show', 'render', function () {
         var totals = $('<div class="fw-cart-totals-wrap">\
       <div data-bind="text: \'Subtotal: $\' + flexStore.Cart.data().sub_total" class="fw-cart-subtotal"></div>\
       <div data-bind="text: \'Discounts: $\' + flexStore.Cart.data().discounts.total" class="fw-cart-discounts"></div>\
@@ -1458,18 +1494,18 @@ var flexStore = flexStore || {};
         totals.bbflex('applyBindings');
         var footer = $('<div>').append('<button type="button" class="btn btn-default close-button">Close</button><button data-bind="visible: flexStore.Cart.data().items.length > 0" type="button" class="btn btn-success checkout-button"><i class="fwicon-dollar"></i> &nbsp;Checkout</button>');
         footer.find('.close-button').click(function () {
-            myApp.modal.close();
+            App.modal.close();
         });
         footer.bbflex('applyBindings');
 
         var content = $('<div>').bbflex({ widget: 'cart', theme: 'none' }).append(totals);
 
         footer.find('.checkout-button').click(function () {
-            myApp.modal.close();
+            App.modal.close();
             flexStore.Cart.checkout();
         });
 
-        myApp.modal({
+        App.modal({
             type: 'cart',
             title: '<i class="fwicon-basket"></i> Shopping Cart',
             content: content,
@@ -1482,7 +1518,7 @@ var flexStore = flexStore || {};
      *  STATS TRACKING
      */
 
-    myApp.trackPageView = function (settings) {
+    App.trackPageView = function (settings) {
         var page = $.extend({
             channel: 'Flex Store Apps',
             url: location.pathname + location.search + location.hash
@@ -1500,7 +1536,7 @@ var flexStore = flexStore || {};
         }
     };
 
-    myApp.trackAction = function (settings) {
+    App.trackAction = function (settings) {
         var action = $.extend({
             channel: 'Flex Store Apps',
             group: 'Ungrouped',
@@ -1524,23 +1560,23 @@ var flexStore = flexStore || {};
     /**
      * Main Navigation Links
      */
-    myApp.navigation = [
+    App.navigation = [
         { title: "Home", action: "#home", icon: "home", root: true },
         { title: "Producers", action: "#producers", icon: "user", visible: ko.computed(function () {
-            return myApp.Producers.list().length > 0;
+            return App.Producers.list().length > 0;
         }), root: true },
         { title: "Playlists", action: "#playlists", icon: "menu", root: true },
         { title: "Special Offers", action: "#discounts", icon: "tags", visible: ko.computed(function () {
-            return myApp.Discounts.list().length > 0;
+            return App.Discounts.list().length > 0;
         }), root: true },
-        { title: "Content", action: "#menu", icon: "doc", visible: myApp.appContent && $.map(myApp.appContent,function () {
+        { title: "Content", action: "#menu", icon: "doc", visible: App.appContent && $.map(App.appContent,function () {
             return true;
         }).length > 0, root: true },
         { title: "Now Playing", action: "#nowplaying", icon: "music", root: true },
         { title: "Shopping Cart", action: "#cart", icon: "cart", root: true },
         { title: "Close", action: function () {
-            myApp.closeApp();
-        }, icon: "close", visible: myApp.baseVars.closeVisible, root: false }
+            App.closeApp();
+        }, icon: "close", visible: App.baseVars.closeVisible, root: false }
     ];
 
 
