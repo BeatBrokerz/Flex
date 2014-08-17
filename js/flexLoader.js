@@ -501,7 +501,7 @@ flexloader.autoload = function (component, options) {
                 var diff = flexloader.extensions.length - extenders;
                 if (diff) {
                     var a = document.createElement('a');
-                    a.href = component.src;
+                    a.href = flexloader.src(component);
                     var path = '/' + a.pathname.split('/').slice(0,-1).join('/').replace(/^\/|\/$/g, '') + '/';
                     var file = a.pathname.split('/').pop();
                     var protocol = a.protocol.replace(/:$/, '');
