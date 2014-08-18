@@ -112,6 +112,7 @@ var flexStore = flexStore || {};
     App.checkoutURL = App.checkoutURL || 'https://api.beatbrokerz.com/cart/checkout';
 
     App.ajaxActive = ko.observable(false);
+    App.finalized = false;
 
     var session_id = $.cookie('_FSID') || undefined;
     if (session_id) {
@@ -443,7 +444,7 @@ var flexStore = flexStore || {};
 
     };
 
-    App.once('bbflex-ajax-idle', function() { App.trigger('bbflex-app-final')});
+    App.once('bbflex-ajax-idle', function() {  App.finalized = true; App.trigger('bbflex-app-final'); });
 
     App.showMessages = function (messages, delay) {
         if (messages) {
