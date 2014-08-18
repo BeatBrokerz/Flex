@@ -163,7 +163,7 @@ var flexStore = flexStore || {};
                 App.app.navigated = true;
 
                 // analytics
-                //App.trackPageView({ affiliate: App.appSettings.acct_id, channel: App.appSettings.app_name });
+                //App.trackPageView();
 
                 // messaging
                 if (App.Data.msgQue) {
@@ -444,7 +444,11 @@ var flexStore = flexStore || {};
 
     };
 
-    App.once('bbflex-ajax-idle', function() {  App.finalized = true; App.trigger('bbflex-app-final'); });
+    App.once('bbflex-ajax-idle', function() {
+        App.finalized = true;
+        App.trigger('bbflex-app-final');
+        App.trackPageView();
+    });
 
     App.showMessages = function (messages, delay) {
         if (messages) {
@@ -1556,14 +1560,14 @@ var flexStore = flexStore || {};
 
     App.trackPageView = function (settings) {
         var page = $.extend({
-            channel: 'Flex Store Apps',
-            url: location.pathname + location.search + location.hash
+            channel: (App.appSettings.app_affiliate ? App.appSettings.app_name + ' (app)' : App.appSettings.app_name ),
+            url: location.href
         }, settings);
         if (typeof OWATracker !== 'undefined') {
             var nid = page.nid || 0;
             var uid = page.uid || 0;
             var channel = page.channel || '';
-            var affiliate = page.affiliate || $.cookie('affiliate[uid]') || 0;
+            var affiliate = (App.appSettings.app_affiliate ? App.appSettings.acct_id : 0);
             OWATracker.setCustomVar(1, 'nid', nid, 'page');
             OWATracker.setCustomVar(2, 'uid', uid, 'page');
             OWATracker.setCustomVar(4, 'channel', channel, 'page');
@@ -1574,7 +1578,7 @@ var flexStore = flexStore || {};
 
     App.trackAction = function (settings) {
         var action = $.extend({
-            channel: 'Flex Store Apps',
+            channel: (App.appSettings.app_affiliate ? App.appSettings.app_name + ' (app)' : App.appSettings.app_name ),
             group: 'Ungrouped',
             name: 'Unnamed',
             label: 'Unlabelled',
@@ -1584,7 +1588,7 @@ var flexStore = flexStore || {};
             var nid = action.nid || 0;
             var uid = action.uid || 0;
             var channel = action.channel || '';
-            var affiliate = action.affiliate || $.cookie('affiliate[uid]') || 0;
+            var affiliate = (App.appSettings.app_affiliate ? App.appSettings.acct_id : 0);
             OWATracker.setCustomVar(1, 'nid', nid, 'page');
             OWATracker.setCustomVar(2, 'uid', uid, 'page');
             OWATracker.setCustomVar(4, 'channel', channel, 'page');
