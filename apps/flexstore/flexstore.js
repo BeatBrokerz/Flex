@@ -604,6 +604,10 @@ var flexStore = flexStore || {};
         App.trigger('message-received', message);
     }
 
+    App.showContact = function (config) {
+        App.trigger('bbflex-show-contact', config);
+    }
+
     window.addEventListener("message", App.receiveMessage, false);
 
 
@@ -1060,7 +1064,7 @@ var flexStore = flexStore || {};
         show: function(content) {
             if (!content) { console.log('no content to display'); return; }
             App.Content.prepare(content, function() {
-                App.trigger('bbflex-content-show', content);
+                App.trigger('bbflex-show-content', content);
             });
         }
     }
@@ -1185,7 +1189,8 @@ var flexStore = flexStore || {};
             fullScreen: App.fullScreen,
             settings: App.appSettings,
             content: App.appContent,
-            ajaxActive: App.ajaxActive
+            ajaxActive: App.ajaxActive,
+            showContact: App.showContact
         }
 
     };
@@ -1247,7 +1252,7 @@ var flexStore = flexStore || {};
         }
     });
 
-    App.on('bbflex-content-show', 'render', function (content) {
+    App.on('bbflex-show-content', 'render', function (content) {
 
         var title = $('<span>').append('<i class="' + content.icon + '"></i> ').append(content.title);
         var body = $('<div>').html(content.content);
@@ -1259,6 +1264,36 @@ var flexStore = flexStore || {};
             type: 'content',
             title: title,
             content: body,
+            footer: footer
+        });
+
+    });
+
+    App.on('bbflex-show-contact', 'render', function(params) {
+
+        var config = params || {};
+        var title = '<i class="fwicon-envelope"></i> &nbsp;Send Email';
+
+        var contact_form = $('<div>').bbflex($.extend(config, { widget: 'contactform' }));
+            contact_form.prepend('<p>Contact us by email using our contact form.</p>')
+            contact_form.find('button').remove();
+
+        var footer = $('<span>')
+            .append('<button type="button" class="btn btn-default close-button">Close</button>')
+            .append('<button type="button" class="btn btn-success submit-button">Send Email</button>');
+
+        footer.find('.close-button').click(function () {
+            App.modal.close();
+        });
+
+        footer.find('.submit-button').click(function() {
+            contact_form.find('form').submit();
+        });
+
+        App.modal({
+            type: 'contact',
+            title: title,
+            content: contact_form,
             footer: footer
         });
 

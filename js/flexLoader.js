@@ -74,6 +74,13 @@ flexloader.flexApp = {
             src: "//www.beatbrokerz.com/flex/js/jquery.min.js",
             core: true
         },
+        jqueryform: {
+            missing: function () {
+                return typeof jQuery !== 'function' || typeof jQuery.fn.ajaxForm !== 'function' || flexloader.jqConflict;
+            },
+            src: "//www.beatbrokerz.com/flex/js/jquery.form.min.js",
+            core: true
+        },
         cookie: {
             missing: function () {
                 return typeof jQuery !== 'function' || typeof jQuery.cookie !== 'function' || flexloader.jqConflict;

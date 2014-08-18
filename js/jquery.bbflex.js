@@ -488,41 +488,41 @@
             html: function (template, settings) {
 
                 return '\
-	    <div class="fw-interface-controls-wrap fw-jplayer-interface">\
-		<div class="fw-controls">\
-			<a href="javascript:;" class="fw-previous jp-button" tabindex="1"><i class="flexicon-fast-bw"></i></a>\
-			<a href="javascript:;" data-bind="visible: music.paused" class="fw-play jp-button" tabindex="1"><i class="flexicon-play"></i></a>\
-			<a href="javascript:;" data-bind="visible: music.playing" class="fw-pause jp-button" tabindex="1"><i class="flexicon-pause"></i></a>\
-			<a href="javascript:;" class="fw-next jp-button" tabindex="1"><i class="flexicon-fast-fw"></i></a>\
-			<span class="divider"></span>\
-		</div>\
-		<div class="fw-progress-container">\
-			<div class="fw-progress">\
-				<div class="fw-seek-bar">\
-					<div class="fw-play-bar">\
-						<div class="bullet">\
-							<div class="fw-current-time">\
-							</div>\
-						</div>\
-					</div>\
-				</div>\
-			</div>\
-			<span class="divider"></span>\
-		</div>\
-		<div class="fw-volume-bar-container">\
-			<a data-bind="visible: !music.muted()" href="javascript:;" class="fw-mute" tabindex="1"><i class="flexicon-volume-up"></i></a>\
-			<a data-bind="visible: music.muted()" href="javascript:;" class="fw-unmute" tabindex="1"><i class="flexicon-volume-down"></i></a>\
-			<div class="fw-volume-bar">\
-				<div class="fw-volume-bar-value">\
-					<div class="bullet"></div>\
-				</div>\
-			</div>\
-		</div>\
-		<div class="fw-full-screen-container">\
-			<a href="javascript:;" class="fw-fullscreen jp-button" tabindex="1"><i class="fwicon-resize-full"></i></a>\
-		</div>\
-	    </div>\
-	';
+                    <div class="fw-interface-controls-wrap fw-jplayer-interface">\
+                    <div class="fw-controls">\
+                        <a href="javascript:;" class="fw-previous jp-button" tabindex="1"><i class="flexicon-fast-bw"></i></a>\
+                        <a href="javascript:;" data-bind="visible: music.paused" class="fw-play jp-button" tabindex="1"><i class="flexicon-play"></i></a>\
+                        <a href="javascript:;" data-bind="visible: music.playing" class="fw-pause jp-button" tabindex="1"><i class="flexicon-pause"></i></a>\
+                        <a href="javascript:;" class="fw-next jp-button" tabindex="1"><i class="flexicon-fast-fw"></i></a>\
+                        <span class="divider"></span>\
+                    </div>\
+                    <div class="fw-progress-container">\
+                        <div class="fw-progress">\
+                            <div class="fw-seek-bar">\
+                                <div class="fw-play-bar">\
+                                    <div class="bullet">\
+                                        <div class="fw-current-time">\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                        <span class="divider"></span>\
+                    </div>\
+                    <div class="fw-volume-bar-container">\
+                        <a data-bind="visible: !music.muted()" href="javascript:;" class="fw-mute" tabindex="1"><i class="flexicon-volume-up"></i></a>\
+                        <a data-bind="visible: music.muted()" href="javascript:;" class="fw-unmute" tabindex="1"><i class="flexicon-volume-down"></i></a>\
+                        <div class="fw-volume-bar">\
+                            <div class="fw-volume-bar-value">\
+                                <div class="bullet"></div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                    <div class="fw-full-screen-container">\
+                        <a href="javascript:;" class="fw-fullscreen jp-button" tabindex="1"><i class="fwicon-resize-full"></i></a>\
+                    </div>\
+                    </div>\
+                ';
             },
             init: function (template, widget, settings) {
 
@@ -581,21 +581,21 @@
             html: function (template, settings) {
 
                 return '\
-	    <div class="fw-interface-controls-wrap fw-jplayer-interface">\
-		<div class="fw-progress-container">\
-		        <div class="fw-current-time"></div>\
-			<div class="fw-progress">\
-				<div class="fw-seek-bar">\
-					<div class="fw-play-bar">\
-						<div class="bullet">\
-						</div>\
-					</div>\
-				</div>\
-			</div>\
-                        <div class="fw-duration"></div>\
-		</div>\
-	    </div>\
-	';
+                    <div class="fw-interface-controls-wrap fw-jplayer-interface">\
+                    <div class="fw-progress-container">\
+                            <div class="fw-current-time"></div>\
+                        <div class="fw-progress">\
+                            <div class="fw-seek-bar">\
+                                <div class="fw-play-bar">\
+                                    <div class="bullet">\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                                    <div class="fw-duration"></div>\
+                    </div>\
+                    </div>\
+                ';
             },
             init: function (template, widget, settings) {
 
@@ -615,19 +615,17 @@
 
             html: function (template, settings) {
                 return '\
-	\
-	<div class="fw-cart-item-list" data-bind="dxList: { dataSource: cart().items, scrollingEnabled: false, itemClickAction: function(action) { window[myAppNamespace].Music.showLicense(action.itemData); }, noDataText: \'No products here. Time to get shopping!\'  }">\
-	  <div class="fw-cart-item" data-options="dxTemplate: { name: \'item\' }">\
-	    <div class="fw-cart-item-wrapper">\
-	      <div class="fw-cart-item-qty" data-bind="text: qty + \' x\'"></div>\
-	      <div class="fw-cart-item-price">$<span data-bind="text: price"></span></div>\
-	      <div class="fw-cart-item-title" data-bind="text: title"></div>\
-	      <div class="fw-cart-item-model">&raquo; <span data-bind="text: model"></span></div>\
-	    </div>\
-	  </div>\
-	</div>\
-	\
-	';
+                <div class="fw-cart-item-list" data-bind="dxList: { dataSource: cart().items, scrollingEnabled: false, itemClickAction: function(action) { window[myAppNamespace].Music.showLicense(action.itemData); }, noDataText: \'No products here. Time to get shopping!\'  }">\
+                  <div class="fw-cart-item" data-options="dxTemplate: { name: \'item\' }">\
+                    <div class="fw-cart-item-wrapper">\
+                      <div class="fw-cart-item-qty" data-bind="text: qty + \' x\'"></div>\
+                      <div class="fw-cart-item-price">$<span data-bind="text: price"></span></div>\
+                      <div class="fw-cart-item-title" data-bind="text: title"></div>\
+                      <div class="fw-cart-item-model">&raquo; <span data-bind="text: model"></span></div>\
+                    </div>\
+                  </div>\
+                </div>\
+                ';
             },
             init: function (template, widget, settings) {
 
@@ -651,11 +649,11 @@
 
             html: function (template, settings) {
                 return '\
-	  <ul class="fw-playlist-items" data-bind="foreach: ' + (settings.playlist ? 'music.Playlist[\'' + settings.playlist + '\']' : 'music.activePlaylistItems') + '">\
-	    <li><a href="javascript:;" data-bind="html: title"></a></li>\
-	  </ul>\
-	  <div class="fw-playlist-loading"><i class="fwicon-down-dir"></i> Load More...</div>\
-	';
+                  <ul class="fw-playlist-items" data-bind="foreach: ' + (settings.playlist ? 'music.Playlist[\'' + settings.playlist + '\']' : 'music.activePlaylistItems') + '">\
+                    <li><a href="javascript:;" data-bind="html: title"></a></li>\
+                  </ul>\
+                  <div class="fw-playlist-loading"><i class="fwicon-down-dir"></i> Load More...</div>\
+                ';
             },
             init: function (template, widget, settings) {
 
@@ -743,15 +741,15 @@
 
             html: function (template, settings) {
                 return '\
-	  <div class="fw-playlists" data-bind="dxList: { dataSource: music.groupedPlaylists, grouped: true, scrollingEnabled: false, itemClickAction: function(action) { music.changePlaylist(action.itemData); }, noDataText: \'No playlists to choose from.\'  }">\
-	    <div data-options="dxTemplate: { name: \'group\' }">\
-	      <span class="group-title"><span data-bind="text: key"></span> Playlists</span>\
-	    </div>\
-	    <div data-bind="css: { \'active-playlist\': id == $root.music.activePlaylist().id }" class="fw-list-title" data-options="dxTemplate: { name: \'item\' }">\
-	      <span class="fw-list-count"><span data-bind="text: $root.music.Playlist[id].count">0</span> Beats</span><i class="fwicon-music"></i> <span data-bind="text: title"></span>\
-	    </div>\
-	  </div>\
-	';
+                  <div class="fw-playlists" data-bind="dxList: { dataSource: music.groupedPlaylists, grouped: true, scrollingEnabled: false, itemClickAction: function(action) { music.changePlaylist(action.itemData); }, noDataText: \'No playlists to choose from.\'  }">\
+                    <div data-options="dxTemplate: { name: \'group\' }">\
+                      <span class="group-title"><span data-bind="text: key"></span> Playlists</span>\
+                    </div>\
+                    <div data-bind="css: { \'active-playlist\': id == $root.music.activePlaylist().id }" class="fw-list-title" data-options="dxTemplate: { name: \'item\' }">\
+                      <span class="fw-list-count"><span data-bind="text: $root.music.Playlist[id].count">0</span> Beats</span><i class="fwicon-music"></i> <span data-bind="text: title"></span>\
+                    </div>\
+                  </div>\
+                ';
             },
             init: function (template, widget, settings) {
 
@@ -774,15 +772,15 @@
 
             html: function (template, settings) {
                 return '\
-	<div class="fw-buynow-licenses nowplaying-licenses" data-bind="dxList: { dataSource: nowplaying().licensing.options, scrollingEnabled: false, itemClickAction: function(action){ window[myAppNamespace].Music.showLicense(action.itemData); }, noDataText: \'No Licensing Options Available\' }">\
-	  <div class="fw-buynow-license" data-options="dxTemplate: { name: \'item\' }">\
-	    <i class="fw-buynow-license-icon fwicon-tag"></i>\
-	    <div class="fw-buynow-addtocart"><i class="fwicon-forward"></i> View Details</div>\
-	    <div class="fw-buynow-license-name" data-bind="text: name"></div>\
-	    <div class="fw-buynow-license-price"><span data-bind="text: price"></span></div>\
-	  </div>\
-	</div>\
-	';
+                <div class="fw-buynow-licenses nowplaying-licenses" data-bind="dxList: { dataSource: nowplaying().licensing.options, scrollingEnabled: false, itemClickAction: function(action){ window[myAppNamespace].Music.showLicense(action.itemData); }, noDataText: \'No Licensing Options Available\' }">\
+                  <div class="fw-buynow-license" data-options="dxTemplate: { name: \'item\' }">\
+                    <i class="fw-buynow-license-icon fwicon-tag"></i>\
+                    <div class="fw-buynow-addtocart"><i class="fwicon-forward"></i> View Details</div>\
+                    <div class="fw-buynow-license-name" data-bind="text: name"></div>\
+                    <div class="fw-buynow-license-price"><span data-bind="text: price"></span></div>\
+                  </div>\
+                </div>\
+                ';
             },
             init: function (template, widget, settings) {
 
@@ -795,7 +793,111 @@
                 if (settings.scroll) widget.bbflex('antiscroll');
             }
 
+        },
+
+        contactform: {
+
+            settings: {
+                classes: {
+                    field: 'form-group',
+                    textarea: 'form-control',
+                    input: 'form-control'
+                }
+            },
+
+            html: function (template, settings) {
+                return '\
+                <form role="form" method="post" id="flex-contact-form"> \
+                    <div class="form-field">\
+                      <label>Name</label>\
+                      <input name="name" id="name" placeholder="Your Name">\
+                    </div>\
+                    <div class="form-field">\
+                      <label>Email</label>\
+                      <input type="email" name="from" id="email" placeholder="Your Email Address">\
+                    </div>\
+                    <div class="form-field">\
+                      <label>Subject</label>\
+                      <input name="subject" id="subject" placeholder="Email Subject">\
+                    </div>\
+                    <div class="form-field">\
+                      <label>Message</label>\
+                      <textarea name="message" id="message"></textarea>\
+                    </div>\
+                    <div class="row reCaptcha"></div>\
+                    <input name="ajax" type="hidden" value="true">\
+                    <input name="form_build_id" type="hidden">\
+                    <input name="form_token" id="edit-anonymous-contact-form-form-token" type="hidden">\
+                    <input name="form_id" id="edit-anonymous-contact-form" value="anonymous_contact_form" type="hidden">\
+                    <button type="submit" class="btn btn-sm btn-success">\
+                      <strong>Send Email</strong></button>\
+                    <label>\
+                </form>';
+            },
+            init: function(template, widget, settings) {
+
+                if (typeof Recaptcha == 'undefined') {
+                    flexloader.addResource({ src: '//www.beatbrokerz.com/flex/js/recaptcha_ajax.js'})
+                }
+
+                if (settings.classes.form) widget.find('form').addClass(settings.classes.form);
+                if (settings.classes.field) widget.find('.form-field').addClass(settings.classes.field);
+                if (settings.classes.label) widget.find('label').addClass(settings.classes.label);
+                if (settings.classes.input) widget.find('input').addClass(settings.classes.input);
+                if (settings.classes.textarea) widget.find('textarea').addClass(settings.classes.textarea);
+                if (settings.classes.button) widget.find('button').addClass(settings.classes.button);
+
+                var protocol = 'https:' == document.location.protocol ? 'https:' : 'http:';
+
+                flexloader.execute(function($, App) {
+
+                    var updateContactForm = function() {
+                        $.get(protocol + '//www.beatbrokerz.com/contact_form/' + App.appSettings.acct_id, { ajax: true }, function (data) {
+                            var content = $('<div>').html(data);
+                            var form_build_id = content.find('input[name="form_build_id"]').val();
+                            var form_token = content.find('input[name="form_token"]').val();
+                            widget.find('input[name="form_build_id"]').attr({ id: form_build_id, value: form_build_id });
+                            widget.find('input[name="form_token"]').val(form_token);
+                            if (content.find('.captcha').length) {
+                                widget.find('div.reCaptcha').html(content.find('.captcha').html());
+                                Recaptcha.create('6LdQ3cESAAAAANkmtIRMUduWPL06DtEWI4XmU_v2', 'recaptcha_ajax_api_container', {theme: 'clean'});
+                            }
+                        });
+                    }
+                    widget.find('form')
+                      .attr('action', protocol + '//www.beatbrokerz.com/contact_form/' + App.appSettings.acct_id + '?app_id=' + App.appSettings.app_id)
+                      .ajaxForm({
+                        clearForm: false,
+                        beforeSubmit: function () {
+                            widget.activity();
+                        },
+                        success: function (response, status) {
+                            widget.activity(false);
+                            var content = $('<div>').html(response.replace(/src=/gi, 'nosrc='));
+                            var message = content.find('#system-messages .messages');
+                            if (message.hasClass('error')) {
+                                App.showMessages({ error: [ message.text() ] });
+                            }
+                            else {
+                                App.showMessages({ success: [ message.text() ] });
+                                widget.find('form')[0].reset();
+                                App.modal.close();
+                            }
+                            updateContactForm();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            widget.activity(false);
+                            App.showMessages({ error: [ 'There was an error sending your message.' ] });
+                            updateContactForm();
+                        }
+                    });
+                    updateContactForm();
+
+                });
+
+            }
         }
+
     };
 
 })(jQuery);

@@ -1263,7 +1263,11 @@ a.jp-button {
  *  Default Themeing
  */
 
-.fw-theme-default * {
+.fw-theme-default {
+    font-family: "Open Sans";
+}
+
+.fw-theme-default.flex-widget-fwplayer {
     font-family: "Open Sans";
     font-size: 12px;
 }
