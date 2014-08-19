@@ -128,7 +128,7 @@ flexloader.mobileApp = {
         },
         globalize: {
             missing: function () {
-                return true;
+                return typeof Globalize === 'undefined';
             },
             src: "//www.beatbrokerz.com/flex/js/globalize.min.js",
             core: true
