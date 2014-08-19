@@ -976,6 +976,7 @@ a.jp-button {
     -webkit-transition: linear 300ms opacity;
     -moz-transition: linear 300ms opacity;
     -o-transition: linear 300ms opacity;
+    z-index:99;
 }
 
 .antiscroll-scrollbar-shown {
