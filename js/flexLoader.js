@@ -21,20 +21,6 @@ flexloader.ready(function () {
 });
 
 /**
- * After loading jQuery, save a reference to it for internal use.
- */
-flexloader.ready('jquery', function () {
-    flexloader.jq = jQuery;
-});
-
-/**
- * After loading knockout, save a reference to it for internal use.
- */
-flexloader.ready('knockout', function () {
-    flexloader.jq.ko = ko;
-});
-
-/**
  * Framework Resources List
  *
  * @type object A list of resources that our core framework uses.
@@ -62,16 +48,16 @@ flexloader.flexApp = {
                     }
                     return true;
                 }
+                flexloader.jqConflict = false;
                 if (typeof jQuery === 'undefined' || !minVersion('1.8')) {
                     flexloader.jqConflict = typeof jQuery !== 'undefined' ? true : false;
                     return true;
                 }
-                else {
-                    flexloader.jqConflict = false;
-                    flexloader.jq = jQuery;
-                }
             },
             src: "//www.beatbrokerz.com/flex/js/jquery.min.js",
+            ready: function() {
+                flexloader.jq = jQuery;
+            },
             core: true
         },
         jqueryform: {
@@ -107,6 +93,12 @@ flexloader.flexApp = {
                 return typeof ko === 'undefined';
             },
             src: "//www.beatbrokerz.com/flex/js/knockout.core.js",
+            ready: function() {
+                ko.bindingHandlers.bindShield = {
+                    init: function() { return { controlsDescendantBindings: true }; }
+                };
+                flexloader.jq.ko = ko;
+            },
             core: true
         },
         bbflex: {

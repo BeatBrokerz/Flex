@@ -630,9 +630,28 @@ var flexStore = flexStore || {};
         paused: ko.observable(true),
         volume: ko.observable($.bbflex.config.jplayer.volume),
         muted: ko.observable(false),
-        nowplaying: ko.observable({ title: '', artist: '', image: '', genres: '', licensing: { options: [] } }), // currently selected song
+        nowplaying: ko.observable({ // currently selected song
+            title: '',
+            artist: '',
+            image: 'https://www.beatbrokerz.com/flex/images/blank250x250.png',
+            thumbnail: 'https://www.beatbrokerz.com/flex/images/blank50x50.png',
+            genres: '',
+            licensing: { options: [] },
+            attributes: {},
+            description: '',
+            tempo: '', effects: '', genres: '', hook: '', instruments: '', moods: '',
+            ratings: { average: 0, total: 0 },
+            tags: []
+        }),
         Playlist: {}, // gets populated with specific observable data for every playlist by id
-        activePlaylist: ko.observable({ title: '', category: '', description: '', producers: [], media: [] }), // an observable of the current playlist object
+        activePlaylist: ko.observable({ // an observable of the current playlist object
+            id: 'init',
+            title: '',
+            category: '',
+            description: '',
+            producers: [],
+            media: []
+        }),
         activePlaylistItems: ko.observableArray([]), // an observable of the current playlist media
         playlistKeys: ko.observableArray([]), // an observable of all playlist ids
         groupedPlaylists: ko.observable([]), // an observable list of all playlists grouped by category
@@ -1217,11 +1236,13 @@ var flexStore = flexStore || {};
         App.Music.Core = jPlayer;
     });
 
-    App.on('bbflex-widget-loading', function (widget) {
-        widget.bbflex('applyBindings');
+    App.on('bbflex-widget-loading', 'render', function (widget) {
+        widget.wrapInner('<div class="flex-widget-container">');
+        widget.find('.flex-widget-container').first().bbflex('applyBindings');
+        widget.attr('data-bind', 'bindShield: true');
     });
 
-    App.on('bbflex-app-launched', function () {
+    App.on('bbflex-app-launched', 'render', function () {
         $('body').addClass('flex-ready');
     });
 
@@ -1428,7 +1449,7 @@ var flexStore = flexStore || {};
 
         App.modal({
             type: 'license',
-            title: info.name + (info.price.indexOf('$') ? ' ' : ' $') + info.price,
+            title: info.name + ' $' + info.price,
             content: content,
             footer: footer
         });
@@ -1459,7 +1480,7 @@ var flexStore = flexStore || {};
                 thiscontent.append('<button type="button" class="btn btn-sm btn-primary cart-add"><i class="fwicon-plus"></i> Add To Cart</button>');
 
             thiscontent.append('\
-	  <h3 class="fw-license-title"><i class="fwicon-tag"></i> ' + license.name + ': <strong>' + license.price + '</strong></h3>\
+	  <h3 class="fw-license-title"><i class="fwicon-tag"></i> ' + license.name + ': <strong>$' + license.price + '</strong></h3>\
 	  ' + '<div class="delivery"><span class="includes">Includes:</span> <span class="files">' + license.files + '</span></div>' + license.terms + '<p>' + license.description + '</p>\
 	');
 

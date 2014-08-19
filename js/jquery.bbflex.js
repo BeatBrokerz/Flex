@@ -424,12 +424,13 @@
         },
 
         applyBindings: function () {
-            var selection = this;
+            var selections = this;
             if (flexloader != undefined) {
                 flexloader.execute(function ($, myApp) {
-                    selection.each(function () {
+                    selections.each(function () {
                         if ($.ko) {
-                            $.ko.applyBindings(myApp.baseVars, $(this)[0]);
+                            var selection = $(this);
+                            $.ko.applyBindings(myApp.baseVars, selection[0]);
                         }
                         else {
                             console.log('$.ko does not exist!');
