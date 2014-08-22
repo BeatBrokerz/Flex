@@ -1432,7 +1432,7 @@ var flexStore = flexStore || {};
             '<button id="modalCartRemove" type="button" class="btn btn-danger"><i class="fwicon-trash"></i> Remove From Cart</button>' :
             '<button id="modalCartAdd" type="button" class="btn btn-primary"><i class="fwicon-plus"></i> Add To Cart</button>';
 
-        var content = $('<div>').append('<div class="delivery"><span class="includes">Includes:</span> <span class="files">' + info.files + '</span></div>' + info.terms + '<p>' + info.description + '</p>');
+        var content = $('<div>').append('<h1>' + info.songname + '</h1><div class="delivery"><span class="includes">Includes:</span> <span class="files">' + info.files + '</span></div>' + info.terms + '<p>' + info.description + '</p>');
 
         var footer = $('<div>').append('<button type="button" class="btn btn-default close-button">Close</button>' + actionButton);
         footer.find('#modalCartAdd').click(function () {

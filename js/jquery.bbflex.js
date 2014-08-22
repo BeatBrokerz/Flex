@@ -338,7 +338,7 @@
                             .html(template.html(template, settings));
                         $.appflow.trigger('bbflex-widget-loading', widget);
                         template.init.call(this, template, widget, settings);
-                        $.appflow.trigger('bbflex-widget-initialized', widget.addClass('widget-loaded'));
+                        $.appflow.trigger('bbflex-widget-loaded', widget.addClass('widget-loaded'));
                     }
                 }
                 if ($(this).find('[data-bbflex]').length) $(this).find('[data-bbflex]').each(function () {
