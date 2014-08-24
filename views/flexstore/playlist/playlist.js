@@ -7,7 +7,7 @@
         var viewModel = {
 
             title: playlist.title,
-            selectedPlaylist: playlist.dataSource,
+            selectedPlaylist: playlist.dataSource || myApp.Music.Playlist[params.key],
 
             playBeat: function (action) {
                 var media = action.itemData;
