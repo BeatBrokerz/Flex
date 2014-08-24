@@ -656,6 +656,8 @@ var flexStore = flexStore || {};
         playlistKeys: ko.observableArray([]), // an observable of all playlist ids
         groupedPlaylists: ko.observable([]), // an observable list of all playlists grouped by category
 
+        search: ko.observable(''),
+
         /*
          *  Methods
          */
@@ -688,9 +690,20 @@ var flexStore = flexStore || {};
             App.trigger('bbflex-show-license-options', media);
         },
 
+        showPlaylist: function(playlist) {
+            if (App.Data.fullscreen) return;
+            var id = typeof playlist === 'object' ? playlist.id : playlist;
+            App.trigger('bbflex-show-playlist', id);
+        },
+
         showPlaylists: function () {
             if (App.Data.fullscreen) return;
-            App.trigger('bbflex-playlists-show');
+            App.trigger('bbflex-show-playlists');
+        },
+
+        showSearch: function () {
+            if (App.Data.fullscreen) return;
+            App.trigger('bbflex-show-search');
         },
 
         createPlaylist: function (playlist) {
@@ -1047,6 +1060,21 @@ var flexStore = flexStore || {};
         App.Music.groupedPlaylists(groups);
     });
 
+    App.Music.search.subscribe(function(searchString) {
+        if (searchString) {
+            App.trigger('bbflex-search-starting', searchString);
+            App.ajax({
+                data: {
+                    music: 'search',
+                    search: searchString
+                },
+                complete: function() {
+                    App.trigger('bbflex-search-complete', searchString);
+                }
+            });
+        }
+    });
+
     // Preload the shopping cart playlist
     App.Music.resetPlaylist({ id: 'cart', title: 'Shopping Cart', description: '<p>Beats that are in your shopping cart.</p>' });
 
@@ -1158,7 +1186,7 @@ var flexStore = flexStore || {};
         },
 
         show: function () {
-            App.trigger('bbflex-cart-show');
+            App.trigger('bbflex-show-cart');
         },
         showCart: function () {
             App.Cart.show();
@@ -1298,7 +1326,7 @@ var flexStore = flexStore || {};
     App.on('bbflex-show-contact', 'render', function(params) {
 
         var config = params || {};
-        var title = '<i class="fwicon-envelope"></i> &nbsp;Send Email';
+        var title = '<i class="fwicon-mail"></i> &nbsp;Send Email';
 
         var contact_form = $('<div>').bbflex($.extend(config, { widget: 'contactform' }));
             contact_form.prepend('<p>Contact us by email using our contact form.</p>')
@@ -1391,7 +1419,7 @@ var flexStore = flexStore || {};
         }
     });
 
-    App.on('bbflex-playlists-show', 'render', function () {
+    App.on('bbflex-show-playlists', 'render', function () {
 
         var content = $('<div>').bbflex({ widget: 'playlists', theme: 'none' });
         content.find('.fw-playlists').on('click', '.fw-list-title', function () {
@@ -1411,28 +1439,100 @@ var flexStore = flexStore || {};
 
     });
 
+    App.on('bbflex-show-playlist', 'render', function (id) {
+
+        var playlist = App.Music.playlists[playlist] || App.Music.activePlaylist();
+        var content = $('<div>').bbflex({ widget: 'playlist', theme: 'none', playlist: id });
+
+        var footer = $('<button type="button" class="btn btn-default close-button">Close</button>').click(function () {
+            App.modal.close();
+        });
+
+        App.modal({
+            type: 'playlist',
+            title: '<i class="fwicon-itunes"></i> ' + playlist.title,
+            content: content,
+            footer: footer
+        });
+
+    });
+
+    App.on('bbflex-show-search', 'render', function() {
+
+
+        var title = $('<div><i class="fwicon-itunes"></i> Search Music</div>');
+
+        if (App.Music.playlists.search) {
+            var content = $('<div>').bbflex({ widget: 'playlist', theme: 'none', playlist: 'search' });
+        } else {
+            var content = $('<div>').append('Type a search query to find beats.');
+            App.once('bbflex-search-starting', function() {
+                content.activity();
+            });
+            App.once('bbflex-search-complete', function() {
+                content.activity(false);
+                content.bbflex({ widget: 'playlist', theme: 'none', playlist: 'search' });
+            });
+        }
+
+        var footer = $('<div><button type="button" class="btn btn-default close-button">Close</button></div>');
+            footer.find('.close-button').click(function () {
+            App.modal.close();
+        });
+
+        title.prepend(
+        '<div style="float:right; margin-right:15px; max-width:50%; text-align:right;">' +
+            '<input style="vertical-align:middle; max-width:70%;" type="text" id="search" value="' + App.Music.search() + '"> ' +
+            '<button style="max-width:25%" type="button" class="btn btn-success do-search btn-sm">Search</button>' +
+        '</div>');
+
+        var doSearch = function() {
+            var search = title.find('#search');
+            if (search.val()) {
+                App.Music.search(search.val());
+            }
+        };
+
+        title.find('.do-search').click(doSearch);
+        title.find('#search').keyup(function(event){
+            if(event.keyCode == 13){
+                doSearch();
+            }
+        });
+
+        App.modal({
+            type: 'search',
+            title: title,
+            content: content,
+            footer: footer
+        });
+
+    });
 
     /* Licensing Events */
 
     App.on('bbflex-show-license', 'render', function (license) {
         var cartItem;
         var info;
+        var songname;
         if (license.cart_item_id) {
             cartItem = license;
             info = license.license;
+            songname = cartItem.title;
         }
         else {
             cartItem = $.map(App.Cart.data().items, function (item) {
                 return item.nid == license.nid && item.option == license.option ? item : undefined;
             })[0];
             info = license;
+            songname = info.songname;
         }
 
         var actionButton = cartItem ?
             '<button id="modalCartRemove" type="button" class="btn btn-danger"><i class="fwicon-trash"></i> Remove From Cart</button>' :
             '<button id="modalCartAdd" type="button" class="btn btn-primary"><i class="fwicon-plus"></i> Add To Cart</button>';
 
-        var content = $('<div>').append('<h1>' + info.songname + '</h1><div class="delivery"><span class="includes">Includes:</span> <span class="files">' + info.files + '</span></div>' + info.terms + '<p>' + info.description + '</p>');
+        var content = $('<div>').append('<h1>' + songname + '</h1><div class="delivery"><span class="includes">Includes:</span> <span class="files">' + info.files + '</span></div>' + info.terms + '<p>' + info.description + '</p>');
 
         var footer = $('<div>').append('<button type="button" class="btn btn-default close-button">Close</button>' + actionButton);
         footer.find('#modalCartAdd').click(function () {
@@ -1546,7 +1646,7 @@ var flexStore = flexStore || {};
         }
     });
 
-    App.on('bbflex-cart-show', 'render', function () {
+    App.on('bbflex-show-cart', 'render', function () {
         var totals = $('<div class="fw-cart-totals-wrap">\
       <div data-bind="text: \'Subtotal: $\' + flexStore.Cart.data().sub_total" class="fw-cart-subtotal"></div>\
       <div data-bind="text: \'Discounts: $\' + flexStore.Cart.data().discounts.total" class="fw-cart-discounts"></div>\
