@@ -530,7 +530,7 @@ var flexStore = flexStore || {};
                     App.ajax({
                         data: params,
                         success: function (list) {
-                            if (typeof list !== 'object' || list.total_count < 1) {
+                            if (typeof list !== 'object' || list.total_count < 1 || list.total_count == undefined) {
                                 App.trigger('bbflex-playlist-outofdata', playlist);
                                 deferred.resolve([]);
                                 return;
