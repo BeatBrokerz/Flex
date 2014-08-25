@@ -208,18 +208,6 @@ var flexStore = flexStore || {};
 
                 App.trigger('bbflex-app-launching', data);
 
-                // Process Playlists
-                $.each(data.playlists, function(id, playlist) {
-                    if (playlist.source == 'ajax') {
-                        if (playlist.isDefault) {
-                            App.Music.usePlaylist(playlist.id);
-                            playlist.selectOnLoad = true;
-                        }
-                        playlist.dataSource = App.Datasource.create(App.appSettings.app_id, playlist);
-                        App.Datasource.reload(playlist);
-                    }
-                });
-
                 // fire up our widgets on the page
                 $.bbflex.init();
 
@@ -370,6 +358,14 @@ var flexStore = flexStore || {};
                         });
                         if (typeof playlist.total_count !== 'undefined') {
                             App.Music.Playlist[playlist.id].count(playlist.total_count);
+                        }
+                        if (playlist.source == 'ajax') {
+                            if (playlist.isDefault) {
+                                App.Music.usePlaylist(playlist.id);
+                                playlist.selectOnLoad = true;
+                            }
+                            playlist.dataSource = App.Datasource.create(App.appSettings.app_id, playlist);
+                            App.Datasource.reload(playlist);
                         }
                     });
                 }
@@ -528,16 +524,11 @@ var flexStore = flexStore || {};
                         music: playlist.id,
                         page: viewModel.page
                     }
-                    if (viewModel.filterTitle && viewModel.filterTitle()) {
-                        reqParams.title = viewModel.filterTitle();
-                        if (viewModel.filterLoadPanel) {
-                            viewModel.filterLoadPanel.visible(true);
-                        }
-                    }
+                    var params = $.extend(playlist.params, reqParams);
 
                     var deferred = new $.Deferred();
                     App.ajax({
-                        data: reqParams,
+                        data: params,
                         success: function (list) {
                             if (typeof list !== 'object' || list.total_count < 1) {
                                 App.trigger('bbflex-playlist-outofdata', playlist);
@@ -1065,7 +1056,7 @@ var flexStore = flexStore || {};
             App.trigger('bbflex-search-starting', searchString);
             App.ajax({
                 data: {
-                    music: 'search',
+                    playlist: 'search',
                     search: searchString
                 },
                 complete: function() {
