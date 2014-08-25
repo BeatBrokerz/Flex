@@ -530,7 +530,7 @@ var flexStore = flexStore || {};
                     App.ajax({
                         data: params,
                         success: function (list) {
-                            if (typeof list !== 'object' || list.total_count < 1 || list.total_count == undefined) {
+                            if (typeof list !== 'object' || list.total_count == 0 || list.total_count == undefined) {
                                 App.trigger('bbflex-playlist-outofdata', playlist);
                                 deferred.resolve([]);
                                 return;
@@ -548,6 +548,10 @@ var flexStore = flexStore || {};
                             });
                             App.Music.Playlist[myPlaylist].count(list.total_count);
                             deferred.resolve(beats);
+
+                            if (App.Music.Playlist[myPlaylist]().length == list.total_count) {
+                                App.trigger('bbflex-playlist-outofdata', playlist);
+                            }
 
                             if (loadOptions.refresh) {
                                 if (playlist.selectOnLoad) {
@@ -1479,7 +1483,9 @@ var flexStore = flexStore || {};
 
         var content;
         if (App.Music.playlists.search) {
-            content = $('<div>').bbflex({ widget: 'playlist', theme: 'none', playlist: 'search' });
+            content = $('<div>').bbflex({ widget: 'playlist', theme: 'none', playlist: 'search', emptyText: '' });
+            content.prepend('<h4 class="result-count"><span data-bind="text: music.Playlist.search.count()"></span> Results</h4>');
+            content.find('.result-count').bbflex('applyBindings');
         } else {
             content = $('<div>').append('Type a search query to find beats.');
             App.once('bbflex-search-starting', function() {
@@ -1487,9 +1493,17 @@ var flexStore = flexStore || {};
             });
             App.once('bbflex-search-complete', function() {
                 content.activity(false);
-                content.bbflex({ widget: 'playlist', theme: 'none', playlist: 'search' });
+                content.bbflex({ widget: 'playlist', theme: 'none', playlist: 'search', emptyText: '' });
+                content.prepend('<h4 class="result-count"><span data-bind="text: music.Playlist.search.count()"></span> Results</h4>');
+                content.find('.result-count').bbflex('applyBindings');
             });
         }
+
+        App.on('bbflex-playlist-outofdata', function(playlist) {
+            if (playlist.id == 'search' && App.Music.playlists[playlist.id].media.length == 0) {
+                content.find('.fw-playlist-empty').html('No beats found for this search.');
+            }
+        });
 
         var footer = $('<div><button type="button" class="btn btn-default close-button">Close</button></div>');
             footer.find('.close-button').click(function () {
