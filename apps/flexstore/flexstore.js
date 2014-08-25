@@ -1226,7 +1226,10 @@ var flexStore = flexStore || {};
         content: {
             categories: App.appContent,
             prepare: App.Content.prepare,
-            show: App.Content.show
+            show: App.Content.show,
+            showAbout: function(options) {
+                App.trigger('bbflex-show-about', options);
+            }
         },
         app: {
             fullScreen: App.fullScreen,
@@ -1339,6 +1342,27 @@ var flexStore = flexStore || {};
             type: 'contact',
             title: title,
             content: contact_form,
+            footer: footer
+        });
+
+    });
+
+    App.on('bbflex-show-about', 'render', function(options) {
+
+        var profile = App.Producers.byId()[App.appSettings.acct_id];
+        if (!profile) { return; }
+
+        var title = $('<span>').append('<i class="fwicon-info"></i> About Us');
+        var content = $('<div>').append(profile.description);
+        var footer = $('<div><button type="button" class="btn btn-default close-button">Close</button></div>');
+        footer.find('.close-button').click(function () {
+            App.modal.close();
+        });
+
+        App.modal({
+            type: 'about_us',
+            title: title,
+            content: content,
             footer: footer
         });
 
