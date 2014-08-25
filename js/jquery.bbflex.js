@@ -678,7 +678,10 @@
                 });
 
                 $.appflow.bind('bbflex-playlist-outofdata', function (playlist) {
-                    if (!settings.playlist || settings.playlist == playlist.id) {
+                    if (
+                        (!settings.playlist && playlist.id == window[myAppNamespace].Music.currentPlaylist) ||
+                            (settings.playlist && settings.playlist == playlist.id)
+                        ) {
                         widget.find('.fw-playlist-loading').css('display', 'none');
                     }
                 });
@@ -689,6 +692,17 @@
                             widget.find('.fw-playlist-loading').css('display', '') :
                             widget.find('.fw-playlist-loading').css('display', 'none');
                     }
+                });
+
+                $.appflow.bind('bbflex-playlist-reset', function(id) {
+                        if (
+                            (!settings.playlist && id == window[myAppNamespace].Music.currentPlaylist) ||
+                                (settings.playlist && settings.playlist == id)
+                            ) {
+                            if (window[myAppNamespace].Music.playlists[id].dataSource) {
+                              widget.find('.fw-playlist-loading').css('display', '');
+                            }
+                        }
                 });
 
                 $.appflow.bind('bbflex-ajax-working', function (params) {
