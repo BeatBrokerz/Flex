@@ -653,6 +653,9 @@
                   <ul class="fw-playlist-items" data-bind="foreach: ' + (settings.playlist ? 'music.Playlist[\'' + settings.playlist + '\']' : 'music.activePlaylistItems') + '">\
                     <li><a href="javascript:;" data-bind="html: title"></a></li>\
                   </ul>\
+                  <!-- ko if: ' + (settings.playlist ? 'music.Playlist[\'' + settings.playlist + '\']().length == 0' : 'music.activePlaylistItems().length == 0') + ' -->\
+                  <div class="fw-playlist-empty">No music available in this playlist.</div>\
+                  <!-- /ko -->\
                   <div class="fw-playlist-loading"><i class="fwicon-down-dir"></i> Load More...</div>\
                 ';
             },
