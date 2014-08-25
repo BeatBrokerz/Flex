@@ -1453,10 +1453,11 @@ var flexStore = flexStore || {};
 
         var title = $('<div><i class="fwicon-itunes"></i> Search Music</div>');
 
+        var content;
         if (App.Music.playlists.search) {
-            var content = $('<div>').bbflex({ widget: 'playlist', theme: 'none', playlist: 'search' });
+            content = $('<div>').bbflex({ widget: 'playlist', theme: 'none', playlist: 'search' });
         } else {
-            var content = $('<div>').append('Type a search query to find beats.');
+            content = $('<div>').append('Type a search query to find beats.');
             App.once('bbflex-search-starting', function() {
                 content.activity();
             });
