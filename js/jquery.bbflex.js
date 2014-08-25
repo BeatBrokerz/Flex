@@ -645,18 +645,21 @@
 
             settings: {
                 scroll: false,
-                playlist: ''
+                playlist: '',
+                emptyText: 'This playlist is empty.'
             },
 
             html: function (template, settings) {
+                var playlistObservable = settings.playlist ? 'music.Playlist[\'' + settings.playlist + '\']' : 'music.Playlist[music.activePlaylist().id]';
+                var playlistRef = settings.playlist ? 'music.playlists[\'' + settings.playlist + '\']' : 'music.playlists[music.activePlaylist().id]';
                 return '\
-                  <ul class="fw-playlist-items" data-bind="foreach: ' + (settings.playlist ? 'music.Playlist[\'' + settings.playlist + '\']' : 'music.activePlaylistItems') + '">\
+                  <ul class="fw-playlist-items" data-bind="foreach: ' + playlistObservable + '">\
                     <li><a href="javascript:;" data-bind="html: title"></a></li>\
                   </ul>\
-                  <!-- ko if: ' + (settings.playlist ? 'music.Playlist[\'' + settings.playlist + '\']().length == 0' : 'music.activePlaylistItems().length == 0') + ' -->\
-                  <div class="fw-playlist-empty">No music available in this playlist.</div>\
+                  <!-- ko if: ' + playlistObservable + '().length == 0 -->\
+                  <div class="fw-playlist-empty">' + settings.emptyText + '</div>\
                   <!-- /ko -->\
-                  <div class="fw-playlist-loading"><i class="fwicon-down-dir"></i> Load More...</div>\
+                  <div class="fw-playlist-loading" data-bind="visible: ' + playlistRef + '.dataSource && ' + playlistObservable + '().length < ' + playlistObservable + '.count()"><i class="fwicon-down-dir"></i> Load More...</div>\
                 ';
             },
             init: function (template, widget, settings) {
@@ -680,34 +683,6 @@
                     window[myAppNamespace].Music.playMedia(window[myAppNamespace].Music.playlists[id].media[playlistIndex]);
                 });
 
-                $.appflow.bind('bbflex-playlist-outofdata', function (playlist) {
-                    if (
-                        (!settings.playlist && playlist.id == window[myAppNamespace].Music.currentPlaylist) ||
-                            (settings.playlist && settings.playlist == playlist.id)
-                        ) {
-                        widget.find('.fw-playlist-loading').css('display', 'none');
-                    }
-                });
-
-                $.appflow.bind('bbflex-playlist-changed', function (id) {
-                    if (!settings.playlist) {
-                        window[myAppNamespace].Music.playlists[id].dataSource ?
-                            widget.find('.fw-playlist-loading').css('display', '') :
-                            widget.find('.fw-playlist-loading').css('display', 'none');
-                    }
-                });
-
-                $.appflow.bind('bbflex-playlist-reset', function(id) {
-                        if (
-                            (!settings.playlist && id == window[myAppNamespace].Music.currentPlaylist) ||
-                                (settings.playlist && settings.playlist == id)
-                            ) {
-                            if (window[myAppNamespace].Music.playlists[id].dataSource) {
-                              widget.find('.fw-playlist-loading').css('display', '');
-                            }
-                        }
-                });
-
                 $.appflow.bind('bbflex-ajax-working', function (params) {
                     if (params && params.data && params.data.music) {
                         if (settings.playlist && settings.playlist != params.data.music) return;
@@ -726,10 +701,6 @@
                         }
                     }
                 });
-
-                if (settings.playlist && !window[myAppNamespace].Music.playlists[settings.playlist].dataSource) {
-                    widget.find('.fw-playlist-loading').css('display', 'none');
-                }
 
                 widget.find('.fw-playlist-loading').click(function () {
                     $.appflow.trigger('bbflex-playlist-scrolled-bottom', settings.playlist, widget);
