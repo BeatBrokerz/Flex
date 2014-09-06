@@ -1716,7 +1716,7 @@ var flexStore = flexStore || {};
         }, settings);
         if (typeof OWATracker !== 'undefined') {
             var nid = page.nid || 0;
-            var uid = (App.appSettings.app_affiliate ? 0 : App.appSettings.acct_id);
+            var uid = App.appSettings.acct_id;
             var channel = page.channel || '';
             var affiliate = (App.appSettings.app_affiliate ? App.appSettings.acct_id : 0);
             OWATracker.setCustomVar(1, 'nid', nid, 'page');
