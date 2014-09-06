@@ -1711,12 +1711,12 @@ var flexStore = flexStore || {};
 
     App.trackPageView = function (settings) {
         var page = $.extend({
-            channel: (App.appSettings.app_affiliate ? App.appSettings.app_name + ' (app)' : App.appSettings.app_name ),
+            channel: App.appSettings.app_channel,
             url: location.href
         }, settings);
         if (typeof OWATracker !== 'undefined') {
             var nid = page.nid || 0;
-            var uid = page.uid || 0;
+            var uid = (App.appSettings.app_affiliate ? 0 : App.appSettings.acct_id);
             var channel = page.channel || '';
             var affiliate = (App.appSettings.app_affiliate ? App.appSettings.acct_id : 0);
             OWATracker.setCustomVar(1, 'nid', nid, 'page');
@@ -1729,7 +1729,7 @@ var flexStore = flexStore || {};
 
     App.trackAction = function (settings) {
         var action = $.extend({
-            channel: (App.appSettings.app_affiliate ? App.appSettings.app_name + ' (app)' : App.appSettings.app_name ),
+            channel: App.appSettings.app_channel,
             group: 'Ungrouped',
             name: 'Unnamed',
             label: 'Unlabelled',
