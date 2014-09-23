@@ -56,6 +56,8 @@
 .flex-widget {
     position: relative;
     visibility: hidden;
+    width:100%;
+    height:100%;
 }
 
 .flex-widget-container {
